@@ -36,5 +36,6 @@ Console.WriteLine($"The smallest Name in this list is: {samllestName}.");
 Console.WriteLine("**************************Aggregate Function***********************");
 
 //print all name separeted by coma as string
-var printAllName = namesCollections.Aggregate((a,b) => a + "," + b);
+var printAllName = namesCollections.Aggregate((a, b) => a + "," + b);
 Console.WriteLine(printAllName);
+
