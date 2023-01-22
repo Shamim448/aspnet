@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinqExample", "LinqExample\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectionOperators", "ProjectionOperators\ProjectionOperators.csproj", "{220562F0-39FD-4E3C-B3DB-E1272165AB3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelectMany", "SelectMany\SelectMany.csproj", "{DAFC7A4C-391E-4707-85FD-32AC565C66AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{220562F0-39FD-4E3C-B3DB-E1272165AB3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{220562F0-39FD-4E3C-B3DB-E1272165AB3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{220562F0-39FD-4E3C-B3DB-E1272165AB3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAFC7A4C-391E-4707-85FD-32AC565C66AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAFC7A4C-391E-4707-85FD-32AC565C66AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAFC7A4C-391E-4707-85FD-32AC565C66AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAFC7A4C-391E-4707-85FD-32AC565C66AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
