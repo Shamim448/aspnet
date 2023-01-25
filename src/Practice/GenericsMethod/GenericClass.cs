@@ -6,31 +6,31 @@ using System.Threading.Tasks;
 
 namespace GenericsMethod
 {
-    public class GenericClass
+    public class GenericClass<T>
     {
-        public int Add<T>(T a, T b)
+        public T Add(T a, T b)
         {               
             dynamic v1 = a;
             dynamic v2 = b;
             return v1 + v2;
         }
-        public int Sub<T>(T a, T b)
+        public T Sub(T a, T b)
         {
             dynamic v1 = a;
             dynamic v2 = b;
             return v1 - v2;
         }
-        public int Mul<T>(T a, T b)
+        public T Mul(T a, T b)
         {
             dynamic v1 = a;
             dynamic v2 = b;
             return v1 * v2;
         }
-        public int div<T>(T a, T b)
+        public T Div(T a, T b)
         {
             dynamic v1 = a;
             dynamic v2 = b;
-            return v1 - v2;
+            return v1 / v2;
         }
     }
 }
