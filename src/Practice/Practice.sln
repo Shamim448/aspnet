@@ -5,11 +5,11 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinqExample", "LinqExample\LinqExample.csproj", "{A6B3DCB4-2B46-473A-80F0-7AABD82D2FE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectionOperators", "ProjectionOperators\ProjectionOperators.csproj", "{220562F0-39FD-4E3C-B3DB-E1272165AB3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectionOperators", "ProjectionOperators\ProjectionOperators.csproj", "{220562F0-39FD-4E3C-B3DB-E1272165AB3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelectMany", "SelectMany\SelectMany.csproj", "{DAFC7A4C-391E-4707-85FD-32AC565C66AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SelectMany", "SelectMany\SelectMany.csproj", "{DAFC7A4C-391E-4707-85FD-32AC565C66AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericsMethod", "GenericsMethod\GenericsMethod.csproj", "{E898BA16-0F43-4EF5-9F54-C620F93CD8B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericsCollection", "GenericsCollection\GenericsCollection.csproj", "{58866F34-C6EA-49B8-AD30-3495EA186485}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{DAFC7A4C-391E-4707-85FD-32AC565C66AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAFC7A4C-391E-4707-85FD-32AC565C66AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAFC7A4C-391E-4707-85FD-32AC565C66AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E898BA16-0F43-4EF5-9F54-C620F93CD8B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E898BA16-0F43-4EF5-9F54-C620F93CD8B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E898BA16-0F43-4EF5-9F54-C620F93CD8B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E898BA16-0F43-4EF5-9F54-C620F93CD8B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58866F34-C6EA-49B8-AD30-3495EA186485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58866F34-C6EA-49B8-AD30-3495EA186485}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58866F34-C6EA-49B8-AD30-3495EA186485}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58866F34-C6EA-49B8-AD30-3495EA186485}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
