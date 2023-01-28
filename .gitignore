@@ -2,5 +2,4 @@
 **/bin
 **/obj
 **/*.user
-**/*.csproj
 **/Logs/*
