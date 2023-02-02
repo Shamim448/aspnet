@@ -30,3 +30,21 @@ foreach(var employee in employees)
     };
     Console.WriteLine();
 }
+
+Console.WriteLine("----------Multiple group keys----------------");
+var groupEmployee = from employee in Employee.GetAllEmployees() group employee by new {employee.Department, employee.Gender} 
+    into eGroup orderby eGroup.Key.Department, eGroup.Key.Gender select new {
+        Dep = eGroup.Key.Department,
+        Gender = eGroup.Key.Gender,
+        Employee = eGroup.OrderBy(x => x.Name)
+    };
+foreach (var employee in groupEmployee)
+{
+    Console.WriteLine("{0} Department {1} Employee count = {2}", employee.Dep, employee.Gender, employee.Employee.Count() );
+    Console.WriteLine("--------------------------------------------");
+    foreach(var result in employee.Employee)
+    {
+        Console.WriteLine(result.Name + "\t" + result.Gender + "\t" + result.Department);
+    }
+    Console.WriteLine();
+}
