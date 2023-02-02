@@ -10,6 +10,6 @@ List<Student> listStudent = new List<Student>
 var result = from studentList in listStudent select new { Key = studentList.StudentID, Value = studentList.Name };
 foreach (var student in listStudent)
 {
-    Console.WriteLine(student.Name);
+    Console.WriteLine();
 }
     
