@@ -1,6 +1,6 @@
 ﻿namespace DrpendencyInjection.Models
 {
-    public interface ICourse
+    public interface IStudent
     {
         string Name { get; }
     }
