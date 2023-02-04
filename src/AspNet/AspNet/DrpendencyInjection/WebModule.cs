@@ -1,5 +1,9 @@
 ﻿using Autofac;
+using DrpendencyInjection.Application.Services;
+using DrpendencyInjection.domain.Repositories;
+using DrpendencyInjection.domain.Services;
 using DrpendencyInjection.Models;
+using DrpendencyInjection.Repositories;
 
 namespace DrpendencyInjection
 {
@@ -7,7 +11,8 @@ namespace DrpendencyInjection
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<Course>().As<ICourse>();
+            builder.RegisterType<CourseRepositories>().As<ICourseRepositories>().InstancePerLifetimeScope();
+            builder.RegisterType<CourseServices>().As<ICourseServices>().InstancePerLifetimeScope();
         }
     }
 }

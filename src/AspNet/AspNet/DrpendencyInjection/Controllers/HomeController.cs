@@ -1,4 +1,5 @@
-﻿using DrpendencyInjection.Models;
+﻿using DrpendencyInjection.domain.Services;
+using DrpendencyInjection.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,11 +8,11 @@ namespace DrpendencyInjection.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ICourse _course;
-        public HomeController(ILogger<HomeController> logger, ICourse course)
+        private readonly ICourseServices _courseServices;
+        public HomeController(ILogger<HomeController> logger, ICourseServices courseServices)
         {
             _logger = logger;
-            _course = course;
+            _courseServices = courseServices;
         }
 
         public IActionResult Index()
