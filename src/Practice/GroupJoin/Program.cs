@@ -18,7 +18,8 @@ foreach(var department in employeeByDepartment)
 Console.WriteLine("----------------Inner Join-----------------------");
 var names = from a in Department.GetAllDepartments() join b in Employee.GetAllEmployees() on a.ID equals b.DepartmentID 
             select new { DepartmentName = a.Name, EmployeeName = b.Name };
-foreach(var name in names)
+foreach(var name in names) 
 {
     Console.WriteLine(name.EmployeeName + "\t" + name.DepartmentName);
+    //payroll department name will missing
 }
