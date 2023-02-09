@@ -76,6 +76,44 @@ namespace Linq_101_Sample
             #endregion
             return 0;
         }
+        #region custom-comparer
+        public class CaseInsensetiveComparer : IComparer<string>
+        {
+            public int Compare(string? x, string? y) => 
+                string.Compare(x, y, StringComparison.OrdinalIgnoreCase);            
+        }
+        #endregion
+        public int OrderBywithCustomComperar()
+        {
+            #region orderby-custom-comparer
+            string[] words = { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" };
+            var sortedWords = words.OrderBy(x => x, new CaseInsensetiveComparer());
+            foreach (var word in sortedWords)
+            {
+                Console.WriteLine(word);
+            }
+            #endregion
+            return 0;
+        }
+        public int OrderingReversal()
+        {
+            #region reverse
+            string[] digits = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+
+            var reversedIDigits = (
+                from digit in digits
+                where digit[1] == 'i'
+                select digit)
+                .Reverse();
+
+            Console.WriteLine("A backwards list of the digits with a second character of 'i':");
+            foreach (var d in reversedIDigits)
+            {
+                Console.WriteLine(d);
+            }
+            #endregion
+            return 0;
+        }
 
 
     }
