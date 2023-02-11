@@ -3,6 +3,7 @@ using Assignment1;
 
 Course course = new Course
 {
+   
     Title = "Asp.Net",
     Teacher = new Instructor
     {
@@ -62,5 +63,5 @@ Course course = new Course
     } //end of tests
 };//end of course
 
-string json = JsonFormatter.Convert(course);
+string json = XmlFormatter.Convert(course);
 Console.WriteLine(json);
