@@ -11,7 +11,16 @@ Console.WriteLine("Hello, World!");
 //new JoinOperation().CrossJoinQuery();
 //new JoinOperation().GroupJoinQquery();
 //new JoinOperation().CrossGroupJoin();
-new JoinOperation().LeftOuterJoin();
+//new JoinOperation().LeftOuterJoin();
+//new Grouping().GroupingSyntax();
+//new Grouping().GroupByProperty();
+//new Grouping().GroupByCategory();
+//new Grouping().NestedGroup();
+//new AggregateOperators().CountSyntax();
+//new AggregateOperators().NestedCount();
+//new AggregateOperators().GroupedCount();
+new AggregateOperators().SumGrouped();
+
 
 
 
