@@ -49,7 +49,7 @@ namespace Assignment1
                 else if (value != null)
                 {
                     xml.Append(string.Format("<{0}>", property.Name));
-                    //if (properties[i].PropertyType.IsValueType || properties[i].PropertyType == typeof(string))
+                    
                     if (value is string)
                     {
                         xml.Append(string.Format("{0}", properties[i].GetValue(item)));
