@@ -1,6 +1,7 @@
-using JSON_Serializer__Custom_;
+//using JSON_Serializer__Custom_;
 using JsonData;
 using System.Text.RegularExpressions;
+using XMLFormetter;
 
 namespace AssignmentTest
 {
@@ -149,7 +150,7 @@ namespace AssignmentTest
         public void Test1()
         {
             set1 = new Regex(@"\s+").Replace(set1, "").Replace("\r\n", "");
-            string json = JsonFormatter.Convert(new JsonData.Course());
+            string json = XmlFormatter.Convert(new JsonData.Course());
             json = new Regex(@"\s+").Replace(json, "").Replace("\r\n", "");
 
             Assert.AreEqual(0, string.Compare(set1, json, StringComparison.OrdinalIgnoreCase));
@@ -159,7 +160,7 @@ namespace AssignmentTest
         public void Test2()
         {
             set2 = new Regex(@"\s+").Replace(set2, "").Replace("\r\n", "");
-            string json = JsonFormatter.Convert(new Product());
+            string json = XmlFormatter.Convert(new JsonData.Product());
             json = new Regex(@"\s+").Replace(json, "").Replace("\r\n", "");
 
             Assert.AreEqual(0, string.Compare(set2, json, StringComparison.OrdinalIgnoreCase));

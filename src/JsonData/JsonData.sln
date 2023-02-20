@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonData", "JsonData\JsonDa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssignmentTest", "AssignmentTest\AssignmentTest.csproj", "{FD328254-ABA4-4B50-9BEC-FF28F35B56C5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSON Serializer (Custom)", "..\..\..\exams\aspnet-b8-Md-Faisal-Mahmud\Assignment-1\JSON Serializer (Custom)\JSON Serializer (Custom).csproj", "{AA84569A-953E-4FC6-88DC-F3260E266D05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLFormetter", "Assignment2\XMLFormetter\XMLFormetter.csproj", "{52A6F18C-AB0B-4A01-BDAD-36F3A59A3A2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{FD328254-ABA4-4B50-9BEC-FF28F35B56C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD328254-ABA4-4B50-9BEC-FF28F35B56C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD328254-ABA4-4B50-9BEC-FF28F35B56C5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA84569A-953E-4FC6-88DC-F3260E266D05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA84569A-953E-4FC6-88DC-F3260E266D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA84569A-953E-4FC6-88DC-F3260E266D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA84569A-953E-4FC6-88DC-F3260E266D05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52A6F18C-AB0B-4A01-BDAD-36F3A59A3A2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52A6F18C-AB0B-4A01-BDAD-36F3A59A3A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52A6F18C-AB0B-4A01-BDAD-36F3A59A3A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52A6F18C-AB0B-4A01-BDAD-36F3A59A3A2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

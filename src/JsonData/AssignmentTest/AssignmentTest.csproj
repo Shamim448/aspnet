@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\exams\aspnet-b8-Md-Faisal-Mahmud\Assignment-1\JSON Serializer (Custom)\JSON Serializer (Custom).csproj" />
+    <ProjectReference Include="..\Assignment2\XMLFormetter\XMLFormetter.csproj" />
     <ProjectReference Include="..\JsonData\JsonData.csproj" />
   </ItemGroup>
 

@@ -19,7 +19,7 @@ namespace JsonData
 
         public Product()
         {
-            Id = new Guid("931055D0-073C-4423-A010-18D3913E297C");
+            //Id = new Guid("931055D0-073C-4423-A010-18D3913E297C");
             Name = "Camera";
             Description = "A cannon camera";
             BarCode = "0475047503";
