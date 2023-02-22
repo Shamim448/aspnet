@@ -101,21 +101,21 @@ namespace AssignmentTest
                 	</Topics>
                 	<Fees>30000.5</Fees>
                 	<Tests>
-                        <Test>
+                        <AdmissionTest>
                             <StartDateTime>2/3/2022 12:00:00 AM</StartDateTime>
                 		    <EndDateTime>2/4/2022 12:00:00 AM</EndDateTime>
                 		    <TestFees>100.5</TestFees>
-                        </Test>
-                		<Test>
+                        </AdmissionTest>
+                		<AdmissionTest>
                 		    <StartDateTime>4/3/2023 12:00:00 AM</StartDateTime>
                 		    <EndDateTime>4/4/2023 12:00:00 AM</EndDateTime>
                 		    <TestFees>200.5</TestFees>
-                	    </Test>
-                	    <Test>
+                	    </AdmissionTest>
+                	    <AdmissionTest>
                 		    <StartDateTime>5/3/2024 12:00:00 AM</StartDateTime>
                 		    <EndDateTime>5/4/2024 12:00:00 AM</EndDateTime>
                 		    <TestFees>300.5</TestFees>
-                	    </Test>
+                	    </AdmissionTest>
                 	</Tests>
                 </Course>
                 """;
@@ -155,16 +155,18 @@ namespace AssignmentTest
                 	    </Feedback>
                     </Feedbacks>
                 	<Spedificatios>
-                        <Items>
-                	        <SpedificationItem>
-                		        <Name>Model</Name>
-                		        <Value>Cannon</Value>
-                	        </SpedificationItem>
-                	        <SpedificationItem>
-                		        <Name>Pixel</Name>
-                		        <Value>12MPX</Value>
-                	        </SpedificationItem>
-                        </Items>
+                        <Spedification>
+                            <Items>
+                	            <SpedificationItem>
+                		            <Name>Model</Name>
+                		            <Value>Cannon</Value>
+                	            </SpedificationItem>
+                	            <SpedificationItem>
+                		            <Name>Pixel</Name>
+                		            <Value>12MPX</Value>
+                	            </SpedificationItem>
+                            </Items>
+                        </Spedification>
                 	</Spedificatios>
                 	<Price>30000.5</Price>
                     <Colors>

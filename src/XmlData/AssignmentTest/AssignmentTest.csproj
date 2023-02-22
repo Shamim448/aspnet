@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\JsonData\Assignment2\XMLFormetter\XMLFormetter.csproj" />
+    <ProjectReference Include="..\..\..\..\aspnet-b8-shamimhosen\src\Assignment2\XMLFormetter\XMLFormetter.csproj" />
     <ProjectReference Include="..\XmlData\XmlData.csproj" />
   </ItemGroup>
 
