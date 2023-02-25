@@ -189,7 +189,7 @@ namespace AssignmentTest
         public void Test1()
         {
             set1 = new Regex(@"\s+").Replace(set1, "").Replace("\r\n", "");
-            string xml = XmlFormatter.Convert(new XmlData.Course());
+            string xml = Test.Convert(new XmlData.Course());
 			xml = new Regex(@"\s+").Replace(xml, "").Replace("\r\n", "");
 
             Assert.AreEqual(0, string.Compare(set1, xml, StringComparison.OrdinalIgnoreCase));
@@ -199,7 +199,7 @@ namespace AssignmentTest
         public void Test2()
         {
             set2 = new Regex(@"\s+").Replace(set2, "").Replace("\r\n", "");
-            string xml = XmlFormatter.Convert(new Product());
+            string xml = Test.Convert(new Product());
 			xml = new Regex(@"\s+").Replace(xml, "").Replace("\r\n", "");
 
             Assert.AreEqual(0, string.Compare(set2, xml, StringComparison.OrdinalIgnoreCase));

@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\aspnet-b8-shamimhosen\src\Assignment2\XMLFormetter\XMLFormetter.csproj" />
     <ProjectReference Include="..\XmlData\XmlData.csproj" />
+    <ProjectReference Include="C:\Users\User2\Desktop\Assignment2\XMLFormetter\XMLFormetter.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssignmentTest", "Assignmen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmlData", "XmlData\XmlData.csproj", "{6F4C2D88-2F8C-4A60-9C4B-66E2E55DC8E8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLFormetter", "..\..\..\aspnet-b8-shamimhosen\src\Assignment2\XMLFormetter\XMLFormetter.csproj", "{9E1AC4F8-CCD6-4B65-BB5D-EE3680868D39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLFormetter", "C:\Users\User2\Desktop\Assignment2\XMLFormetter\XMLFormetter.csproj", "{9E2CEE42-A3AE-4C1B-B431-8CF1365F86DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{6F4C2D88-2F8C-4A60-9C4B-66E2E55DC8E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F4C2D88-2F8C-4A60-9C4B-66E2E55DC8E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F4C2D88-2F8C-4A60-9C4B-66E2E55DC8E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9E1AC4F8-CCD6-4B65-BB5D-EE3680868D39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E1AC4F8-CCD6-4B65-BB5D-EE3680868D39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E1AC4F8-CCD6-4B65-BB5D-EE3680868D39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E1AC4F8-CCD6-4B65-BB5D-EE3680868D39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E2CEE42-A3AE-4C1B-B431-8CF1365F86DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E2CEE42-A3AE-4C1B-B431-8CF1365F86DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E2CEE42-A3AE-4C1B-B431-8CF1365F86DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E2CEE42-A3AE-4C1B-B431-8CF1365F86DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
