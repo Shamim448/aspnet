@@ -2,7 +2,7 @@
 using JsonData;
 using XMLFormetter;
 
-Course course = new Course();
+//Course course = new Course();
 Product product = new Product();
 
 string XML = XmlFormatter.Convert(product);
