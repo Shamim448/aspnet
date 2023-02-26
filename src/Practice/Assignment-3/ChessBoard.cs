@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace Assignment_3
                     Console.Write(ChessBoardHorizontalSymbol);
                 }
                 Console.Write("+\n");//Print last + and new line
-                Console.Write(r + " ");
+               Console.Write(r + " ");
                 for (int c = 0; c <= DIMENTION; c++)
                 {
                     Console.Write(ChessBoardVarticalSymbol + "  ");
@@ -41,8 +42,10 @@ namespace Assignment_3
             for (int r = 0;r < DIMENTION; r++)
             {
                 Console.Write(ChessBoardHorizontalSymbol);
+               
             }
             Console.Write("+\n");
+            Console.ReadLine();
 
         }
       
