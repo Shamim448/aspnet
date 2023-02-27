@@ -6,7 +6,7 @@ using MVCProject.Web.Data;
 using MVCProject.Web.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-//Dependancy Injection by AutiFac
+//Dependancy Injection by AutoFac
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(ContainerBuilder =>
 {

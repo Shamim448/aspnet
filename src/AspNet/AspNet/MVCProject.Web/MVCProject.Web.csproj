@@ -22,4 +22,8 @@
     <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MVCProject.Application\MVCProject.Application.csproj" />
+  </ItemGroup>
+
 </Project>
