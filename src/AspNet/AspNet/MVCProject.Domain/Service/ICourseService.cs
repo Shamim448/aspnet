@@ -8,6 +8,6 @@ namespace MVCProject.Domain.Service
 {
     public interface ICourseService
     {
-        public string Name { get; set; }
+       public string Name { get; set; }
     }
 }

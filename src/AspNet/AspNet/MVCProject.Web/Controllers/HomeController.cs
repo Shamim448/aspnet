@@ -9,12 +9,12 @@ namespace MVCProject.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         //Dependancy Injection by service controller
-        private readonly ICourse _course;
+        
         private readonly ICourseService _courseService;
-        public HomeController(ILogger<HomeController> logger, ICourse course, ICourseService courseService)
+        public HomeController(ILogger<HomeController> logger, /*ICourse course,*/ ICourseService courseService)
         {
             _logger = logger;
-            _course = course;
+            //_course = course;
             _courseService = courseService;
         }
 
