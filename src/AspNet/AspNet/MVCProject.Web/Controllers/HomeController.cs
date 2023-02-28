@@ -9,25 +9,22 @@ namespace MVCProject.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         //Dependancy Injection by service controller
-        
-        private readonly ICourseService _courseService;
-        public HomeController(ILogger<HomeController> logger, /*ICourse course,*/ ICourseService courseService)
+                private readonly ICourseService _courseService;
+        public HomeController(ILogger<HomeController> logger, ICourseService courseService)
         {
             _logger = logger;
             //_course = course;
             _courseService = courseService;
         }
-
         public IActionResult Index()
         {
+            _logger.LogInformation("I am Index Page");
             return View();
         }
-
         public IActionResult Privacy()
         {
             return View();
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
