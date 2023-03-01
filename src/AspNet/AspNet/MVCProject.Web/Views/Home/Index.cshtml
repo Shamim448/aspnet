@@ -6,3 +6,7 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+@*HTML Helper*@
+@Html.ActionLink("Test Page", "Test", "Home", null, new{style = "color:red"}); <br/>
+@*Tag Helper*@
+<a asp-action="AnotherTest", asp-controller="Home" style="color:hotpink">Another Test Page</a>

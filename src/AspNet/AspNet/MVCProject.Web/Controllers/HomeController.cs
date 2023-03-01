@@ -21,6 +21,24 @@ namespace MVCProject.Web.Controllers
             _logger.LogInformation("I am Index Page");
             return View();
         }
+        //Html and Tag Helper
+        public IActionResult Test()
+        {
+            var model = new TestModel();
+            return View(model);
+        }
+        //used for recive post data
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Test(TestModel model)
+        {
+            return View(model);
+        }
+        //Tag helper view page
+        public IActionResult AnotherTest()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
