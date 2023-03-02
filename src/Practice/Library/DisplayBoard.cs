@@ -1,4 +1,5 @@
-﻿using PrimaryLibrary;
+﻿using Library;
+using PrimaryLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Assignment_3
 {
     public class DisplayBoard:IDisplayBoard
     {
+        public int c = 0;
         public void DissplayChessBoard(object[,] arrs)
         {
             //Used for colums numbers
@@ -17,9 +19,10 @@ namespace Assignment_3
                 Console.Write("  " + i);
             }
             Console.WriteLine();
-
+            int c = 0;
             for (int row = 0; row < arrs.GetLength(0); row++)
             {
+                
                 Console.Write(row + " ");
                 for (int col = 0; col < arrs.GetLength(0); col++)
                 {
@@ -31,17 +34,22 @@ namespace Assignment_3
                     {
                         Console.BackgroundColor = ConsoleColor.Magenta;
                     }
-                   
-                    Console.Write(" ♜ ");
-                    
+                     c ++;
+                    //Console.Write(" ♜ ");
+                    Piece piece = new Piece();
+                    piece.SetPiess(c);
                     Console.ResetColor();
+                    
                 }//end column
 
                 Console.WriteLine();//used for lest side row number
+                
             }
-
+           
+            
 
             Console.ReadLine();
         }
     }
+   
 }
