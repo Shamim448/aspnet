@@ -31,8 +31,9 @@ namespace Assignment_3
                     {
                         Console.BackgroundColor = ConsoleColor.Magenta;
                     }
-                    Console.Write("   ");
-
+                   
+                    Console.Write(" ♜ ");
+                    
                     Console.ResetColor();
                 }//end column
 

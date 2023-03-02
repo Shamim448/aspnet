@@ -9,5 +9,9 @@ namespace Assignment_3
     public interface IChessPiece
     {
         public string Symbol { get; }
+        public void SetPeice(object[,] arrs);
+
+
+
     }
 }
