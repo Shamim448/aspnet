@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace Assignment_3
 {
-    public class ChessPiece 
+    public interface IChessPiece
     {
-        public string? X { get; set; }
-        public string? Y { get; set; }
-        //public const int DIMENTION = 8;
-       
-
+        public string Symbol { get; }
     }
 }
