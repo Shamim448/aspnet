@@ -23,7 +23,7 @@ namespace ChessGame
         //check type and set oiece symbol
         public string GetSymbol(string type)
         {
-            string y = type switch
+            string chessType = type switch
             {
                 "rook" => "♜",
                 "knight" => "♞",
@@ -33,8 +33,9 @@ namespace ChessGame
                 "pawn" => "♙",
                 _ => " ",
             };
-            return y;
+            return chessType;
         }
+        
 
 
 

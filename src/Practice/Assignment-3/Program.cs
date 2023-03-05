@@ -6,7 +6,7 @@ using Library;
 Console.OutputEncoding = System.Text.Encoding.Unicode;
 Console.WriteLine("Chess Board 2D Design");
 ChessBoards chessBoard = new ChessBoards();
-chessBoard.DisplayBoard();
+chessBoard.PrintBoard();
 
 
 

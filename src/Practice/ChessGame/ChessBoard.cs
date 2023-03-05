@@ -47,15 +47,15 @@ namespace ChessGame
             #endregion
         }
         //Print Chese Board
-        public void DisplayBoard()
+        public void PrintBoard()
         {
+            #region Print_CheseBoard
             //Used for colums numbers
             for (int i = 0; i < Size; i++)
             {
                 Console.Write("  " + i);
             }
             Console.WriteLine();
-            #region Print_CheseBoard
             for (int row = 0; row < Size; row++)
             {
                 Console.Write(row + " "); // used Left side row number
@@ -86,6 +86,43 @@ namespace ChessGame
             #endregion
         }
 
+        //Move piece
+        public bool MovePiece(int formRow, int formCol, int toRow, int toCol)
+        {
+            //If there is no piece
+            if (board[formRow,formCol] == null)
+            {
+                Console.WriteLine("There is no piece at this position");
+                return false;
+            }
+            if(toRow < 0 || toRow > 7 || toCol < 0 || toCol > 7) {
+                Console.WriteLine("The distination position out of the range in board");
+                return false;
+            }
+            //check the piece is occupied by same color
+            if (board[toRow, toCol] != null && (board[formRow, formCol].Color == board[toRow, toCol].Color))
+            {
+                Console.WriteLine("The distination position is occupied by a piece of the same color");
+                return false;
+            }
+            //check is valid move
+            if (!IsvalidMove(board[formRow, formCol], toRow , toCol))
+            {
+                Console.WriteLine("Invalid Move for the given piece");
+                return false;
+            }
+            //move the piece in new position
+             board[toRow, toCol] = board[formRow, formCol];
+            board[formRow, formCol] = null;
+            Console.WriteLine("Moved done") ;
+            return true;
+        }
 
+
+
+        private bool IsvalidMove(ChessPiece chessPiece, int toRow, int toCol)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
