@@ -90,16 +90,20 @@ namespace ChessGame
         //Move piece
         public bool MovePiece()
         {
-            int formRow = 1; int formCol = 3; int toRow = 3; int toCol = 3 ;
-            //list<int> myList = 
-            Console.WriteLine("Enter The row number for select piece, Ex: 3");
-            formRow = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter The col number for select piece, Ex: 3");
-            formCol = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter The row number for destination of piece, Ex: 3");
-            toRow = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter The col number for destination of piece, Ex: 3");
-            toCol = int.Parse(Console.ReadLine());
+            int formRow = 1; int formCol = 3; int toRow = 3; int toCol = 3;
+            string[] number = Console.ReadLine().Split(" ");
+            //Console.WriteLine("Enter The row number for select piece, Ex: 3");
+            formRow = int.Parse(number[0]);
+            formCol = int.Parse(number[1]);
+            toRow = int.Parse(number[2]);
+            toCol = int.Parse(number[3]);
+            //formRow = int.Parse(Console.ReadLine());
+            //Console.WriteLine("Enter The col number for select piece, Ex: 3");
+            //formCol = int.Parse(Console.ReadLine());
+            //Console.WriteLine("Enter The row number for destination of piece, Ex: 3");
+            //toRow = int.Parse(Console.ReadLine());
+            //Console.WriteLine("Enter The col number for destination of piece, Ex: 3");
+            //toCol = int.Parse(Console.ReadLine());
             //If there is no piece
             if (board[formRow,formCol] == null)
             {
@@ -135,7 +139,7 @@ namespace ChessGame
           string piceType = piece.Types;
           bool y = piceType switch
             {
-                 "pawn" => board[piece.Row + 1, piece.Col] == board[toRow, toCol],
+                 "pawn" => (piece.Row + 1 == toRow) && (piece.Col == toCol),
                    
                  "_" => false
             };
