@@ -82,13 +82,24 @@ namespace ChessGame
                 //used for row number new line 
                 Console.WriteLine();
             }
-            Console.ReadLine();
+            Console.WriteLine("\n Put the value ");
+            
             #endregion
         }
 
         //Move piece
-        public bool MovePiece(int formRow, int formCol, int toRow, int toCol)
+        public bool MovePiece()
         {
+            int formRow = 1; int formCol = 3; int toRow = 3; int toCol = 3 ;
+            //list<int> myList = 
+            Console.WriteLine("Enter The row number for select piece, Ex: 3");
+            formRow = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter The col number for select piece, Ex: 3");
+            formCol = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter The row number for destination of piece, Ex: 3");
+            toRow = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter The col number for destination of piece, Ex: 3");
+            toCol = int.Parse(Console.ReadLine());
             //If there is no piece
             if (board[formRow,formCol] == null)
             {
@@ -118,11 +129,17 @@ namespace ChessGame
             return true;
         }
 
-
-
-        private bool IsvalidMove(ChessPiece chessPiece, int toRow, int toCol)
+        //Check valid Move
+        private bool IsvalidMove(ChessPiece piece, int toRow, int toCol)
         {
-            throw new NotImplementedException();
+          string piceType = piece.Types;
+          bool y = piceType switch
+            {
+                 "pawn" => board[piece.Row + 1, piece.Col] == board[toRow, toCol],
+                   
+                 "_" => false
+            };
+            return y;
         }
     }
 }
