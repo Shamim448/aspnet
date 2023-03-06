@@ -12,6 +12,7 @@ namespace ChessGame
         //2D Array Declear
         private ChessPiece[,] board;
         private const int Size = 8;
+        private bool resetBord = false;
         //Constractor for initialize array
         public ChessBoards()
         {
@@ -50,40 +51,49 @@ namespace ChessGame
         public void PrintBoard()
         {
             #region Print_CheseBoard
-            //Used for colums numbers
-            for (int i = 0; i < Size; i++)
-            {
-                Console.Write("  " + i);
-            }
-            Console.WriteLine();
-            for (int row = 0; row < Size; row++)
-            {
-                Console.Write(row + " "); // used Left side row number
-                for (int col = 0; col < Size; col++)
+            if (!resetBord) {
+                Console.Clear();
+                //Used for colums numbers
+                for (int i = 0; i < Size; i++)
                 {
-                    if ((row + col) % 2 == 0)
-                    {
-                        Console.BackgroundColor = ConsoleColor.Red;
-                    }
-                    else
-                    {
-                        Console.BackgroundColor = ConsoleColor.Magenta;
-                    }
-                    if (board[row, col] == null)
-                    {
-                        Console.Write("   ");
-                    }
-                    else
-                    {
-                        Console.Write(" " + board[row, col].GetSymbol(board[row, col].Types) + " ");
-                    }
-                    Console.ResetColor();
+                    Console.Write("  " + i);
                 }
-                //used for row number new line 
                 Console.WriteLine();
+                for (int row = 0; row < Size; row++)
+                {
+                    Console.Write(row + " "); // used Left side row number
+                    for (int col = 0; col < Size; col++)
+                    {
+                        if ((row + col) % 2 == 0)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Red;
+                        }
+                        else
+                        {
+                            Console.BackgroundColor = ConsoleColor.Magenta;
+                        }
+                        if (board[row, col] == null)
+                        {
+                            Console.Write("   ");
+                        }
+                        else
+                        {
+                            Console.Write(" " + board[row, col].GetSymbol(board[row, col].Types) + " ");
+                        }
+                        Console.ResetColor();
+                    }
+                    //used for row number new line 
+                    Console.WriteLine();
+                }
+                Console.WriteLine("\nPut the input value of selected piece row col and destination row, col: EX- 1 2 2 2 ");
+                MovePiece();
             }
-            Console.WriteLine("\n Put the value ");
-            
+            else
+            {
+                Console.WriteLine("Put in correct formate (from row & col and to row & col) col: EX- 1 2 2 2 ");
+                MovePiece();
+            }
+           
             #endregion
         }
 
@@ -92,44 +102,66 @@ namespace ChessGame
         {
             int formRow = 1; int formCol = 3; int toRow = 3; int toCol = 3;
             string[] number = Console.ReadLine().Split(" ");
-            //Console.WriteLine("Enter The row number for select piece, Ex: 3");
-            formRow = int.Parse(number[0]);
-            formCol = int.Parse(number[1]);
-            toRow = int.Parse(number[2]);
-            toCol = int.Parse(number[3]);
-            //formRow = int.Parse(Console.ReadLine());
-            //Console.WriteLine("Enter The col number for select piece, Ex: 3");
-            //formCol = int.Parse(Console.ReadLine());
-            //Console.WriteLine("Enter The row number for destination of piece, Ex: 3");
-            //toRow = int.Parse(Console.ReadLine());
-            //Console.WriteLine("Enter The col number for destination of piece, Ex: 3");
-            //toCol = int.Parse(Console.ReadLine());
+            //
+            //check inpur number 4 digit
+            if(number.Length == 4)
+            {
+                formRow = int.Parse(number[0]);
+                formCol = int.Parse(number[1]);
+                toRow = int.Parse(number[2]);
+                toCol = int.Parse(number[3]);
+            }
+            else
+            {
+               // Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Enter The correct value, Ex: 1 1 2 1\n");
+                Console.ResetColor();
+                //reset privious condition
+                resetBord = true;
+               PrintBoard();
+            }
             //If there is no piece
             if (board[formRow,formCol] == null)
             {
                 Console.WriteLine("There is no piece at this position");
+                //reset privious condition
+                resetBord = true;
+                PrintBoard();
                 return false;
             }
             if(toRow < 0 || toRow > 7 || toCol < 0 || toCol > 7) {
                 Console.WriteLine("The distination position out of the range in board");
+                //reset privious condition
+                resetBord = true;
+                PrintBoard();
                 return false;
             }
             //check the piece is occupied by same color
             if (board[toRow, toCol] != null && (board[formRow, formCol].Color == board[toRow, toCol].Color))
             {
                 Console.WriteLine("The distination position is occupied by a piece of the same color");
+                //reset privious condition
+                resetBord = true;
+                PrintBoard();
                 return false;
             }
             //check is valid move
             if (!IsvalidMove(board[formRow, formCol], toRow , toCol))
             {
                 Console.WriteLine("Invalid Move for the given piece");
+                //reset privious condition
+                resetBord = true;
+                PrintBoard();
                 return false;
             }
             //move the piece in new position
              board[toRow, toCol] = board[formRow, formCol];
             board[formRow, formCol] = null;
-            Console.WriteLine("Moved done") ;
+            //reset privious condition
+            resetBord = false;
+            PrintBoard();
+           // Console.WriteLine("Moved done") ;
             return true;
         }
 
