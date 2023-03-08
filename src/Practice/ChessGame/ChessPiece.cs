@@ -20,7 +20,7 @@ namespace ChessGame
             Row = row;
             Col = col;
         }
-        //check type and set oiece symbol
+        //check type and set piece symbol
         public string GetSymbol(string type)
         {
             string chessType = type switch
