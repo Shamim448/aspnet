@@ -84,7 +84,11 @@ namespace ChessBoardConsoleGame
             //{
             //    throw new ArgumentException("Invalid move: selected piece cannot capture a piece of the same color.");
             //}
-            
+           if( ! _board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsValidMove(currentSquare, targetSquare, _board))
+            {
+                Console.WriteLine("Invalid Move for the given piece");
+            }
+
             // move the piece to the target square
             _board.GetSquare(targetSquare.X, targetSquare.Y).Piece = _board.GetSquare(currentSquare.X, currentSquare.Y).Piece;
             _board.GetSquare(currentSquare.X, currentSquare.Y).Piece = null;
@@ -94,7 +98,8 @@ namespace ChessBoardConsoleGame
             _currentPlayer = _currentPlayer == _whitePlayer ? _blackPlayer : _whitePlayer;
         }
 
-
+        
+       
 
 
         //public void Start()
