@@ -16,11 +16,11 @@
             string chessType = type switch
             {
                 "Rook" => " ♜ ",
-                "knight" => "♞",
-                "bishop" => "♝",
-                "queen" => "♛",
+                "Knight" => " ♞ ",
+                "Bishop" => " ♝ ",
+                "Queen" => " ♛ ",
                 "King" => " ♚ ",
-                "pawn" => "♙",
+                "Pawn" => " ♙ ",
                 _ => " ",
             };
             return chessType;

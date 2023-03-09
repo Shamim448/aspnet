@@ -27,17 +27,17 @@ namespace ChessBoardConsoleGame
         private void InitializeBoard()
         {
             // initialize white pieces
-            _squares[0, 0] = new Square(0, 0, new King(true));
-            _squares[0, 1] = new Square(0, 1, new King(true));
-            _squares[0, 2] = new Square(0, 2, new King(true));
-            _squares[0, 3] = new Square(0, 3, new King(true));
+            _squares[0, 0] = new Square(0, 0, new Rook(true));
+            _squares[0, 1] = new Square(0, 1, new Knight(true));
+            _squares[0, 2] = new Square(0, 2, new Bishop(true));
+            _squares[0, 3] = new Square(0, 3, new Queen(true));
             _squares[0, 4] = new Square(0, 4, new King(true));
-            _squares[0, 5] = new Square(0, 5, new King(true));
-            _squares[0, 6] = new Square(0, 6, new King(true));
-            _squares[0, 7] = new Square(0, 7, new King(true));
+            _squares[0, 5] = new Square(0, 5, new Bishop(true));
+            _squares[0, 6] = new Square(0, 6, new Knight(true));
+            _squares[0, 7] = new Square(0, 7, new Rook(true));
             for (int i = 0; i < 8; i++)
             {
-                _squares[1, i] = new Square(1, i, new King(true));
+                _squares[1, i] = new Square(1, i, new Pawn(true));
             }
 
             // initialize empty squares
@@ -49,17 +49,17 @@ namespace ChessBoardConsoleGame
                 }
             }
             // initialize black pieces
-            _squares[7, 0] = new Square(7, 0, new King(false));
-            _squares[7, 1] = new Square(7, 1, new King(false));
-            _squares[7, 2] = new Square(7, 2, new King(false));
-            _squares[7, 3] = new Square(7, 3, new King(false));
+            _squares[7, 0] = new Square(7, 0, new Rook(false));
+            _squares[7, 1] = new Square(7, 1, new Knight(false));
+            _squares[7, 2] = new Square(7, 2, new Bishop(false));
+            _squares[7, 3] = new Square(7, 3, new Queen(false));
             _squares[7, 4] = new Square(7, 4, new King(false));
-            _squares[7, 5] = new Square(7, 5, new King(false));
-            _squares[7, 6] = new Square(7, 6, new King(false));
-            _squares[7, 7] = new Square(7, 7, new King(false));
+            _squares[7, 5] = new Square(7, 5, new Bishop(false));
+            _squares[7, 6] = new Square(7, 6, new Knight(false));
+            _squares[7, 7] = new Square(7, 7, new Rook(false));
             for (int i = 0; i < 8; i++)
             {
-                _squares[6, i] = new Square(6, i, new King(false));
+                _squares[6, i] = new Square(6, i, new Pawn(false));
             }
         }
 

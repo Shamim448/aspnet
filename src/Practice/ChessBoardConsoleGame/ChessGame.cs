@@ -19,12 +19,14 @@ namespace ChessBoardConsoleGame
 
         private Player _whitePlayer;
         private Player _blackPlayer;
+        private Player _currentPlayer;
 
-        public ChessGame(Player whitePlayer, Player blackPlayer)
+        public ChessGame(/*Player whitePlayer, Player blackPlayer*/)
         {
             _board = new Board();
-            _whitePlayer = whitePlayer;
-            _blackPlayer = blackPlayer;
+            //_whitePlayer = whitePlayer;
+            //_blackPlayer = blackPlayer;
+            //_currentPlayer = _whitePlayer;
         }
 
         public void DisplayBoard()
@@ -56,6 +58,45 @@ namespace ChessBoardConsoleGame
                 Console.ResetColor();
             }
         }
+        
+        public void MovePiece(Square currentSquare, Square targetSquare)
+        {
+            //    currentSquare.X = 1; currentSquare.Y = 1;
+            //    targetSquare.X = 2; targetSquare.Y = 1;
+            if (_board.GetSquare(currentSquare.X, currentSquare.Y).Piece == null)
+            {
+              //  throw new ArgumentException("Invalid move: no piece found on the current square.");
+                Console.WriteLine("Invalid move: no piece found on the current square.");
+            }
+
+            //if (_board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsWhite != _currentPlayer.IsWhite)
+            //{
+            //    throw new ArgumentException("Invalid move: selected piece does not belong to the current player.");
+            //}
+
+            //if (!_board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsValidMove(currentSquare, targetSquare, _board))
+            //{
+            //    throw new ArgumentException("Invalid move: selected piece cannot move to the target square.");
+            //}
+
+            //if (_board.GetSquare(targetSquare.X, targetSquare.Y).Piece != null &&
+            //    _board.GetSquare(targetSquare.X, targetSquare.Y).Piece.IsWhite == _currentPlayer.IsWhite)
+            //{
+            //    throw new ArgumentException("Invalid move: selected piece cannot capture a piece of the same color.");
+            //}
+            
+            // move the piece to the target square
+            _board.GetSquare(targetSquare.X, targetSquare.Y).Piece = _board.GetSquare(currentSquare.X, currentSquare.Y).Piece;
+            _board.GetSquare(currentSquare.X, currentSquare.Y).Piece = null;
+            Console.WriteLine("Moved Done");
+            DisplayBoard();
+            // switch the current player
+            _currentPlayer = _currentPlayer == _whitePlayer ? _blackPlayer : _whitePlayer;
+        }
+
+
+
+
         //public void Start()
         //{
         //    // game loop
@@ -74,36 +115,6 @@ namespace ChessBoardConsoleGame
         //private bool IsStalemate(Player player)
         //{
         //    // stalemate logic
-        //}
-        //public void MovePiece(Square currentSquare, Square targetSquare)
-        //{
-        //    if (_board.GetSquare(currentSquare.X, currentSquare.Y).Piece == null)
-        //    {
-        //        throw new ArgumentException("Invalid move: no piece found on the current square.");
-        //    }
-
-        //    if (_board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsWhite != _currentPlayer.IsWhite)
-        //    {
-        //        throw new ArgumentException("Invalid move: selected piece does not belong to the current player.");
-        //    }
-
-        //    if (!_board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsValidMove(currentSquare, targetSquare, _board))
-        //    {
-        //        throw new ArgumentException("Invalid move: selected piece cannot move to the target square.");
-        //    }
-
-        //    if (_board.GetSquare(targetSquare.X, targetSquare.Y).Piece != null &&
-        //        _board.GetSquare(targetSquare.X, targetSquare.Y).Piece.IsWhite == _currentPlayer.IsWhite)
-        //    {
-        //        throw new ArgumentException("Invalid move: selected piece cannot capture a piece of the same color.");
-        //    }
-
-        //    // move the piece to the target square
-        //    _board.GetSquare(targetSquare.X, targetSquare.Y).Piece = _board.GetSquare(currentSquare.X, currentSquare.Y).Piece;
-        //    _board.GetSquare(currentSquare.X, currentSquare.Y).Piece = null;
-
-        //    // switch the current player
-        //    _currentPlayer = _currentPlayer == _whitePlayer ? _blackPlayer : _whitePlayer;
         //}
     }
 }
