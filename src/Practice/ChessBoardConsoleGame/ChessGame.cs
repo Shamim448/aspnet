@@ -21,6 +21,9 @@ namespace ChessBoardConsoleGame
         private Player _blackPlayer;
         private Player _currentPlayer;
 
+        private Square currentSquare;
+        private Square targetSquare;
+        private bool resetBord = false;
         public ChessGame(/*Player whitePlayer, Player blackPlayer*/)
         {
             _board = new Board();
@@ -31,8 +34,11 @@ namespace ChessBoardConsoleGame
 
         public void DisplayBoard()
         {
-            for (int i = 0; i < 8; i++)
-            {
+            if (!resetBord) {
+                Console.Clear();
+            }
+                for (int i = 0; i < 8; i++)
+                 {
                 for (int j = 0; j < 8; j++)
                 {
                     Square square = _board.GetSquare(i, j);
@@ -57,16 +63,31 @@ namespace ChessBoardConsoleGame
                 Console.WriteLine(); // move to the next row
                 Console.ResetColor();
             }
+            Console.WriteLine("Please Put the currentsqure & targetesqure") ;
+            string[] number = Console.ReadLine().Split(" ");
+            if (number.Length == 4)
+            {
+                int CX = int.Parse(number[0]);
+                int CY = int.Parse(number[1]);
+                int TX = int.Parse(number[2]);
+                int TY = int.Parse(number[3]);
+                MovePiece(new Square(CX, CY), new Square(TX, TY));
+            }
+            //MovePiece(currentSquare, targetSquare);
         }
         
         public void MovePiece(Square currentSquare, Square targetSquare)
         {
-            //    currentSquare.X = 1; currentSquare.Y = 1;
-            //    targetSquare.X = 2; targetSquare.Y = 1;
+            //Square currentSquare;
+            //Square targetSquare;
+            //_board.GetSquare(currentSquare.X = 1, currentSquare.Y = 1);
             if (_board.GetSquare(currentSquare.X, currentSquare.Y).Piece == null)
             {
               //  throw new ArgumentException("Invalid move: no piece found on the current square.");
                 Console.WriteLine("Invalid move: no piece found on the current square.");
+                resetBord = true;
+                DisplayBoard();
+                
             }
 
             //if (_board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsWhite != _currentPlayer.IsWhite)
@@ -87,11 +108,14 @@ namespace ChessBoardConsoleGame
            if( ! _board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsValidMove(currentSquare, targetSquare, _board))
             {
                 Console.WriteLine("Invalid Move for the given piece");
+                resetBord = true;
+                DisplayBoard();
             }
 
             // move the piece to the target square
             _board.GetSquare(targetSquare.X, targetSquare.Y).Piece = _board.GetSquare(currentSquare.X, currentSquare.Y).Piece;
             _board.GetSquare(currentSquare.X, currentSquare.Y).Piece = null;
+            resetBord = false;
             Console.WriteLine("Moved Done");
             DisplayBoard();
             // switch the current player
