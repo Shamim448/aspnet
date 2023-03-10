@@ -4,9 +4,12 @@ using ChessBoardConsoleGame;
 //using ChessGame;
 
 Console.OutputEncoding = System.Text.Encoding.Unicode;
+Console.WriteLine("Enter The White Player Name");
+string white_player_Name = Console.ReadLine();
+Console.WriteLine("Enter The Black Player Name");
+string black_player_Name = Console.ReadLine();
 
-
-ChessGame chessGame = new ChessGame(/*new Player("Shamim", true), new Player("Saba", false)*/);
+ChessGame chessGame = new ChessGame(new Player(white_player_Name, true), new Player(black_player_Name, false));
 chessGame.print();
 chessGame.DisplayBoard();
 //string[] number = Console.ReadLine().Split(" ");

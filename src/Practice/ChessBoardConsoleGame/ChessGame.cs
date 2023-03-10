@@ -24,14 +24,15 @@ namespace ChessBoardConsoleGame
         private Square currentSquare;
         private Square targetSquare;
         private bool resetBord = false;
-        public ChessGame(/*Player whitePlayer, Player blackPlayer*/)
+        public ChessGame(Player whitePlayer, Player blackPlayer)
         {
             _board = new Board();
-            //_whitePlayer = whitePlayer;
-            //_blackPlayer = blackPlayer;
-            //_currentPlayer = _whitePlayer;
+            _whitePlayer = whitePlayer;
+            _blackPlayer = blackPlayer;
+            //_currentPlayer = null;
+            _currentPlayer = _currentPlayer != _whitePlayer ? _whitePlayer : _blackPlayer;
         }
-
+      
         public void DisplayBoard()
         {
             if (!resetBord) {
@@ -63,7 +64,8 @@ namespace ChessBoardConsoleGame
                 Console.WriteLine(); // move to the next row
                 Console.ResetColor();
             }
-            Console.WriteLine("Please Put the currentsqure & targetesqure") ;
+            Console.WriteLine("Please Put the currentsqure & targetesqure for " + _currentPlayer.Name);
+
             string[] number = Console.ReadLine().Split(" ");
             if (number.Length == 4)
             {
@@ -73,27 +75,24 @@ namespace ChessBoardConsoleGame
                 int TY = int.Parse(number[3]);
                 MovePiece(new Square(CX, CY), new Square(TX, TY));
             }
-            //MovePiece(currentSquare, targetSquare);
+            
         }
         
         public void MovePiece(Square currentSquare, Square targetSquare)
         {
-            //Square currentSquare;
-            //Square targetSquare;
-            //_board.GetSquare(currentSquare.X = 1, currentSquare.Y = 1);
             if (_board.GetSquare(currentSquare.X, currentSquare.Y).Piece == null)
             {
-              //  throw new ArgumentException("Invalid move: no piece found on the current square.");
                 Console.WriteLine("Invalid move: no piece found on the current square.");
                 resetBord = true;
-                DisplayBoard();
-                
+                DisplayBoard();         
             }
-
-            //if (_board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsWhite != _currentPlayer.IsWhite)
-            //{
-            //    throw new ArgumentException("Invalid move: selected piece does not belong to the current player.");
-            //}
+            if (_board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsWhite != _currentPlayer.IsWhite)
+            {
+               // throw new ArgumentException("Invalid move: selected piece does not belong to the current player.");
+                Console.WriteLine("Invalid move: selected piece does not belong to the current player.");
+                resetBord = true;
+                DisplayBoard();
+            }
 
             //if (!_board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsValidMove(currentSquare, targetSquare, _board))
             //{
@@ -105,7 +104,7 @@ namespace ChessBoardConsoleGame
             //{
             //    throw new ArgumentException("Invalid move: selected piece cannot capture a piece of the same color.");
             //}
-           if( ! _board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsValidMove(currentSquare, targetSquare, _board))
+            if ( ! _board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsValidMove(currentSquare, targetSquare, _board))
             {
                 Console.WriteLine("Invalid Move for the given piece");
                 resetBord = true;
@@ -115,21 +114,37 @@ namespace ChessBoardConsoleGame
             // move the piece to the target square
             _board.GetSquare(targetSquare.X, targetSquare.Y).Piece = _board.GetSquare(currentSquare.X, currentSquare.Y).Piece;
             _board.GetSquare(currentSquare.X, currentSquare.Y).Piece = null;
-            resetBord = false;
-            Console.WriteLine("Moved Done");
-            DisplayBoard();
+            
             // switch the current player
             _currentPlayer = _currentPlayer == _whitePlayer ? _blackPlayer : _whitePlayer;
+            resetBord = false;
+            DisplayBoard();
+            //not working till now
+            if (_currentPlayer.IsWhite)
+            {
+                Console.WriteLine("Now trun white player: " + _currentPlayer.Name);
+            }
+            else if (!_currentPlayer.IsWhite)
+            {
+                Console.WriteLine("Now trun Black player: " + _currentPlayer.Name);
+            }
+            else
+            {
+                Console.WriteLine("Please Put the currentsqure & targetesqure");
+            }
+           
+           
+           
         }
 
-        
-       
+
 
 
         //public void Start()
         //{
-        //    // game loop
+
         //}
+
 
         //private void EndGame(Player winner)
         //{
