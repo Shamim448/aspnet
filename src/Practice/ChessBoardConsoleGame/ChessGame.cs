@@ -45,15 +45,21 @@ namespace ChessBoardConsoleGame
                     Square square = _board.GetSquare(i, j);
                     if ((i + j) % 2 == 0)
                     {
-                        Console.BackgroundColor = ConsoleColor.Red;
+                        Console.BackgroundColor = ConsoleColor.Magenta;
                     }
                     else
                     {
-                        Console.BackgroundColor = ConsoleColor.Magenta;
+                        Console.BackgroundColor = ConsoleColor.Red;
                     }
-                    if (square.Piece != null)
+                    if (square.Piece != null && square.Piece.IsWhite)
                     {
+                        Console.ForegroundColor = ConsoleColor.White;
                         Console.Write( square.Piece.GetSymbol(square.Piece.Name)); // print the first character of the piece name
+                    }
+                    else if (square.Piece != null && !square.Piece.IsWhite)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write(square.Piece.GetSymbol(square.Piece.Name)); // print the first character of the piece name
                     }
                     else
                     {
@@ -88,7 +94,6 @@ namespace ChessBoardConsoleGame
             }
             if (_board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsWhite != _currentPlayer.IsWhite)
             {
-               // throw new ArgumentException("Invalid move: selected piece does not belong to the current player.");
                 Console.WriteLine("Invalid move: selected piece does not belong to the current player.");
                 resetBord = true;
                 DisplayBoard();

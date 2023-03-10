@@ -13,17 +13,20 @@
         }
         public string GetSymbol(string type)
         {
-            string chessType = type switch
-            {
-                "Rook" => " ♜ ",
-                "Knight" => " ♞ ",
-                "Bishop" => " ♝ ",
-                "Queen" => " ♛ ",
-                "King" => " ♚ ",
-                "Pawn" => " ♙ ",
-                _ => " ",
-            };
-            return chessType;
+            
+                string chessType = type switch
+                {
+
+                    "Rook" => " ♜ ",
+                    "Knight" => " ♞ ",
+                    "Bishop" => " ♝ ",
+                    "Queen" => " ♛ ",
+                    "King" => " ♔ ", 
+                    "Pawn" => " ♙ ",
+                    _ => " ",
+                };
+                return chessType;
+
         }
     public abstract bool IsValidMove(Square currentSquare, Square targetSquare, Board board);
     }
