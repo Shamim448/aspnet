@@ -11,14 +11,14 @@ namespace ChessBoardConsoleGame
         public Pawn(bool isWhite) : base("Pawn", 9, isWhite)
         {
         }
-
         public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
         {
-            // Check if the target square is occupied by a piece of the same color
-            if (targetSquare.Piece != null && targetSquare.Piece.IsWhite == this.IsWhite)
-            {
-                return false;
-            }
+
+            //// Check if the target square is occupied by a piece of the same color
+            //if (targetSquare.Piece != null && targetSquare.Piece.IsWhite == this.IsWhite)
+            //{
+            //    return false;
+            //}
 
             int rowDiff = Math.Abs(targetSquare.X - currentSquare.X);
             int colDiff = Math.Abs(targetSquare.Y - currentSquare.Y);

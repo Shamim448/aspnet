@@ -15,10 +15,11 @@ namespace ChessBoardConsoleGame
 
         public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
         {
-            int dx = Math.Abs(currentSquare.X - targetSquare.X);
-            int dy = Math.Abs(currentSquare.Y - targetSquare.Y);
+            // Calculate absolute difference in row and column indices
+            int rowDiff = Math.Abs(targetSquare.X - currentSquare.X);
+            int colDiff = Math.Abs(targetSquare.Y - currentSquare.Y);
 
-            if ((dx == 1 && dy == 0) || (dx == 0 && dy == 1) || (dx == 1 && dy == 1))
+            if ((rowDiff == 1 && colDiff == 0) || (rowDiff == 0 && colDiff == 1) || (rowDiff == 1 && colDiff == 1))
             {
                 // check if the target square is empty or contains an opponent's piece
                 if (board.GetSquare(targetSquare.X, targetSquare.Y).Piece == null ||

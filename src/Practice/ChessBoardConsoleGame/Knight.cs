@@ -13,8 +13,22 @@ namespace ChessBoardConsoleGame
         }
 
         public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
-        {
-            throw new NotImplementedException();
+        {  
+            // Calculate absolute difference in row and column indices
+            int rowDiff = Math.Abs(targetSquare.X - currentSquare.X);
+            int colDiff = Math.Abs(targetSquare.Y - currentSquare.Y);
+            // Check if move is a valid knight move
+            if (!((rowDiff == 1 && colDiff == 2) || (rowDiff == 2 && colDiff == 1)))
+            {
+                return false;
+            }
+            // Check if target square is occupied by same color piece
+            if (targetSquare.Piece != null && targetSquare.Piece.IsWhite == this.IsWhite)
+            {
+                return false;
+            }
+            // No other checks needed, knight can jump over pieces
+            return true;
         }
     }
 }
