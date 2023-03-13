@@ -12,7 +12,6 @@ namespace ChessBoardConsoleGame
         public King(bool isWhite) : base("King", 100, isWhite)
         {
         }
-
         public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
         {
             // Calculate absolute difference in row and column indices
