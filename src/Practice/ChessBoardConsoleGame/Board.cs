@@ -63,14 +63,6 @@ namespace ChessBoardConsoleGame
             }
         }
 
-        //        //public void MovePiece(Square currentSquare, Square targetSquare)
-        //        //{
-        //        //    // move piece logic
-        //        //}
-
-        internal bool IsCellEmpty(int row, int column)
-        {
-            throw new NotImplementedException();
-        }
+              
     }
 }
