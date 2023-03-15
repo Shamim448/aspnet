@@ -5,11 +5,11 @@ using ChessBoardConsoleGame;
 
 Console.OutputEncoding = System.Text.Encoding.Unicode;
 Console.WriteLine("Enter The White Player Name");
-string white_player_Name = Console.ReadLine();
+string? white_player_Name = Console.ReadLine();
 Console.WriteLine("Enter The Black Player Name");
-string black_player_Name = Console.ReadLine();
+string? black_player_Name = Console.ReadLine();
 
-ChessGame chessGame = new ChessGame(new Player(white_player_Name, true), new Player(black_player_Name, false));
+ChessGame chessGame = new ChessGame(new Player(white_player_Name, true), new Player(black_player_Name, false), new MakeMove());
 chessGame.print();
 chessGame.DisplayBoard();
 

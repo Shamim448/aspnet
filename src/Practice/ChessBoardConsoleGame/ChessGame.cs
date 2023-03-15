@@ -15,22 +15,23 @@ namespace ChessBoardConsoleGame
         {
             Console.WriteLine("Welcome Game");
         }
-        private Board _board;
-        private Player _whitePlayer;
-        private Player _blackPlayer;
-        private Player _currentPlayer;
-
+        public Board _board;
+        public Player _whitePlayer;
+        public Player _blackPlayer;
+        public Player _currentPlayer;
+        private MakeMove _makeMove;
         //private Square currentSquare;
         //private Square targetSquare;
-        private bool resetBord = false;
+       public bool resetBord = false;
         public string massage { get; set; }
-        public ChessGame(Player whitePlayer, Player blackPlayer)
+        public ChessGame(Player whitePlayer, Player blackPlayer, MakeMove makeMove)
         {
             _board = new Board();
             _whitePlayer = whitePlayer;
             _blackPlayer = blackPlayer;
             _currentPlayer = _currentPlayer != _whitePlayer ? _whitePlayer : _blackPlayer;
             massage = "Please Put the currentsqure & targetesqure for " + _currentPlayer.Name;
+            _makeMove = makeMove;
         }
 
         public void DisplayBoard()
@@ -92,7 +93,7 @@ namespace ChessBoardConsoleGame
                 int CY = int.Parse(number[1]);
                 int TX = int.Parse(number[2]);
                 int TY = int.Parse(number[3]);
-                MovePiece(new Square(CX, CY), new Square(TX, TY));
+                _makeMove.MovePiece(new Square(CX, CY), new Square(TX, TY));
             }
             else
             {
@@ -105,54 +106,54 @@ namespace ChessBoardConsoleGame
             #endregion
         }
         //Move selected piece
-        public void MovePiece(Square currentSquare, Square targetSquare)
-        {
-            #region Move selected Piece
-            // Check if target square is on the board
-            if (targetSquare.X < 0 || targetSquare.X > 7 || targetSquare.Y < 0 || targetSquare.Y > 7)
-            {
-               Console.WriteLine("Invalid move: Out of square range.");
-                resetBord = true;
-                DisplayBoard();
-            }
+        //public void MovePiece(Square currentSquare, Square targetSquare)
+        //{
+        //    #region Move selected Piece
+        //    // Check if target square is on the board
+        //    if (targetSquare.X < 0 || targetSquare.X > 7 || targetSquare.Y < 0 || targetSquare.Y > 7)
+        //    {
+        //       Console.WriteLine("Invalid move: Out of square range.");
+        //        resetBord = true;
+        //        DisplayBoard();
+        //    }
 
-            if (_board.GetSquare(currentSquare.X, currentSquare.Y).Piece == null)
-            {
-                Console.WriteLine("Invalid move: no piece found on the current square.");
-                resetBord = true;
-                DisplayBoard();         
-            }
-            if (_board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsWhite != _currentPlayer.IsWhite)
-            {
-                Console.WriteLine("Invalid move: selected piece does not belong to the current player.");
-                resetBord = true;
-                DisplayBoard();
-            }
-            if (_board.GetSquare(targetSquare.X, targetSquare.Y).Piece != null &&
-                 _board.GetSquare(targetSquare.X, targetSquare.Y).Piece.IsWhite == _currentPlayer.IsWhite)
-            {
-                Console.WriteLine("Invalid move: selected piece cannot capture a piece of the same color.");
-                resetBord = true;
-                DisplayBoard();
-            }
+        //    if (_board.GetSquare(currentSquare.X, currentSquare.Y).Piece == null)
+        //    {
+        //        Console.WriteLine("Invalid move: no piece found on the current square.");
+        //        resetBord = true;
+        //        DisplayBoard();         
+        //    }
+        //    if (_board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsWhite != _currentPlayer.IsWhite)
+        //    {
+        //        Console.WriteLine("Invalid move: selected piece does not belong to the current player.");
+        //        resetBord = true;
+        //        DisplayBoard();
+        //    }
+        //    if (_board.GetSquare(targetSquare.X, targetSquare.Y).Piece != null &&
+        //         _board.GetSquare(targetSquare.X, targetSquare.Y).Piece.IsWhite == _currentPlayer.IsWhite)
+        //    {
+        //        Console.WriteLine("Invalid move: selected piece cannot capture a piece of the same color.");
+        //        resetBord = true;
+        //        DisplayBoard();
+        //    }
            
-            if ( ! _board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsValidMove(currentSquare, targetSquare, _board))
-            {
-                Console.WriteLine("Invalid move: selected piece cannot move to the target square.");
-                resetBord = true;
-                DisplayBoard();
-            }
-            // switch the current player
-            _currentPlayer = _currentPlayer == _whitePlayer ? _blackPlayer : _whitePlayer;
-            //Print Message update agter valid move
-            massage = _board.GetSquare(currentSquare.X, currentSquare.Y).Piece.Name + " Move done, Now your turn: " + _currentPlayer.Name ;
-            // move the piece to the target square
-            _board.GetSquare(targetSquare.X, targetSquare.Y).Piece = _board.GetSquare(currentSquare.X, currentSquare.Y).Piece;
-            _board.GetSquare(currentSquare.X, currentSquare.Y).Piece = null; //set null previos square
-            resetBord = false;
-            DisplayBoard();
-            #endregion
-        }
+        //    if ( ! _board.GetSquare(currentSquare.X, currentSquare.Y).Piece.IsValidMove(currentSquare, targetSquare, _board))
+        //    {
+        //        Console.WriteLine("Invalid move: selected piece cannot move to the target square.");
+        //        resetBord = true;
+        //        DisplayBoard();
+        //    }
+        //    // switch the current player
+        //    _currentPlayer = _currentPlayer == _whitePlayer ? _blackPlayer : _whitePlayer;
+        //    //Print Message update agter valid move
+        //    massage = _board.GetSquare(currentSquare.X, currentSquare.Y).Piece.Name + " Move done, Now your turn: " + _currentPlayer.Name ;
+        //    // move the piece to the target square
+        //    _board.GetSquare(targetSquare.X, targetSquare.Y).Piece = _board.GetSquare(currentSquare.X, currentSquare.Y).Piece;
+        //    _board.GetSquare(currentSquare.X, currentSquare.Y).Piece = null; //set null previos square
+        //    resetBord = false;
+        //    DisplayBoard();
+        //    #endregion
+        //}
 
 
 
