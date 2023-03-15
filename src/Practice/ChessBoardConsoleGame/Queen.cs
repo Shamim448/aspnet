@@ -13,8 +13,15 @@ namespace ChessBoardConsoleGame
         {
         }
        
-        public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
+        public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)     
         {
+            // Check if the rook is moving horizontally or vertically
+            if (currentSquare.X != targetSquare.X && currentSquare.Y != targetSquare.Y
+            && (Math.Abs(targetSquare.X - currentSquare.X) != 
+            Math.Abs(targetSquare.Y - currentSquare.Y)))
+            {
+                return false;
+            }
             if (currentSquare.X == targetSquare.X)
             {
                 // Moving horizontally
@@ -28,22 +35,7 @@ namespace ChessBoardConsoleGame
                     }
                 }
             }
-            //top to bottom right cornner done
-            else if(Math.Abs(targetSquare.X - currentSquare.X) == Math.Abs(targetSquare.Y - currentSquare.Y))
-            {
-                int startCol = currentSquare.Y < targetSquare.Y ? currentSquare.Y : targetSquare.Y;
-                int endCol = currentSquare.Y > targetSquare.Y ? currentSquare.Y : targetSquare.Y;
-                int crow = 1;
-                for (int col = startCol + 1; col < endCol; col++)
-                {
-                     crow += currentSquare.X++;
-                    if (board.GetSquare(crow, col).Piece != null)
-                    {
-                        return false;
-                    }
-                }
-
-            }
+            
             else if(currentSquare.Y == targetSquare.Y)
             {
                 // Moving vertically
@@ -57,7 +49,22 @@ namespace ChessBoardConsoleGame
                     }
                 }
             }
+            //top to bottom right cornner done
+            else
+            {
+                int startCol = currentSquare.Y < targetSquare.Y ? currentSquare.Y : targetSquare.Y;
+                int endCol = currentSquare.Y > targetSquare.Y ? currentSquare.Y : targetSquare.Y;
+                int crow = 1;
+                for (int col = startCol + 1; col < endCol; col++)
+                {
+                    crow += currentSquare.X++;
+                    if (board.GetSquare(crow, col).Piece != null)
+                    {
+                        return false;
+                    }
+                }
 
+            }
 
 
             //int step = targetSquare.X == currentSquare.X ? Math.Sign(targetSquare.Y - currentSquare.Y) : (targetSquare.Y == currentSquare.Y ? Math.Sign(targetSquare.X - currentSquare.X) :
@@ -76,7 +83,7 @@ namespace ChessBoardConsoleGame
             //    return true;
             //}
 
-        
+
             //return false;
             //// Check if there are any pieces in the way of the rook's path
             //if (currentSquare.X == targetSquare.X)
@@ -131,7 +138,7 @@ namespace ChessBoardConsoleGame
             //}
 
             // The move is valid
-             return true;
+            return true;
         }
     }
 }

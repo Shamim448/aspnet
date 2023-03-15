@@ -14,12 +14,12 @@ namespace ChessBoardConsoleGame
 
         public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
         {
-            
-            //// Check if the rook is moving horizontally or vertically
-            //if (currentSquare.X != targetSquare.X && currentSquare.Y != targetSquare.Y)
-            //{
-            //    return false;
-            //}
+
+            // Check if the rook is moving horizontally or vertically
+            if (currentSquare.X != targetSquare.X && currentSquare.Y != targetSquare.Y)
+            {
+                return false;
+            }
 
             // Check if there are any pieces in the way of the rook's path
             if (currentSquare.X == targetSquare.X)
