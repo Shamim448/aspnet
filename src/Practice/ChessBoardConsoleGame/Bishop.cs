@@ -14,7 +14,27 @@ namespace ChessBoardConsoleGame
 
         public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
         {
-            throw new NotImplementedException();
+            // Check if the rook is moving horizontally or vertically
+            if ((Math.Abs(targetSquare.X - currentSquare.X) != Math.Abs(targetSquare.Y - currentSquare.Y)))
+            {
+                return false;
+            }
+            // Moving diagonally
+            int stepX = Math.Sign(targetSquare.X - currentSquare.X);
+            int stepY = Math.Sign(targetSquare.Y - currentSquare.Y);
+            int i = currentSquare.X + stepX;
+            int j = currentSquare.Y + stepY;
+            while (i != targetSquare.X || j != targetSquare.Y)
+            {
+                if (board.GetSquare(i, j).Piece != null)
+                {
+                    return false;
+                }
+                i += stepX;
+                j += stepY;
+            }
+            // The move is valid
+            return true;
         }
     }
 }

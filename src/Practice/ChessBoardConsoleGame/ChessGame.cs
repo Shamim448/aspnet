@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -22,12 +23,14 @@ namespace ChessBoardConsoleGame
         //private Square currentSquare;
         //private Square targetSquare;
         private bool resetBord = false;
+        public string massage { get; set; }
         public ChessGame(Player whitePlayer, Player blackPlayer)
         {
             _board = new Board();
             _whitePlayer = whitePlayer;
             _blackPlayer = blackPlayer;
             _currentPlayer = _currentPlayer != _whitePlayer ? _whitePlayer : _blackPlayer;
+            massage = "Please Put the currentsqure & targetesqure for " + _currentPlayer.Name;
         }
 
         public void DisplayBoard()
@@ -38,9 +41,15 @@ namespace ChessBoardConsoleGame
                 //reset privious output in consol
                 Console.Clear();
             }
-            //
+            //Used for colums numbers
             for (int i = 0; i < 8; i++)
             {
+                Console.Write("  " + i);
+            }
+            Console.WriteLine();
+            for (int i = 0; i < 8; i++)
+            {
+                Console.Write(i + ""); // used Left side row number
                 for (int j = 0; j < 8; j++)
                 {
                     Square square = _board.GetSquare(i, j);
@@ -73,7 +82,7 @@ namespace ChessBoardConsoleGame
                 Console.WriteLine(); // move to the next row
                 Console.ResetColor();
             }
-            Console.WriteLine("Please Put the currentsqure & targetesqure for " + _currentPlayer.Name);
+            Console.WriteLine("\n" + massage);
             //check user input value for change piece position
             string[] number = Console.ReadLine().Split(" ");
             if (number.Length == 4)
@@ -133,12 +142,13 @@ namespace ChessBoardConsoleGame
                 resetBord = true;
                 DisplayBoard();
             }
+            // switch the current player
+            _currentPlayer = _currentPlayer == _whitePlayer ? _blackPlayer : _whitePlayer;
+            //Print Message update agter valid move
+            massage = _board.GetSquare(currentSquare.X, currentSquare.Y).Piece.Name + " Move done, Now your turn: " + _currentPlayer.Name ;
             // move the piece to the target square
             _board.GetSquare(targetSquare.X, targetSquare.Y).Piece = _board.GetSquare(currentSquare.X, currentSquare.Y).Piece;
             _board.GetSquare(currentSquare.X, currentSquare.Y).Piece = null; //set null previos square
-            
-            // switch the current player
-            _currentPlayer = _currentPlayer == _whitePlayer ? _blackPlayer : _whitePlayer;
             resetBord = false;
             DisplayBoard();
             #endregion
