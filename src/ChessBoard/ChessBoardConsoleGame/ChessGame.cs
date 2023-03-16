@@ -35,9 +35,9 @@ namespace ChessBoardConsoleGame
             string[] coordinates = input.Split(' ');
             if (coordinates.Length != 4)
             {
-              _boardDisplay.Display();
-              Console.WriteLine("Please enter two valid coordinates in the format 'x1 y1 x2 y2'.");                 
-              return;
+                Console.WriteLine("Please enter two valid coordinates in the format 'x1 y1 x2 y2'.");
+                //_resetBoard = true;
+                return;
             }
 
             int currentX, currentY, targetX, targetY;
@@ -46,18 +46,15 @@ namespace ChessBoardConsoleGame
                 !int.TryParse(coordinates[2], out targetX) ||
                 !int.TryParse(coordinates[3], out targetY))
             {
-
                 Console.WriteLine("Please enter two valid coordinates in the format 'x1 y1 x2 y2'.");
+                //_resetBoard = true;
                 return;
             }
             Square currentSquare = new Square(currentX, currentY);
             Square targetSquare = new Square(targetX, targetY);
             _pieceMover.Move(currentSquare, targetSquare);
-                
-            }
-            
         }
-
+    }
         
     }
 }

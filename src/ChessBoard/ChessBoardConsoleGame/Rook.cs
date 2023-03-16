@@ -35,28 +35,12 @@ namespace ChessBoardConsoleGame
             if (currentSquare.X == targetSquare.X)
             {
                 // Moving horizontally
-                int startCol = currentSquare.Y < targetSquare.Y ? currentSquare.Y : targetSquare.Y;
-                int endCol = currentSquare.Y > targetSquare.Y ? currentSquare.Y : targetSquare.Y;
-                for (int col = startCol + 1; col < endCol; col++)
-                {
-                    if (board.GetSquare(currentSquare.X, col).Piece != null)
-                    {
-                        return false;
-                    }
-                }
+                Move.Horizontally(currentSquare, targetSquare, board);
             }
             else
             {
                 // Moving vertically
-                int startRow = currentSquare.X < targetSquare.X ? currentSquare.X : targetSquare.X;
-                int endRow = currentSquare.X > targetSquare.X ? currentSquare.X : targetSquare.X;
-                for (int row = startRow + 1; row < endRow; row++)
-                {
-                    if (board.GetSquare(row, targetSquare.Y).Piece != null)
-                    {
-                        return false;
-                    }
-                }
+                Move.Vartically(currentSquare, targetSquare, board);
             }
 
             // The move is valid

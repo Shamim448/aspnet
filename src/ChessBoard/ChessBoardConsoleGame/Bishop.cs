@@ -29,20 +29,9 @@ namespace ChessBoardConsoleGame
                 return false;
             }
             // Moving diagonally
-            int stepX = Math.Sign(targetSquare.X - currentSquare.X);
-            int stepY = Math.Sign(targetSquare.Y - currentSquare.Y);
-            int i = currentSquare.X + stepX;
-            int j = currentSquare.Y + stepY;
-            while (i != targetSquare.X || j != targetSquare.Y)
-            {
-                if (board.GetSquare(i, j).Piece != null)
-                {
-                    return false;
-                }
-                i += stepX;
-                j += stepY;
-            }
-            // The move is valid
+            Move.Diagonally(currentSquare, targetSquare, board);
+            
+            //// The move is valid
             return true;
         }
 

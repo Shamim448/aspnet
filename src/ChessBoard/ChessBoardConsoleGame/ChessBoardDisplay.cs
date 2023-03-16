@@ -14,6 +14,7 @@ namespace ChessBoardConsoleGame
         {
             _board = board;
         }
+
         public void Display()
         {
             _board.DisplayBoard();
