@@ -6,17 +6,23 @@ using System.Threading.Tasks;
 
 namespace ChessBoardConsoleGame
 {
-    public class Queen : Piece
+    public class Queen : IPiece
     {
-       // private Rook _rook;
-        public Queen(bool isWhite) : base("Queen", isWhite)
+        public string Name { get; }
+        public bool IsWhite { get; }
+
+        public Queen(bool isWhite)
         {
+            Name = "Queen";
+            IsWhite = isWhite;
         }
-        public override string GetSymbol(string name)
+
+
+        public string GetSymbol(string name)
         {
-            return " ♛ ";
+            return IsWhite ? " ♕ " : " ♛ ";
         }
-        public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)     
+        public bool IsValidMove(Square currentSquare, Square targetSquare, Board board)     
         {
             // Check if the rook is moving horizontally or vertically
             if (currentSquare.X != targetSquare.X && currentSquare.Y != targetSquare.Y

@@ -6,16 +6,22 @@ using System.Threading.Tasks;
 
 namespace ChessBoardConsoleGame
 {
-    public class Bishop : Piece
+    public class Bishop : IPiece
     {
-        public Bishop(bool isWhite) : base("Bishop", isWhite)
+        public string Name { get; }
+        public bool IsWhite { get; }
+
+        public Bishop(bool isWhite)
         {
+            Name = "Bishop";
+            IsWhite = isWhite;
         }
-        public override string GetSymbol(string name)
+
+        public string GetSymbol(string name)
         {
-            return " ♝ ";
+            return IsWhite ? " ♗ " : " ♝ ";
         }
-        public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
+        public bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
         {
             // Check if the rook is moving horizontally or vertically
             if ((Math.Abs(targetSquare.X - currentSquare.X) != Math.Abs(targetSquare.Y - currentSquare.Y)))
@@ -39,5 +45,7 @@ namespace ChessBoardConsoleGame
             // The move is valid
             return true;
         }
+
+       
     }
 }

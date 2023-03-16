@@ -1,10 +1,10 @@
 ﻿namespace ChessBoardConsoleGame
 {
-  public abstract class Piece {
+  public abstract class Piecess {
         public string Name { get; protected set; }
         public bool IsWhite { get; protected set; }
 
-        public Piece(string name, bool isWhite)
+        public Piecess(string name, bool isWhite)
         {
             Name = name;
             IsWhite = isWhite;
