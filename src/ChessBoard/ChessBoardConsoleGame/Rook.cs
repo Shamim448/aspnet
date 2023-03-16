@@ -11,7 +11,10 @@ namespace ChessBoardConsoleGame
         public Rook(bool isWhite) : base("Rook", isWhite)
         {
         }
-
+        public override string GetSymbol(string name)
+        {
+            return " ♜ ";
+        }
         public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
         {
 

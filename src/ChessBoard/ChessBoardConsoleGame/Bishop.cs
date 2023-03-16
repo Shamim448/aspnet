@@ -11,6 +11,10 @@ namespace ChessBoardConsoleGame
         public Bishop(bool isWhite) : base("Bishop", isWhite)
         {
         }
+        public override string GetSymbol(string name)
+        {
+            return " ♝ ";
+        }
         public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
         {
             // Check if the rook is moving horizontally or vertically

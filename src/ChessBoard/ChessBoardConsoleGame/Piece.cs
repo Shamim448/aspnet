@@ -10,21 +10,8 @@
             IsWhite = isWhite;
         }
         public abstract bool IsValidMove(Square currentSquare, Square targetSquare, Board board);
-        public string GetSymbol(string type)
-        {
-                string chessType = type switch
-                {
-                    "Rook" => " ♜ ",
-                    "Knight" => " ♞ ",
-                    "Bishop" => " ♝ ",
-                    "Queen" => " ♛ ",
-                    "King" => " ♔ ", 
-                    "Pawn" => " ♙ ",
-                    _ => " ",
-                };
-                return chessType;
-        }
-   
+        public abstract string GetSymbol(string name);
+          
     }
 
 }

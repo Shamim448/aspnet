@@ -11,6 +11,12 @@ namespace ChessBoardConsoleGame
         public Pawn(bool isWhite) : base("Pawn", isWhite)
         {
         }
+
+        public override string GetSymbol(string name)
+        {
+            return " ♙ ";
+        }
+
         public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
         {
 
