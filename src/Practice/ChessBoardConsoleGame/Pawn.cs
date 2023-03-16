@@ -8,7 +8,7 @@ namespace ChessBoardConsoleGame
 {
     public class Pawn : Piece
     {
-        public Pawn(bool isWhite) : base("Pawn", 9, isWhite)
+        public Pawn(bool isWhite) : base("Pawn", isWhite)
         {
         }
         public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
@@ -40,7 +40,6 @@ namespace ChessBoardConsoleGame
                     return false;
                 }
             }
-
             // Check if the pawn is moving diagonally to capture an opponent's piece
             if (colDiff == 1 && rowDiff == 1)
             {

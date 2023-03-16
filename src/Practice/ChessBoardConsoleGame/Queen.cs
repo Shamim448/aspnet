@@ -9,7 +9,7 @@ namespace ChessBoardConsoleGame
     public class Queen : Piece
     {
        // private Rook _rook;
-        public Queen(bool isWhite) : base("Queen", 4, isWhite)
+        public Queen(bool isWhite) : base("Queen", isWhite)
         {
         }
        

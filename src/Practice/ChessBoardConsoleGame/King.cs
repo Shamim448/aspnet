@@ -9,7 +9,7 @@ namespace ChessBoardConsoleGame
 {
     public class King : Piece
     {
-        public King(bool isWhite) : base("King", 100, isWhite)
+        public King(bool isWhite) : base("King", isWhite)
         {
         }
         public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)

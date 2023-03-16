@@ -16,17 +16,5 @@ namespace ChessBoardConsoleGame
             Name = name;
             IsWhite = isWhite;
         }
-
-        //public void MakeMove(Board board, int row, int column)
-        //{
-        //    if (board.IsCellEmpty(row, column))
-        //    {
-        //        //board.PlacePiece(row, column, this); // place the current player's game piece at the specified location
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("Invalid move - cell is already occupied.");
-        //    }
-        //}
     }
 }

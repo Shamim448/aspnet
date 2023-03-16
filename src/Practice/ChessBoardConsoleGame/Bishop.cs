@@ -8,10 +8,9 @@ namespace ChessBoardConsoleGame
 {
     public class Bishop : Piece
     {
-        public Bishop(bool isWhite) : base("Bishop", 3, isWhite)
+        public Bishop(bool isWhite) : base("Bishop", isWhite)
         {
         }
-
         public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
         {
             // Check if the rook is moving horizontally or vertically

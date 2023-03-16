@@ -2,13 +2,11 @@
 {
   public abstract class Piece {
         public string Name { get; protected set; }
-        public int Value { get; protected set; }
         public bool IsWhite { get; protected set; }
 
-        public Piece(string name, int value, bool isWhite)
+        public Piece(string name, bool isWhite)
         {
             Name = name;
-            Value = value;
             IsWhite = isWhite;
         }
         public abstract bool IsValidMove(Square currentSquare, Square targetSquare, Board board);

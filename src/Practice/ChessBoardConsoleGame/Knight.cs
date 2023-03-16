@@ -8,7 +8,7 @@ namespace ChessBoardConsoleGame
 {
     public class Knight : Piece
     {
-        public Knight(bool isWhite) : base("Knight", 2, isWhite)
+        public Knight(bool isWhite) : base("Knight", isWhite)
         {
         }
 
