@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,18 +7,33 @@ using System.Threading.Tasks;
 
 namespace ChessBoardConsoleGame
 {
-    public class Pawn : Piece
+    public class Pawn : IPiece
     {
-        public Pawn(bool isWhite) : base("Pawn", isWhite)
+        public string Name { get; }
+        public bool IsWhite { get; }
+
+        public Pawn(bool isWhite)
         {
+            Name = "Pawn";
+            IsWhite = isWhite;
         }
 
-        public override string GetSymbol(string name)
+        
+        public string GetSymbol(string name)
         {
-            return " ♙ ";
+            return IsWhite ? " ♙ " : " ♙ ";
         }
 
-        public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
+        //public Pawn(bool isWhite) : base("Pawn", isWhite)
+        //{
+        //}
+
+        //public override string GetSymbol(string name)
+        //{
+        //    return " ♙ ";
+        //}
+
+        public bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
         {
 
             //// Check if the target square is occupied by a piece of the same color
@@ -64,5 +80,6 @@ namespace ChessBoardConsoleGame
             // The move is valid
             return true;
         }
+
     }
 }

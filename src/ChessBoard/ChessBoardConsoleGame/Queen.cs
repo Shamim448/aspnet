@@ -6,17 +6,23 @@ using System.Threading.Tasks;
 
 namespace ChessBoardConsoleGame
 {
-    public class Queen : Piece
+    public class Queen : IPiece
     {
-       // private Rook _rook;
-        public Queen(bool isWhite) : base("Queen", isWhite)
+        public string Name { get; }
+        public bool IsWhite { get; }
+
+        public Queen(bool isWhite)
         {
+            Name = "Queen";
+            IsWhite = isWhite;
         }
-        public override string GetSymbol(string name)
+
+
+        public string GetSymbol(string name)
         {
-            return " ♛ ";
+            return IsWhite ? " ♕ " : " ♛ ";
         }
-        public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)     
+        public bool IsValidMove(Square currentSquare, Square targetSquare, Board board)     
         {
             // Check if the rook is moving horizontally or vertically
             if (currentSquare.X != targetSquare.X && currentSquare.Y != targetSquare.Y
@@ -28,47 +34,19 @@ namespace ChessBoardConsoleGame
             if (currentSquare.X == targetSquare.X)
             {
                 // Moving horizontally
-                int startCol = currentSquare.Y < targetSquare.Y ? currentSquare.Y : targetSquare.Y;
-                int endCol = currentSquare.Y > targetSquare.Y ? currentSquare.Y : targetSquare.Y;
-                for (int col = startCol + 1; col < endCol; col++)
-                {
-                    if (board.GetSquare(currentSquare.X, col).Piece != null)
-                    {
-                        return false;
-                    }
-                }
+                Move.Horizontally(currentSquare, targetSquare, board);
             }
             
             else if(currentSquare.Y == targetSquare.Y)
             {
                 // Moving vertically
-                int startRow = currentSquare.X < targetSquare.X ? currentSquare.X : targetSquare.X;
-                int endRow = currentSquare.X > targetSquare.X ? currentSquare.X : targetSquare.X;
-                for (int row = startRow + 1; row < endRow; row++)
-                {
-                    if (board.GetSquare(row, targetSquare.Y).Piece != null)
-                    {
-                        return false;
-                    }
-                }
+                Move.Vartically(currentSquare, targetSquare, board);
             }
             //top to bottom right cornner done
             else
             {
-                // Moving diagonally
-                int stepX = Math.Sign(targetSquare.X - currentSquare.X);
-                int stepY = Math.Sign(targetSquare.Y - currentSquare.Y);
-                int i = currentSquare.X + stepX;
-                int j = currentSquare.Y + stepY;
-                while (i != targetSquare.X || j != targetSquare.Y)
-                {
-                    if (board.GetSquare(i, j).Piece != null)
-                    {
-                        return false;
-                    }
-                    i += stepX;
-                    j += stepY;
-                }
+                Move.Diagonally(currentSquare, targetSquare, board);
+                
             }
             // The move is valid
             return true;

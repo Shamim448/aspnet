@@ -7,16 +7,23 @@ using System.Xml.Linq;
 
 namespace ChessBoardConsoleGame
 {
-    public class King : Piece
+    public class King : IPiece
     {
-        public King(bool isWhite) : base("King", isWhite)
+        public string Name { get; }
+        public bool IsWhite { get; }
+
+        public King(bool isWhite)
         {
+            Name = "King";
+            IsWhite = isWhite;
         }
-        public override string GetSymbol(string name)
+
+
+        public string GetSymbol(string name)
         {
-            return " ♔ ";
+            return IsWhite ? " ♔ " : " ♚ ";
         }
-        public override bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
+        public bool IsValidMove(Square currentSquare, Square targetSquare, Board board)
         {
             // Calculate absolute difference in row and column indices
             int rowDiff = Math.Abs(targetSquare.X - currentSquare.X);
@@ -35,6 +42,6 @@ namespace ChessBoardConsoleGame
             return false;
         }
 
-
+        
     }
 }

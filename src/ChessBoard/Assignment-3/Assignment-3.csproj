@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChessBoardConsoleGame\ChessBoardConsoleGame.csproj" />
-    <ProjectReference Include="..\DILibrary\DILibrary.csproj" />
   </ItemGroup>
 
 </Project>
