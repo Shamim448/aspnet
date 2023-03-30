@@ -5,7 +5,9 @@ VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuple", "Tuple\Tuple.csproj", "{B64109D3-7F07-4D2F-BA02-B2BC9A802AA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generices", "Generices\Generices.csproj", "{529B3805-AA0F-4A00-81FF-BBD20916A7FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generices", "Generices\Generices.csproj", "{529B3805-AA0F-4A00-81FF-BBD20916A7FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyORM", "MyORM\MyORM.csproj", "{D46851B7-4BDD-45F5-BBAB-2183DCFB9602}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{529B3805-AA0F-4A00-81FF-BBD20916A7FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{529B3805-AA0F-4A00-81FF-BBD20916A7FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{529B3805-AA0F-4A00-81FF-BBD20916A7FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D46851B7-4BDD-45F5-BBAB-2183DCFB9602}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D46851B7-4BDD-45F5-BBAB-2183DCFB9602}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D46851B7-4BDD-45F5-BBAB-2183DCFB9602}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D46851B7-4BDD-45F5-BBAB-2183DCFB9602}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
