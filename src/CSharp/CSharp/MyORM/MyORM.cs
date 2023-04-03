@@ -10,8 +10,7 @@ public class MyORM<G, T> where T : IIdBase<G>
     public readonly string _connectionString;
        public MyORM(string connectionString)
     {
-        _connectionString = connectionString;
-        
+        _connectionString = connectionString;    
     }
     Type type = typeof(T);
     //Insert value
