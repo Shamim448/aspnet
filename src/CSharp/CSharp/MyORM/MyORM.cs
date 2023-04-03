@@ -1,45 +1,44 @@
 using System.Collections;
+using System.Data.SqlClient;
 using System.Net;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text;
-//CREATE TABLE Persons (
-//    PersonID int,
-//    LastName varchar(255),
-//    FirstName varchar(255),
-//    Address varchar(255),
-//    City varchar(255)
-//);
-public class MyORM
+public class MyORM<G, T> where T : IIdBase<G>
 {
-    public string Insert (object item)
+    public readonly string _connectionString;
+    public MyORM(string connectionString)
     {
-        StringBuilder sql = new StringBuilder ();
-        sql.Append("CREATE TABLE ");
-        Type type = item.GetType();
-        string TName = type.Name;
-        sql.Append(TName + " (");
-        PropertyInfo[] properties = type.GetProperties();
-        for(int i = 0; i < properties.Length; i++)
-        {
-            var values = properties[i].GetValue(item);
-            if (properties[i].PropertyType == typeof(int))
+        _connectionString = connectionString;
+    }
+   
+    //Insert value
+    public int Insert(T entity)
+    {
+        var tablename = typeof(T).Name;
+
+        //StringBuilder columnName = new StringBuilder();
+        PropertyInfo[] properties = typeof(T).GetProperties().Where(p => p.Name != "Id").ToArray();
+       
+        //collect table column name
+        string columnName = string.Join(", ", properties.Select(c => c.Name));
+        //column name set as a parameter name
+        string parametersName = string.Join(", ", properties.Select(p => $"@{p.Name}"));
+        
+        string sql = $"Insert into {tablename} ({columnName}) Values({parametersName})";
+        using SqlConnection connection = new SqlConnection(_connectionString) ;
+            if (connection.State != System.Data.ConnectionState.Open)
             {
-                sql.Append(properties[i].Name + " int, ");
+                connection.Open();
             }
-            else if (properties[i].PropertyType.IsGenericType ||  values is IList )
+            using SqlCommand cmd = new SqlCommand(sql, connection);
+            foreach(var property in properties)
             {
-                IList list = (IList) values;
-                foreach( var value in list)
-                {
-                    sql.Append(Insert(value));
-                }           
+                cmd.Parameters.AddWithValue($"@{property.Name}", property.GetValue(entity));
+                
+                var a = property.GetValue(entity);
             }
-            else
-            {
-                sql.Append(properties[i].Name + " varchar(255), ");
-            }
-        }
-        sql.Append (")");
-        return sql.ToString ();
+            int effected = cmd.ExecuteNonQuery();
+          return effected;
     }
 }
