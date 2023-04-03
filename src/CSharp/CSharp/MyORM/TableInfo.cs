@@ -12,7 +12,7 @@ public class EntityInfo
     {
         _type = obj.GetType();
     }
-    public string GetTableName()
+    public string GetObjectName()
     {
         string tableName = _type.Name;
         return tableName;
