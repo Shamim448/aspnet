@@ -78,26 +78,7 @@ public class MyORM<G, T> where T : IIdBase<G>
                     }
                     rows.Add(columns);
                 }
-                //Print Table Header
-                if(rows.Count > 0) {
-                    foreach (var col in rows[0].Keys)
-                    {
-                        Console.Write(col + "\t");
-                    }
-                    Console.WriteLine();
-                    //Print All Value
-                    foreach (var v in rows)
-                    {
-                        foreach (var k in v.Values)
-                        {
-                            Console.Write(k + "\t");
-                        }
-                        Console.WriteLine();
-                    }
-                } 
-                else { 
-                    Console.WriteLine($"There is no value in this {id} id."); 
-                }
+               ValuePrinter.Printvalue(rows); 
             }
         }
         catch (SqlException ex)
