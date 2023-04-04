@@ -8,11 +8,17 @@ using System.Text;
 public class MyORM<G, T> where T : IIdBase<G>
 {
     public readonly string _connectionString;
-       public MyORM(string connectionString)
+    public readonly DataUtility _dataUtility;
+    public string DbConnection = "Server=.\\SQLEXPRESS;Database=Aspnetb8;User Id=aspnetb8;Password=123456;";
+    public MyORM(string connectionString)
     {
-        _connectionString = connectionString;    
+        _connectionString = connectionString;
+        _dataUtility = new DataUtility(DbConnection);
+
     }
+    
     Type type = typeof(T);
+    string tableName = typeof(T).Name;
     //Insert value
     public void Insert(T entity)
     {
@@ -56,12 +62,18 @@ public class MyORM<G, T> where T : IIdBase<G>
         #endregion
     }
     public void Update(T entity) { }
-    public void Delete(G id) { }
+    public void Delete(G id) {
+        #region Delete_By _ID
+        string sql = $"Delete From {tableName} Where Id = {id}";
+        _dataUtility.ExecuteCommand(sql);
+        #endregion
+    }
     public void GetById(G id)    {
+        #region Print_Value_By_Id
         //sql query for select all data
-        string sql = $"Select * from {type.Name} Where Id = {id}";
-        using var connection = new SqlConnection(_connectionString);  
-        using SqlCommand cmd = new SqlCommand(sql, connection);      
+        string sql = $"Select * from {tableName} Where Id = {id}";
+        var connection = new SqlConnection(_connectionString);  
+        SqlCommand cmd = new SqlCommand(sql, connection);      
         try
         {
             if (connection.State != System.Data.ConnectionState.Open)
@@ -78,7 +90,8 @@ public class MyORM<G, T> where T : IIdBase<G>
                     }
                     rows.Add(columns);
                 }
-               ValuePrinter.Printvalue(rows); 
+                //Print Table values
+                ValuePrinter.Printvalue(rows); 
             }
         }
         catch (SqlException ex)
@@ -89,12 +102,12 @@ public class MyORM<G, T> where T : IIdBase<G>
         {
             connection.Close();
         }
-
+        #endregion
     }
     public void GetAll() {
         #region Get_All_Table_Data
         //sql query for select all data
-        string sql = $"Select * from {type.Name}";
+        string sql = $"Select * from {tableName}";
         var connection = new SqlConnection(_connectionString);
         SqlCommand cmd = new SqlCommand( sql, connection);
         try
@@ -113,21 +126,9 @@ public class MyORM<G, T> where T : IIdBase<G>
                     }
                     rows.Add(columns);
                 }
-                //Print Table Header
-                foreach (var col in rows[0].Keys)
-                {
-                    Console.Write(col + "\t");
-                }
-                Console.WriteLine();
-                //Print All Value
-                foreach (var v in rows)
-                {
-                    foreach (var k in v.Values)
-                    {
-                        Console.Write(k + "\t");
-                    }
-                    Console.WriteLine();
-                }
+                //Print Table values
+                ValuePrinter.Printvalue(rows);
+                
             }
         }
         catch (SqlException ex)

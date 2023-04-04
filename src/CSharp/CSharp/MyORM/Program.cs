@@ -5,4 +5,7 @@ course = new Course { Title = "English", Fees = 5000, IsActive = false, StartDat
 var orm = new MyORM< int, Course>(DbConnection);
 //orm.Insert(course);
 //orm.GetAll();
-orm.GetById(1);
+//orm.GetById(15);
+orm.Delete(8);
+//orm.GetAll();
+DataUtility dataUtility = new DataUtility(DbConnection);
