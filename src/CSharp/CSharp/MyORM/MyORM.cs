@@ -32,7 +32,6 @@ public class MyORM<G, T> where T : IIdBase<G>
         string sql = $"Insert into {tablename} ({columnName}) Values({parametersName})";
         //call sqlconnection and open connection 
         SqlConnection connection = new SqlConnection(_connectionString);
-        
         //instialize sqlcommend it takes a sql query and a sqlconnection
         SqlCommand cmd = new SqlCommand(sql, connection);
         //initialize value in parameters
@@ -61,7 +60,14 @@ public class MyORM<G, T> where T : IIdBase<G>
        
         #endregion
     }
-    public void Update(T entity) { }
+    public void Update(T entity) {
+        EntityInfo entityInfo = new EntityInfo(entity);
+        string sql = $"Update {tableName} set {entityInfo.GetColumn()} ";
+    }
+    public void Delete(T entity)
+    {
+
+    }
     public void Delete(G id) {
         #region Delete_By _ID
         string sql = $"Delete From {tableName} Where Id = {id}";
@@ -72,75 +78,14 @@ public class MyORM<G, T> where T : IIdBase<G>
         #region Print_Value_By_Id
         //sql query for select all data
         string sql = $"Select * from {tableName} Where Id = {id}";
-        var connection = new SqlConnection(_connectionString);  
-        SqlCommand cmd = new SqlCommand(sql, connection);      
-        try
-        {
-            if (connection.State != System.Data.ConnectionState.Open)
-            {
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
-                while (reader.Read())
-                {
-                    Dictionary<string, object> columns = new Dictionary<string, object>();
-                    foreach (var column in reader.GetColumnSchema())
-                    {
-                        columns.Add(column.ColumnName, reader[column.ColumnName]);
-                    }
-                    rows.Add(columns);
-                }
-                //Print Table values
-                ValuePrinter.Printvalue(rows); 
-            }
-        }
-        catch (SqlException ex)
-        {
-            Console.WriteLine("Error Generated. Details: " + ex.ToString());
-        }
-        finally
-        {
-            connection.Close();
-        }
+        _dataUtility.ReadData(sql);
         #endregion
     }
     public void GetAll() {
         #region Get_All_Table_Data
         //sql query for select all data
         string sql = $"Select * from {tableName}";
-        var connection = new SqlConnection(_connectionString);
-        SqlCommand cmd = new SqlCommand( sql, connection);
-        try
-        {
-            if (connection.State != System.Data.ConnectionState.Open)
-            {
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
-                while (reader.Read())
-                {
-                    Dictionary<string, object> columns = new Dictionary<string, object>();
-                    foreach (var column in reader.GetColumnSchema())
-                    {
-                        columns.Add(column.ColumnName, reader[column.ColumnName]);
-                    }
-                    rows.Add(columns);
-                }
-                //Print Table values
-                ValuePrinter.Printvalue(rows);
-                
-            }
-        }
-        catch (SqlException ex)
-        {
-            Console.WriteLine("Error Generated. Details: " + ex.ToString());
-        }
-        finally
-        {
-            connection.Close();
-        }
-       
-        
+        _dataUtility.ReadData(sql);       
         #endregion
     }
 }
