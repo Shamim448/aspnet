@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Diagnostics.Metrics;
 using System.Net;
 using System.Reflection;
 using System.Security.Claims;
@@ -94,7 +95,10 @@ public class MyORM<G, T> where T : IIdBase<G>
     }
     public void Delete(T entity)
     {
-
+        EntityInfo entityInfo = new EntityInfo(entity);
+      // string s = $"ALTER TABLE {tableName} DROP COLUMN {entityInfo.GetColumn()}";
+        string sql = $"Drop Table {entityInfo.GetObjectName()}";
+        _dataUtility.ExecuteCommand(sql);
     }
     public void Delete(G id) {
         #region Delete_By _ID
