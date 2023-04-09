@@ -36,11 +36,28 @@ public class MyORM<G, T> where T : IIdBase<G>
         //instialize sqlcommend it takes a sql query and a sqlconnection
         SqlCommand cmd = new SqlCommand(sql, connection);
         //initialize value in parameters
-        foreach (var property in entityInfo.GetProperties())
+        PropertyInfo[] properties = entityInfo.GetProperties();
+        
+        foreach (var property in properties)
         {
             cmd.Parameters.AddWithValue($"@{property.Name}", property.GetValue(entity));
             //check value get or not
+            
+        }
+        foreach (var property in properties)
+        {
             var value = property.GetValue(entity);
+            if (property.PropertyType.IsGenericType || value is IList)
+            {
+                IList list = (IList)value;
+                if (list != null)
+                {
+                    foreach(var item in list)
+                    {
+                       // Insert(T item);
+                    }
+                }
+            }
         }
         try
         {
