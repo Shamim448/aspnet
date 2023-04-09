@@ -9,15 +9,16 @@ using System.Text;
 public class DataUtility
 {
     public readonly string _connectionString;
+    public SqlCommand cmd { get; private set; }
     public DataUtility(string connectionString)
     {
-        _connectionString = connectionString;
+        _connectionString = connectionString;  
     }
     //Used in delete
     public void ExecuteCommand(string command)
     {
         SqlConnection connection = new SqlConnection(_connectionString);
-        SqlCommand cmd = new SqlCommand(command, connection);
+       cmd = new SqlCommand(command, connection);
         try
         {
             if (connection.State != System.Data.ConnectionState.Open)

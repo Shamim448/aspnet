@@ -6,5 +6,10 @@ var orm = new MyORM< int, Course>(DbConnection);
 //orm.Insert(course);
 //orm.GetById(10);
 //orm.Delete(10);
+course.Id = 9;
+course.Title = "Test";
+course.IsActive = true;
+orm.Update(course);
+
 orm.GetAll();
 DataUtility dataUtility = new DataUtility(DbConnection);
