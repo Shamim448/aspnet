@@ -16,7 +16,7 @@ course = new Course {
 };
 
 var orm = new TestORM<decimal, Course>(DbConnection);
-orm.Insert(course);
+orm.Inserts(course);
 
 //var orm = new MyORM< int, Course>(DbConnection);
 //orm.Insert(course);

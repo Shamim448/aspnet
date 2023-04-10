@@ -15,7 +15,7 @@ public class TestORM<G, T> where T : IIdBase<G>
         _connectionString = connectionString;
     }
 
-    public void Insert(T item)
+    public void Insertt(T item)
     {
         using (var connection = new SqlConnection(_connectionString))
         {
@@ -96,144 +96,145 @@ public class TestORM<G, T> where T : IIdBase<G>
 
 
 
-    //public void Insert (T entity)
-    //{
-    //   using (var connection = new SqlConnection(_connectionString))
-    //    {
-    //        connection.Open();
-    //        //using(var transection  = connection.BeginTransaction())
-    //        //{
-    //            try
-    //            {
-    //                InsertItem(entity, connection /*transection*/);
-    //                //transection.Commit();
-    //            }
-    //            catch (Exception ex)
-    //            {
-    //                //transection.Rollback();
-    //                throw ex;
-    //            }
-    //            finally { 
-    //                //transection.Dispose();
-    //                connection.Close();
-    //            }
-    //        //}
-    //    }
-    //}
+    public void Insert(T entity)
+    {
+        using (var connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+            //using(var transection  = connection.BeginTransaction())
+            //{
+            try
+            {
+                InsertItem(entity, connection /*transection*/);
+                //transection.Commit();
+            }
+            catch (Exception ex)
+            {
+                //transection.Rollback();
+                throw ex;
+            }
+            finally
+            {
+                //transection.Dispose();
+                connection.Close();
+            }
+            //}
+        }
+    }
 
-    //public void InsertItem(object item, SqlConnection connection /*SqlTransaction transection*/)
-    //{
-    //    var itemType = item.GetType();
-    //    var tableName = itemType.Name;
-    //    var properties = itemType.GetProperties();
-    //    var sql = $"INSERT INTO {tableName} ({GetColumnList(properties)}) VALUES({GetParameterList(properties)})";
-    //    using (var command = new SqlCommand(sql, connection /*transection*/))
-    //    {
-    //        foreach (var property in properties)
-    //        {
-    //            var value = property.GetValue(item);
-    //            var parameter = new SqlParameter($"@{property.Name}", value ?? DBNull.Value);
-    //            command.Parameters.Add(parameter);
-    //        }
-    //        command.ExecuteNonQuery();
-    //    }
-    //    //Nested object handle
-    //    foreach (var property in properties)
-    //    {
-    //        if(property.PropertyType.IsClass && property.PropertyType != typeof(string))
-    //        {
-    //            if(property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
-    //            {
-    //                var list = (IEnumerable<object>)property.GetValue(item);
-    //                if(list != null)
-    //                {
-    //                    foreach(var itemlist  in list)
-    //                    {
-    //                        InsertItem(itemlist, connection /*transection*/);
-    //                    }
-    //                }
-    //            }
-    //            else
-    //            {
-    //                var nestedItem = property.GetValue(item);
-    //                if(nestedItem != null)
-    //                {
-    //                    InsertItem(nestedItem, connection /*transection*/);
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
-    //public string GetColumnList(PropertyInfo[] properties)
-    //{
-    //    var column = new List<string>();
-    //    foreach (var property in properties)
-    //    {
-    //        column.Add(property.Name);
-    //    }
-    //    return string.Join(", ", column);
-    //}
-    //public string GetParameterList(PropertyInfo[] properties)
-    //{
-    //    var parameter = new List<string>();
-    //    foreach (var property in properties)
-    //    {
-    //        parameter.Add($"@{property.Name}");
-    //    }
-    //    return string.Join(", ", parameter);
-    //}
+    public void InsertItem(object item, SqlConnection connection /*SqlTransaction transection*/)
+    {
+        var itemType = item.GetType();
+        var tableName = itemType.Name;
+        var properties = itemType.GetProperties();
+        var sql = $"INSERT INTO {tableName} ({GetColumnList(properties)}) VALUES({GetParameterList(properties)})";
+        using (var command = new SqlCommand(sql, connection /*transection*/))
+        {
+            foreach (var property in properties)
+            {
+                var value = property.GetValue(item);
+                var parameter = new SqlParameter($"@{property.Name}", value ?? DBNull.Value);
+                command.Parameters.Add(parameter);
+            }
+            command.ExecuteNonQuery();
+        }
+        //Nested object handle
+        foreach (var property in properties)
+        {
+            if (property.PropertyType.IsClass && property.PropertyType != typeof(string))
+            {
+                if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
+                {
+                    var list = (IEnumerable<object>)property.GetValue(item);
+                    if (list != null)
+                    {
+                        foreach (var itemlist in list)
+                        {
+                            InsertItem(itemlist, connection /*transection*/);
+                        }
+                    }
+                }
+                else
+                {
+                    var nestedItem = property.GetValue(item);
+                    if (nestedItem != null)
+                    {
+                        InsertItem(nestedItem, connection /*transection*/);
+                    }
+                }
+            }
+        }
+    }
+    public string GetColumnList(PropertyInfo[] properties)
+    {
+        var column = new List<string>();
+        foreach (var property in properties)
+        {
+            column.Add(property.Name);
+        }
+        return string.Join(", ", column);
+    }
+    public string GetParameterList(PropertyInfo[] properties)
+    {
+        var parameter = new List<string>();
+        foreach (var property in properties)
+        {
+            parameter.Add($"@{property.Name}");
+        }
+        return string.Join(", ", parameter);
+    }
 
-    //public void Inserts(T item)
-    //{
-    //    using (var connection = new SqlConnection(_connectionString))
-    //    {
-    //        connection.Open();
-    //        var transaction = connection.BeginTransaction();
-    //        try
-    //        {
-    //            // Insert the item
-    //            var type = item.GetType();
-    //            var properties = type.GetProperties().Where(p => p.Name != "Id");
-    //            var columns = string.Join(", ", properties.Select(p => $"[{p.Name}]"));
-    //            var values = string.Join(", ", properties.Select(p => $"@{p.Name}"));
-    //            var commandText = $"INSERT INTO [{type.Name}] ({columns}) VALUES ({values})";
-    //            var command = new SqlCommand(commandText, connection, transaction);
-    //            foreach (var property in properties)
-    //            {
-    //                command.Parameters.AddWithValue($"@{property.Name}", property.GetValue(item) ?? DBNull.Value);
-    //            }
-    //            var id = (G)command.ExecuteScalar();
-    //            type.GetProperty("Id").SetValue(item, id);
+    public void Inserts(T item)
+    {
+        using (var connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+            var transaction = connection.BeginTransaction();
+            try
+            {
+                // Insert the item
+                var type = item.GetType();
+                var properties = type.GetProperties().Where(p => p.Name != "Id");
+                var columns = string.Join(", ", properties.Select(p => $"[{p.Name}]"));
+                var values = string.Join(", ", properties.Select(p => $"@{p.Name}"));
+                var commandText = $"INSERT INTO [{type.Name}] ({columns}) VALUES ({values})";
+                var command = new SqlCommand(commandText, connection, transaction);
+                foreach (var property in properties)
+                {
+                    command.Parameters.AddWithValue($"@{property.Name}", property.GetValue(item) ?? DBNull.Value);
+                }
+                var id = (G)command.ExecuteScalar();
+                type.GetProperty("Id").SetValue(item, id);
 
-    //            // Insert the nested objects recursively
-    //            foreach (var property in properties)
-    //            {
-    //                if (property.PropertyType == typeof(List<>))
-    //                {
-    //                    var list = (IEnumerable)property.GetValue(item);
-    //                    if (list != null)
-    //                    {
-    //                        foreach (var nestedItem in list)
-    //                        {
-    //                            var nestedType = nestedItem.GetType();
-    //                            nestedType.GetProperty($"{type.Name}Id").SetValue(nestedItem, id);
-    //                            var myOrmType = typeof(MyORM<,>).MakeGenericType(typeof(G), nestedType);
-    //                            var myOrm = Activator.CreateInstance(myOrmType, _connectionString);
-    //                            myOrmType.GetMethod("Insert").Invoke(myOrm, new[] { nestedItem });
-    //                        }
-    //                    }
-    //                }
-    //            }
+                // Insert the nested objects recursively
+                foreach (var property in properties)
+                {
+                    if (property.PropertyType == typeof(List<>))
+                    {
+                        var list = (IEnumerable)property.GetValue(item);
+                        if (list != null)
+                        {
+                            foreach (var nestedItem in list)
+                            {
+                                var nestedType = nestedItem.GetType();
+                                nestedType.GetProperty($"{type.Name}Id").SetValue(nestedItem, id);
+                                var myOrmType = typeof(MyORM<,>).MakeGenericType(typeof(G), nestedType);
+                                var myOrm = Activator.CreateInstance(myOrmType, _connectionString);
+                                myOrmType.GetMethod("Insert").Invoke(myOrm, new[] { nestedItem });
+                            }
+                        }
+                    }
+                }
 
-    //            transaction.Commit();
-    //        }
-    //        catch
-    //        {
-    //            transaction.Rollback();
-    //            throw;
-    //        }
-    //    }
-    //}
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+        }
+    }
 
 
 }
