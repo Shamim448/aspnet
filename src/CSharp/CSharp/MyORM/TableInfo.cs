@@ -19,7 +19,7 @@ public class EntityInfo
     }
     public PropertyInfo[] GetProperties()
     {
-        return _type.GetProperties().Where(p => p.Name != "Id").ToArray();
+        return _type.GetProperties().Where(p => p.Name != "Id" && !p.PropertyType.IsGenericType &&  !p.PropertyType.IsClass).ToArray();
     }
     //collect table column name
     public string GetColumn()

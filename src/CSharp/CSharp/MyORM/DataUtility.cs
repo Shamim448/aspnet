@@ -26,6 +26,7 @@ public class DataUtility
                 connection.Open();
                 cmd.ExecuteNonQuery();
                 Console.WriteLine("Query Executed!");
+                
             }
         }
         catch (SqlException ex)

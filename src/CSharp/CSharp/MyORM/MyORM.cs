@@ -121,6 +121,7 @@ public class MyORM<G, T> where T : IIdBase<G>
         #region Delete_By _ID
         string sql = $"Delete From {tableName} Where Id = {id}";
         _dataUtility.ExecuteCommand(sql);
+       
         #endregion
     }
     public void GetById(G id)    {

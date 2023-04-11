@@ -1,0 +1,17 @@
+﻿CREATE TABLE [dbo].[Course] (
+    [Id]              UNIQUEIDENTIFIER NOT NULL,
+    [Title]           NVARCHAR(50) NULL,
+    [Fees]            FLOAT (53)     NULL,
+    [IsActive]        BIT            NULL,
+    [CourseStartDate] DATETIME       NULL,
+    CONSTRAINT [PK_Course] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[Topic] (
+    [Id]       UNIQUEIDENTIFIER NOT NULL,
+    [CourseId] UNIQUEIDENTIFIER NULL,
+    [Title]    NVARCHAR (100)   NOT NULL,
+    [Duration] FLOAT (53)       NOT NULL,
+    FOREIGN KEY ([CourseId]) REFERENCES [dbo].[Course] ([Id]),
+    CONSTRAINT [PK_Topics] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
