@@ -81,83 +81,9 @@ public class TestORM<G, T> where T : IIdBase<G>
             cmd.ExecuteNonQuery();           
         }
     }
-    public void Insertt(T item)
-    {
-        using (var connection = new SqlConnection(_connectionString))
-        {
-            connection.Open();
+   
 
-            // Insert the main object
-            var command = new SqlCommand($"INSERT INTO {typeof(T).Name} DEFAULT VALUES; SELECT SCOPE_IDENTITY()", connection);
-            var id = (G)command.ExecuteScalar();
-            item.Id = id;
 
-            // Recursively insert child objects and collections
-            InsertChildObjects(item, connection);
-
-            connection.Close();
-        }
-    }
-
-    private void InsertChildObjects(object obj, SqlConnection connection)
-    {
-        var type = obj.GetType();
-        var properties = type.GetProperties();
-
-        foreach (var property in properties)
-        {
-            if (property.PropertyType.IsPrimitive || property.PropertyType == typeof(string))
-            {
-                // If the property is a primitive type or a string, insert it as a parameter
-                var value = property.GetValue(obj);
-                if (value != null)
-                {
-                    var parameter = new SqlParameter($"@{property.Name}", value);
-                    var command = new SqlCommand($"UPDATE {type.Name} SET {property.Name} = @{property.Name} WHERE Id = @Id", connection);
-                    command.Parameters.Add(parameter);
-                    command.Parameters.AddWithValue("@Id", ((IIdBase<G>)obj).Id);
-                    command.ExecuteNonQuery();
-                }
-            }
-            else if (property.PropertyType.GetInterfaces().Contains(typeof(IEnumerable)) && property.PropertyType != typeof(string))
-            {
-                // If the property is a collection, recursively insert each item in the collection
-                var collection = (IEnumerable)property.GetValue(obj);
-                if (collection != null)
-                {
-                    foreach (var item in collection)
-                    {
-                        InsertChildObjects(item, connection);
-
-                        // Insert the relationship between the parent and child object
-                        var childType = item.GetType();
-                        var childId = ((IIdBase<G>)item).Id;
-                        var command = new SqlCommand($"UPDATE {type.Name} SET {childType.Name}Id = @childId WHERE Id = @parentId", connection);
-                        command.Parameters.AddWithValue("@childId", childId);
-                        command.Parameters.AddWithValue("@parentId", ((IIdBase<G>)obj).Id);
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-            else if (typeof(IIdBase<G>).IsAssignableFrom(property.PropertyType))
-            {
-                // If the property is a nested object, recursively insert it
-                var child = property.GetValue(obj);
-                if (child != null)
-                {
-                    InsertChildObjects(child, connection);
-
-                    // Insert the relationship between the parent and child object
-                    var childType = child.GetType();
-                    var childId = ((IIdBase<G>)child).Id;
-                    var command = new SqlCommand($"UPDATE {type.Name} SET {childType.Name}Id = @childId WHERE Id = @parentId", connection);
-                    command.Parameters.AddWithValue("@childId", childId);
-                    command.Parameters.AddWithValue("@parentId", ((IIdBase<G>)obj).Id);
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-    }
 
 
 
