@@ -14,51 +14,30 @@ public class TestORM<G, T> where T : IIdBase<G>
     {
         _connectionString = connectionString;
     }
-
     public void Insert(T item)
     {
         Type type = typeof(T);
-        var tableName = type.Name;
-        PropertyInfo[] properties = type.GetProperties().Where(p =>  !p.PropertyType.IsGenericType && 
-        !p.PropertyType.IsClass || p.PropertyType == typeof(string)).ToArray();
-        string columnName = string.Join(", ", properties.Select(c => c.Name));
-        string parametersName = string.Join(", ", properties.Select(p => $"@{p.Name}"));
-        string sql = $"Insert into {tableName} ({columnName}) Values({parametersName})";
+        BasicObjectInsert(item);
 
-        using (var connection = new SqlConnection(_connectionString))
+        PropertyInfo[] propertiesOfList = type.GetProperties();
+        foreach (var property in propertiesOfList)
         {
-            connection.Open();
-            SqlCommand cmd = new SqlCommand(sql, connection);
-            foreach (var property in properties)
+            var values = property.GetValue(item);
+            if ((property.PropertyType.IsGenericType || values is IList) && values != null)
             {
-                cmd.Parameters.AddWithValue($"@{property.Name}", property.GetValue(item));
-                //check value get or not
-
-            }
-            Console.WriteLine(sql);
-            cmd.ExecuteNonQuery();
-            Console.WriteLine("Record Insert Successfully");
-
-            PropertyInfo[] propertiesOfList = type.GetProperties();
-            foreach (var property in propertiesOfList)
-            {
-                var values = property.GetValue(item);
-                if (property.PropertyType.IsGenericType || values is IList)
+                IList list = (IList) values;
+                foreach (var value in list)
                 {
-                    IList list = (IList) values;
-                    foreach (var value in list)
-                    {
-                        ChieldObjectInsert(value);
-                    }
+                    BasicObjectInsert(value);
                 }
-               
-                
+            }  
+             else if(property.PropertyType.IsClass && values != null && property.PropertyType != typeof(string))
+             {
+                BasicObjectInsert(values);
             }
-
-        }
+        }        
     }
-
-    public void ChieldObjectInsert(object item)
+    public  void BasicObjectInsert(object item)
     {
         Type type = item.GetType();
         var tableName = type.Name;
@@ -68,19 +47,42 @@ public class TestORM<G, T> where T : IIdBase<G>
         string parametersName = string.Join(", ", properties.Select(p => $"@{p.Name}"));
         string sql = $"Insert into {tableName} ({columnName}) Values({parametersName})";
 
-        using (var connection = new SqlConnection(_connectionString))
+        var connection = new SqlConnection(_connectionString);
+
+        connection.Open();
+        SqlCommand cmd = new SqlCommand(sql, connection);
+        foreach (var property in properties)
         {
-            connection.Open();
-            SqlCommand cmd = new SqlCommand(sql, connection);       
-            foreach (var property in properties)
-            {
-                cmd.Parameters.AddWithValue($"@{property.Name}", property.GetValue(item));                
-            }
-            //cmd.Parameters.AddWithValue($"@CourseId", item(item));
-            Console.WriteLine(sql);
-            cmd.ExecuteNonQuery();           
+            cmd.Parameters.AddWithValue($"@{property.Name}", property.GetValue(item));
         }
+        Console.WriteLine(sql);
+        cmd.ExecuteNonQuery();
+        Console.WriteLine("Record Insert Successfully");
+        
     }
+    //public void ChieldObjectInsert(object item)
+    //{
+    //    Type type = item.GetType();
+    //    var tableName = type.Name;
+    //    PropertyInfo[] properties = type.GetProperties().Where(p => !p.PropertyType.IsGenericType &&
+    //    !p.PropertyType.IsClass || p.PropertyType == typeof(string)).ToArray();
+    //    string columnName = string.Join(", ", properties.Select(c => c.Name));
+    //    string parametersName = string.Join(", ", properties.Select(p => $"@{p.Name}"));
+    //    string sql = $"Insert into {tableName} ({columnName}) Values({parametersName})";
+
+    //    using (var connection = new SqlConnection(_connectionString))
+    //    {
+    //        connection.Open();
+    //        SqlCommand cmd = new SqlCommand(sql, connection);       
+    //        foreach (var property in properties)
+    //        {
+    //            cmd.Parameters.AddWithValue($"@{property.Name}", property.GetValue(item));                
+    //        }
+    //        //cmd.Parameters.AddWithValue($"@CourseId", item(item));
+    //        Console.WriteLine(sql);
+    //        cmd.ExecuteNonQuery();           
+    //    }
+    //}
    
 
 

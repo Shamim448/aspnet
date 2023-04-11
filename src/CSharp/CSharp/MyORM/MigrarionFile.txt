@@ -15,3 +15,12 @@ CREATE TABLE [dbo].[Topic] (
     FOREIGN KEY ([CourseId]) REFERENCES [dbo].[Course] ([Id]),
     CONSTRAINT [PK_Topics] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
+CREATE TABLE [dbo].[Instructor] (
+    [Id]       UNIQUEIDENTIFIER NOT NULL,
+    [CourseId] UNIQUEIDENTIFIER NULL,
+    [Name]    NVARCHAR (100)   NOT NULL,
+    [Email]    NVARCHAR (100)   NOT NULL,
+    FOREIGN KEY ([CourseId]) REFERENCES [dbo].[Course] ([Id]),
+    CONSTRAINT [PK_Instructor] PRIMARY KEY CLUSTERED ([Id] ASC)
+);

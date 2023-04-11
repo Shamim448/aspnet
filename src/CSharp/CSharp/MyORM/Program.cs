@@ -13,6 +13,13 @@ course = new Course {
 
         new Topic() {Id=Guid.NewGuid(), Title = "Ado.net", Duration = 60, CourseId = courseId },
         new Topic() {Id = Guid.NewGuid(),   Title = "Entity Framework", Duration = 60, CourseId = courseId },
+    },
+    Teacher = new Instructor
+    {
+        Id = Guid.NewGuid(),
+        Name = "Jalal Uddin",
+        Email = "info@devskill.com",
+        CourseId = courseId,
     }
 };
 
