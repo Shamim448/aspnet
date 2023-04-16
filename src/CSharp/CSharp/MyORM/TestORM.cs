@@ -17,7 +17,8 @@ public class TestORM<G, T> where T : IIdBase<G>
     public void Insert(T item)
     {
         Type type = typeof(T);
-        BasicObjectInsert(item);    
+        BasicObjectInsert(item);
+    
     }
     public  void BasicObjectInsert(object item)
     {
