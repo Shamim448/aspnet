@@ -17,25 +17,7 @@ public class TestORM<G, T> where T : IIdBase<G>
     public void Insert(T item)
     {
         Type type = typeof(T);
-        BasicObjectInsert(item);
-
-        PropertyInfo[] propertiesOfList = type.GetProperties();
-        foreach (var property in propertiesOfList)
-        {
-            var values = property.GetValue(item);
-            if ((property.PropertyType.IsGenericType || values is IList) && values != null)
-            {
-                IList list = (IList) values;
-                foreach (var value in list)
-                {
-                    BasicObjectInsert(value);
-                }
-            }  
-             else if(property.PropertyType.IsClass && values != null && property.PropertyType != typeof(string))
-             {
-                BasicObjectInsert(values);
-            }
-        }        
+        BasicObjectInsert(item);    
     }
     public  void BasicObjectInsert(object item)
     {
@@ -58,7 +40,26 @@ public class TestORM<G, T> where T : IIdBase<G>
         Console.WriteLine(sql);
         cmd.ExecuteNonQuery();
         Console.WriteLine("Record Insert Successfully");
-        
+
+        PropertyInfo[] ChieldProperty = type.GetProperties();
+        foreach (var property in ChieldProperty)
+        {
+            var values = property.GetValue(item);
+            if ((property.PropertyType.IsGenericType || values is IList) && values != null)
+            {
+                IList list = (IList)values;
+                foreach (var value in list)
+                {
+                    BasicObjectInsert(value);
+
+                }
+            }
+            else if (property.PropertyType.IsClass && values != null && property.PropertyType != typeof(string))
+            {
+                BasicObjectInsert(values);
+            }
+        }
+
     }
     //public void ChieldObjectInsert(object item)
     //{

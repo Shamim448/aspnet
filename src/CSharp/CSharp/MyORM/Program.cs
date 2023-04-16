@@ -2,10 +2,12 @@
 string DbConnection = "Server=.\\SQLEXPRESS;Database=Aspnetb8;User Id=aspnetb8;Password=123456;";
 Course course = new Course();
 Guid courseId = Guid.NewGuid();
+Guid teacherId = Guid.NewGuid();
+
 course = new Course {
     Id = courseId,
-    Title = "CSharp",
-    Fees = 9000,
+    Title = "Asp.Net",
+    Fees = 30000,
     IsActive = false,
     CourseStartDate = new DateTime(2023, 04, 25),
     Topics = new List<Topic>()
@@ -16,9 +18,17 @@ course = new Course {
     },
     Teacher = new Instructor
     {
-        Id = Guid.NewGuid(),
+        Id = teacherId,
         Name = "Jalal Uddin",
         Email = "info@devskill.com",
+        PresentAddress = new Address
+        {
+            Id= Guid.NewGuid(),
+            Street = "Kashaimpur",
+            City = "Gazipyr",
+            Country = "Bangladesh",
+            InstructorId = teacherId,
+        },
         CourseId = courseId,
     }
 };

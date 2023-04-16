@@ -24,3 +24,12 @@ CREATE TABLE [dbo].[Instructor] (
     FOREIGN KEY ([CourseId]) REFERENCES [dbo].[Course] ([Id]),
     CONSTRAINT [PK_Instructor] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+CREATE TABLE [dbo].[Address] (
+    [Id]       UNIQUEIDENTIFIER NOT NULL,
+    [InstructorId] UNIQUEIDENTIFIER NULL,
+    [Street]    NVARCHAR (100)   NOT NULL,
+    [City]    NVARCHAR (100)   NOT NULL,
+    [Country]    NVARCHAR (100)   NOT NULL,
+    FOREIGN KEY ([InstructorId]) REFERENCES [dbo].[Instructor] ([Id]),
+    CONSTRAINT [PK_Address] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
