@@ -6,6 +6,7 @@ using System.Net;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text;
+
 public class MyORM<G, T> where T : IIdBase<G>
 {
     private readonly string _connectionString;
@@ -16,57 +17,133 @@ public class MyORM<G, T> where T : IIdBase<G>
     }
     public void Insert(T item)
     {
+        InsertObject(item);
+
+    }//End of Insert
+    private void InsertObject(object item) {
+        Type type = typeof(T);
+        PropertyInfo[] properties = type.GetProperties()
+            .Where(p => !p.PropertyType.IsGenericType && !p.PropertyType.IsClass || p.PropertyType == typeof(string))
+          .ToArray();
+        string tableName = type.Name;
+        string columns = string.Join(", ", properties.Select(p => p.Name));
+        string parameters = string.Join(", ", properties.Select(p => $"@{p.Name}"));
+
+        // Insert the Course object into the database
         using (var connection = new SqlConnection(_connectionString))
         {
             connection.Open();
-            BasicObjectInsert(item, connection);
+            using (var command = new SqlCommand($"INSERT INTO {tableName} ({columns}) VALUES({parameters})", connection))
+            {
+                foreach (var property in properties)
+                {
+                    var value = property.GetValue(item);
+                    command.Parameters.AddWithValue($"@{property.Name}", value ?? DBNull.Value);
+                }
+                command.ExecuteNonQuery();
+            }
         }
+        // Recursively insert the nested objects
+        InsertNestedObjects(item);
     }
-    private void BasicObjectInsert(object item, SqlConnection connection)
+    private void InsertNestedObjects(object item)
     {
         var type = item.GetType();
-        var tableName = type.Name;
-        var idProperty = type.GetProperty("Id");
-        var id = (G)idProperty.GetValue(item);
+        var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-        var properties = type.GetProperties()
-            .Where(p => !p.PropertyType.IsGenericType && !p.PropertyType.IsClass || p.PropertyType == typeof(string))
-            .ToArray();
-        var columnNames = string.Join(", ", properties.Select(p => p.Name));
-        var parameterNames = string.Join(", ", properties.Select(p => "@" + p.Name));
-        var sql = $"INSERT INTO {tableName} ({columnNames}) VALUES ({parameterNames})";
-        using (var command = new SqlCommand(sql, connection))
-        {
-            //command.Parameters.AddWithValue("@Id", id);
-            foreach (var property in properties)
-            {
-                command.Parameters.AddWithValue($"@{property.Name}", property.GetValue(item));
-            }
-            command.ExecuteNonQuery();
-        }
-        var childProperties = type.GetProperties();
-        foreach (var property in childProperties)
+        foreach (var property in properties)
         {
             var value = property.GetValue(item);
-            if (value == null) continue;
-            if (typeof(IEnumerable).IsAssignableFrom(property.PropertyType) && property.PropertyType != typeof(string))
+            if (value == null)
             {
-                var collection = (IEnumerable)value;
-                foreach (var child in collection)
+                continue;
+            }
+
+            if (value is IList list)
+            {
+                // If the property is a list, insert each item in the list
+                foreach (var listItem in list)
                 {
-                    BasicObjectInsert(child, connection);
+                    InsertObject(listItem);
                 }
             }
-            else if (property.PropertyType.IsClass)
+            else if (!property.PropertyType.IsPrimitive && property.PropertyType != typeof(string))
             {
-                BasicObjectInsert(value, connection);
+                // If the property is not a primitive type or string, insert the object recursively
+                InsertObject(value);
+
+                //// If the property is a reference to a Course object, set the courseId property of the object to the Course object's Id
+                //if (property.PropertyType == typeof(Instructor))
+                //{
+                //    var courseIdProperty = property.PropertyType.GetProperty("courseId");
+                //    courseIdProperty.SetValue(value, ((Course)item).Id);
+                //}
             }
         }
     }
 
+    }
+//public class MyORM<G, T> where T : IIdBase<G>
+//{
+//    private readonly string _connectionString;
+
+//    public MyORM(string connectionString)
+//    {
+//        _connectionString = connectionString;
+//    }
+//    public void Insert(T item)
+//    {
+//        using (var connection = new SqlConnection(_connectionString))
+//        {
+//            connection.Open();
+//            BasicObjectInsert(item, connection);
+//        }
+//    }
+//    private void BasicObjectInsert(object item, SqlConnection connection)
+//    {
+//        var type = item.GetType();
+//        var tableName = type.Name;
+//        var idProperty = type.GetProperty("Id");
+//        var id = (G)idProperty.GetValue(item);
+
+//        var properties = type.GetProperties()
+//            .Where(p => !p.PropertyType.IsGenericType && !p.PropertyType.IsClass || p.PropertyType == typeof(string))
+//            .ToArray();
+//        var columnNames = string.Join(", ", properties.Select(p => p.Name));
+//        var parameterNames = string.Join(", ", properties.Select(p => "@" + p.Name));
+//        var sql = $"INSERT INTO {tableName} ({columnNames}) VALUES ({parameterNames})";
+//        using (var command = new SqlCommand(sql, connection))
+//        {
+//            //command.Parameters.AddWithValue("@Id", id);
+//            foreach (var property in properties)
+//            {
+//                command.Parameters.AddWithValue($"@{property.Name}", property.GetValue(item));
+//            }
+//            command.ExecuteNonQuery();
+//        }
+//        var childProperties = type.GetProperties();
+//        foreach (var property in childProperties)
+//        {
+//            var value = property.GetValue(item);
+//            if (value == null) continue;
+//            if (typeof(IEnumerable).IsAssignableFrom(property.PropertyType) && property.PropertyType != typeof(string))
+//            {
+//                var collection = (IEnumerable)value;
+//                foreach (var child in collection)
+//                {
+//                    BasicObjectInsert(child, connection);
+//                }
+//            }
+//            else if (property.PropertyType.IsClass)
+//            {
+//                BasicObjectInsert(value, connection);
+//            }
+//        }
+//    }
 
 
-   }
+
+//   }
 
 
 

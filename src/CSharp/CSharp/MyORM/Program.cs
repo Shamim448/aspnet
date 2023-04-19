@@ -6,7 +6,7 @@ Guid teacherId = Guid.NewGuid();
 
 var instructor = new Instructor
 {
-    Id=1,
+    Id = 1,
     Name = "John Doe",
     Email = "johndoe@example.com",
     PresentAddress = new Address
@@ -81,7 +81,7 @@ var topic2 = new Topic
 
 var course = new Course
 {
-    Id = 1,
+    Id = 3,
     Title = "Course Title",
     Teacher = instructor,
     Topics = new List<Topic> { topic1, topic2 },
