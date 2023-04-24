@@ -2,8 +2,6 @@
     [Id]              UNIQUEIDENTIFIER NOT NULL,
     [Title]           NVARCHAR(50) NULL,
     [Fees]            FLOAT (53)     NULL,
-    [IsActive]        BIT            NULL,
-    [CourseStartDate] DATETIME       NULL,
     CONSTRAINT [PK_Course] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
@@ -32,6 +30,15 @@ CREATE TABLE [dbo].[Address] (
     [Country]    NVARCHAR (100)     NULL,
     FOREIGN KEY ([InstructorId]) REFERENCES [dbo].[Instructor] ([Id]),
     CONSTRAINT [PK_Address] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+CREATE TABLE [dbo].[AdmissionTest] (
+    [Id]       UNIQUEIDENTIFIER NOT NULL,
+    [CourseId] UNIQUEIDENTIFIER NULL,
+    [StartDateTime]    datetime   NULL,
+    [EndDateTime] datetime       NULL,
+    [TestFees] FLOAT (53)       NULL,
+    FOREIGN KEY ([CourseId]) REFERENCES [dbo].[Course] ([Id]),
+    CONSTRAINT [PK_AdmissionTest] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
 
