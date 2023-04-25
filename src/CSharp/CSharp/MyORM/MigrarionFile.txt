@@ -1,4 +1,4 @@
-﻿<<<<<<< .mine
+﻿
 CREATE TABLE [dbo].[Course] (
     [Id]              UNIQUEIDENTIFIER NOT NULL,
     [Title]           NVARCHAR(50) NULL,
