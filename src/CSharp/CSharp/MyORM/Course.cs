@@ -32,7 +32,7 @@ public class Topic : IIdBase<Guid>
 public class Session : IIdBase<Guid>
 {
     public Guid Id { get; set; }
-    public int DurationInHour { get; set; }
+    public Guid DurationInHour { get; set; }
     public string LearningObjective { get; set; }
 }
 

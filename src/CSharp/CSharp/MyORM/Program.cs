@@ -3,6 +3,7 @@ string DbConnection = "Server=.\\SQLEXPRESS;Database=Aspnetb8;User Id=aspnetb8;P
 
 Guid courseId = Guid.NewGuid();
 Guid teacherId = Guid.NewGuid();
+
 Course course = new Course();
 course = new Course
 {

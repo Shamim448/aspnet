@@ -102,6 +102,19 @@ public class TestORM<G, T> where T : IIdBase<G>
     }
 
 
+    public void GetAll()
+    {
+        #region Get_All_Table_Data
+
+        Type type = typeof(T);
+        var tableName = type.Name;
+        //sql query for select all data
+        string sql = $"Select * from {tableName}";
+        _dataUtility.ReadData(sql);
+        #endregion
+    }
+
+
     //public void ChieldObjectInsert(object item)
     //{
     //    Type type = item.GetType();
