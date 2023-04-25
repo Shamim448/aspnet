@@ -20,6 +20,7 @@ public class TestORM<G, T> where T : IIdBase<G>
 
     }
 
+
     public void Insert(T item)
     {
         Type type = typeof(T);
@@ -107,13 +108,33 @@ public class TestORM<G, T> where T : IIdBase<G>
         }
     }
 
+    public void Delete(G id)
+    {
+        #region Delete_By _ID
+        Type type = typeof(T);
+        var tableName = type.Name;
+        string sql = $"Delete From {tableName} Where Id = '{id}'";
+        _dataUtility.ExecuteCommand(sql);
+
+        #endregion
+    }
+    public void GetById(G id)
+    {
+        #region Print_Value_By_Id
+        Type type = typeof(T);
+        var tableName = type.Name;
+        //sql query for select all data
+        string sql = $"Select * from {tableName} Where Id = '{id}'";
+        _dataUtility.ReadData(sql);
+        #endregion
+    }
 
     public void GetAll()
     {
         #region Get_All_Table_Data
-
         Type type = typeof(T);
         var tableName = type.Name;
+
         //sql query for select all data
         string sql = $"Select * from {tableName}";
         _dataUtility.ReadData(sql);

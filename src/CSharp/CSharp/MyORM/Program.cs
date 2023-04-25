@@ -56,7 +56,11 @@ course = new Course
 
 
 var orm = new TestORM<Guid, Course>(DbConnection);
-orm.Insert(course);
+//orm.Insert(course);
+orm.GetAll();
+Guid myGuid = new Guid("11a45114-275a-4ab3-9355-54dc56694427");
+orm.Delete(myGuid);
+orm.GetAll();
 
 
 
