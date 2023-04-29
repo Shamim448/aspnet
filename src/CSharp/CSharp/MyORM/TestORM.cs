@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 
-public class TestORM<G, T> where T : IIdBase<G>
+public class TestORM<G, T> where T : IEntity<G>
 {
     public readonly string _connectionString;
     public readonly DataUtility _dataUtility;
@@ -24,15 +24,19 @@ public class TestORM<G, T> where T : IIdBase<G>
     public void Insert(T item)
     {
         Type type = typeof(T);
+        
+
         BasicObjectInsert(item);
     
     }
-    public  void BasicObjectInsert(object item)
+    public  void BasicObjectInsert(object item, object p = null, object baseClass = null)
     {
-        Type type = item.GetType();
+        Type type = item.GetType();        
+
         var tableName = type.Name;
         PropertyInfo[] properties = type.GetProperties().Where(p => !p.PropertyType.IsGenericType &&
         !p.PropertyType.IsClass || p.PropertyType == typeof(string)).ToArray();
+
         string columnName = string.Join(", ", properties.Select(c => c.Name));
         string parametersName = string.Join(", ", properties.Select(p => $"@{p.Name}"));
         string sql = $"Insert into {tableName} ({columnName}) Values({parametersName})";
@@ -41,30 +45,56 @@ public class TestORM<G, T> where T : IIdBase<G>
 
         connection.Open();
         SqlCommand cmd = new SqlCommand(sql, connection);
+        if(baseClass != null)
+        {
+            var foreignKeyProperty = properties.FirstOrDefault(p => p.Name == $"{baseClass}Id");
+            // var foreignKeyProperty =  $"{baseClass}Id";
+            if (foreignKeyProperty != null)
+            {
+                foreignKeyProperty.SetValue(item, p);
+            }
+        }
+        
         foreach (var property in properties)
         {
-            cmd.Parameters.AddWithValue($"@{property.Name}", property.GetValue(item));
+            // Get the foreign key object's ID property value
+            
+
+            cmd.Parameters.AddWithValue($"@{property.Name}", property.GetValue(item)); 
         }
-        Console.WriteLine(sql);
         cmd.ExecuteNonQuery();
-        Console.WriteLine("Record Insert Successfully");
 
         PropertyInfo[] ChieldProperty = type.GetProperties();
+
+        var primaryKeyProperty = properties.FirstOrDefault(p => p.Name == "Id");
+        if (primaryKeyProperty == null)
+        {
+            throw new ArgumentException($"Type '{type.Name}' does not have a primary key property named 'Id'");
+        }
+
+        var primaryKeyValue = primaryKeyProperty.GetValue(item);
+        if (primaryKeyValue == null)
+        {
+            throw new ArgumentException($"Primary key value for type '{type.Name}' cannot be null");
+        }
+        baseClass = type.Name;
+
         foreach (var property in ChieldProperty)
         {
+
             var values = property.GetValue(item);
             if ((property.PropertyType.IsGenericType || values is IList) && values != null)
             {
                 IList list = (IList)values;
                 foreach (var value in list)
                 {
-                    BasicObjectInsert(value);
+                    BasicObjectInsert(value, primaryKeyValue, baseClass);
 
                 }
             }
             else if (property.PropertyType.IsClass && values != null && property.PropertyType != typeof(string))
             {
-                BasicObjectInsert(values);
+                BasicObjectInsert(values, primaryKeyValue, baseClass);
             }
         }
 

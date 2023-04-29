@@ -1,4 +1,60 @@
-﻿
+﻿CREATE TABLE Course (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Title NVARCHAR(255) NULL,
+    Fees decimal NULL
+);
+
+CREATE TABLE Topic (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Title NVARCHAR(255) NULL,
+    Description NVARCHAR(MAX) NULL,
+    CourseId UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Course(Id)
+);
+CREATE TABLE Session (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    DurationInHour int NULL,
+    LearningObjective NVARCHAR(MAX) NULL,
+    TopicId UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Topic(Id)
+);
+
+CREATE TABLE AdmissionTest (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    StartDateTime    datetime   NULL,
+    EndDateTime datetime       NULL,
+    TestFees decimal        NULL,
+    CourseId UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Course(Id)
+);
+
+CREATE TABLE Instructor (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Name NVARCHAR(255) NULL,
+    Email NVARCHAR(255) NULL,
+    CourseId UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Course(Id)
+);
+
+CREATE TABLE Address (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Street NVARCHAR(255) NULL,
+    City NVARCHAR(255) NULL,
+    Country NVARCHAR(255) NULL,
+    InstructorId UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Instructor(Id)
+);
+
+CREATE TABLE Phone (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Number NVARCHAR(255) NOT NULL,
+    Extension NVARCHAR(255) NULL,
+    CountryCode NVARCHAR(255) NOT NULL,
+    InstructorId UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Instructor(Id)
+);
+
+
+
+-------------------------------------------------------
+
+
+
+
 CREATE TABLE [dbo].[Course] (
     [Id]              UNIQUEIDENTIFIER NOT NULL,
     [Title]           NVARCHAR(50) NULL,
