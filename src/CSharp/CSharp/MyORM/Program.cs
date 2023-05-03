@@ -1,71 +1,77 @@
 ﻿// See https://aka.ms/new-console-template for more information
 string DbConnection = "Server=.\\SQLEXPRESS;Database=Aspnetb8;User Id=aspnetb8;Password=123456;";
 
-
+var course = new Course();
 
 
 // Create a new Course object to insert into the database
-var course = new Course
-{
-    Id = Guid.NewGuid(),
-    Title = "C#",
-    Teacher = new Instructor
-    {
-        Id = Guid.NewGuid(),
-        Name = "jalal",
-        Email = "johndoe@example.com",
-        PhoneNumbers = new List<Phone> {
-            new Phone {
-                Id = Guid.NewGuid(),
-                Number = "01746902499",
-                Extension = "123",
-                CountryCode = "+1"
+//var course = new Course
+//{
+//    Id = Guid.NewGuid(),
+//    Title = "C#",
+//    Teacher = new Instructor
+//    {
+//        Id = Guid.NewGuid(),
+//        Name = "jalal",
+//        Email = "johndoe@example.com",
+//        PhoneNumbers = new List<Phone> {
+//            new Phone {
+//                Id = Guid.NewGuid(),
+//                Number = "01746902499",
+//                Extension = "123",
+//                CountryCode = "+1"
 
-            }
-        },
-        PresentAddress = new Address
-        {
-            Id = Guid.NewGuid(),
-            Street = "Nayapara",
-            City = "Anytown",
-            Country = "USA"
-        },
-        PermanentAddress = new Address
-        {
-            Id = Guid.NewGuid(),
-            Street = "Paharpur",
-            City = "Gazipur",
-            Country = "Bangladesh"
-        }
+//            }
+//        },
+//        PresentAddress = new Address
+//        {
+//            Id = Guid.NewGuid(),
+//            Street = "Nayapara",
+//            City = "Anytown",
+//            Country = "USA"
+//        },
+//        PermanentAddress = new Address
+//        {
+//            Id = Guid.NewGuid(),
+//            Street = "Paharpur",
+//            City = "Gazipur",
+//            Country = "Bangladesh"
+//        }
 
-    },
-    Topics = new List<Topic> {
-        new Topic {
-            Id = Guid.NewGuid(),
-            Title = "Geting Srarted",
-            Description = "Learn about",
-            Sessions = new List<Session>{new Session { Id = Guid.NewGuid(), DurationInHour=60, LearningObjective="abc" } }
-        },
-        new Topic {
-            Id = Guid.NewGuid(),
-            Title = "Tools Installation",
-            Description = "variables, data types, and control flow",
-            Sessions = new List<Session>{new Session { Id = Guid.NewGuid(), DurationInHour=55, LearningObjective="abc" } }
-        }
-    },
-    Tests = new List<AdmissionTest>()
-    {
-        new AdmissionTest(){Id = Guid.NewGuid(), StartDateTime = DateTime.Now, EndDateTime=DateTime.Today, TestFees=200},
-        new AdmissionTest(){Id = Guid.NewGuid(), StartDateTime = DateTime.Now, EndDateTime=DateTime.Today, TestFees=300},
+//    },
+//    Topics = new List<Topic> {
+//        new Topic {
+//            Id = Guid.NewGuid(),
+//            Title = "Geting Srarted",
+//            Description = "Learn about",
+//            Sessions = new List<Session>{new Session { Id = Guid.NewGuid(), DurationInHour=60, LearningObjective="abc" } }
+//        },
+//        new Topic {
+//            Id = Guid.NewGuid(),
+//            Title = "Tools Installation",
+//            Description = "variables, data types, and control flow",
+//            Sessions = new List<Session>{new Session { Id = Guid.NewGuid(), DurationInHour=55, LearningObjective="abc" } }
+//        }
+//    },
+//    Tests = new List<AdmissionTest>()
+//    {
+//        new AdmissionTest(){Id = Guid.NewGuid(), StartDateTime = DateTime.Now, EndDateTime=DateTime.Today, TestFees=200},
+//        new AdmissionTest(){Id = Guid.NewGuid(), StartDateTime = DateTime.Now, EndDateTime=DateTime.Today, TestFees=300},
 
-    },
-    Fees = 1000.00
-};
+//    },
+//    Fees = 1000.00
+//};
 // Create a new instance of the MyORM class
 var orm = new TestORM<Guid, Course>(DbConnection);
 // Call the Insert method on the MyORM instance to insert the Course object into the database
 orm.Insert(course);
 
+//for Update
+Guid myGuid = new Guid("257ae788-ad3f-4ff4-b6ea-8645071daea7");
+course.Id = myGuid;
+course.Title = "C++";
+//orm.Update(course);
+orm.GetAll();
 
 
 

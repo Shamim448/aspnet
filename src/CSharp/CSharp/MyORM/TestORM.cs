@@ -108,7 +108,7 @@ public class TestORM<G, T> where T : IEntity<G>
         var tableName = type.Name;
         EntityInfo entityInfo = new EntityInfo(entity);
         string columnName = string.Join(", ", entityInfo.GetProperties().Select(p => $"{p.Name} = @{p.Name}"));
-        string sql = $"Update {tableName} set {columnName} where Title = @Title";
+        string sql = $"Update {tableName} set {columnName} where Id = @Id";
         SqlConnection connection = new SqlConnection(_connectionString);
         SqlCommand cmd = new SqlCommand(sql, connection);
         //initialize value in parameters
@@ -125,7 +125,7 @@ public class TestORM<G, T> where T : IEntity<G>
                 connection.Open();
                 cmd.Parameters.AddWithValue("@Id", entity.Id);
                 cmd.ExecuteNonQuery();
-                Console.WriteLine("Record Insert Successfully");
+                Console.WriteLine("Record Update Successfully");
             }
         }
         catch (SqlException ex)
@@ -163,14 +163,35 @@ public class TestORM<G, T> where T : IEntity<G>
     {
         #region Get_All_Table_Data
         Type type = typeof(T);
-        var tableName = type.Name;
-
-        //sql query for select all data
-        string sql = $"Select * from {tableName}";
-        _dataUtility.ReadData(sql);
+        GetAll(type);
+        
         #endregion
     }
+    public void GetAll(object item)
+    {
+        Type type = item.GetType();
+        var tableName = type.Name;
+        PropertyInfo[] properties = type.GetProperties();
 
+        foreach (var property in properties)
+        {
+
+            var values = property.GetValue(item);
+            if ((property.PropertyType.IsGenericType || values is IList) && values != null)
+            {
+                IList list = (IList)values;
+                foreach (var value in list)
+                {
+                    GetAll(value);
+
+                }
+            }
+            else if (property.PropertyType.IsClass && values != null && property.PropertyType != typeof(string))
+            {
+                GetAll(values);
+            }
+        }
+    }
 
     //public void ChieldObjectInsert(object item)
     //{
