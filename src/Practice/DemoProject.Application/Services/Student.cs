@@ -1,4 +1,6 @@
-﻿namespace DemoProject.web.Models
+﻿using DemoProject.Domain.Entities;
+
+namespace DemoProject.Application.Services
 {
     public class Student : IStudent
     {

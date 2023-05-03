@@ -1,4 +1,4 @@
-﻿namespace DemoProject.web.Models
+﻿namespace DemoProject.Domain.Entities
 {
     public interface IStudent
     {

@@ -1,4 +1,6 @@
-﻿using DemoProject.web.Models;
+﻿using DemoProject.Application.Services;
+using DemoProject.Domain.Services;
+using DemoProject.web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,11 +10,11 @@ namespace DemoProject.web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        public IStudent _student;
-        public HomeController(ILogger<HomeController> logger, IStudent student)
+        private readonly IStudentService _studentService;
+        public HomeController(ILogger<HomeController> logger, IStudentService studentService)
         {
             _logger = logger;
-            _student = student;     
+            _studentService = studentService;
         }
         public IActionResult Index()
         {    
