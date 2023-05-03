@@ -1,5 +1,6 @@
 ﻿using DemoProject.Application.Services;
 using DemoProject.Domain.Services;
+using DemoProject.web.Data;
 using DemoProject.web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -11,13 +12,17 @@ namespace DemoProject.web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IStudentService _studentService;
-        public HomeController(ILogger<HomeController> logger, IStudentService studentService)
+        private readonly IConfiguration _config;
+        public HomeController(ILogger<HomeController> logger, IStudentService studentService, IConfiguration config)
         {
             _logger = logger;
             _studentService = studentService;
+            _config = config;
         }
         public IActionResult Index()
         {    
+            AdoNetUtility adoNetUtility = new AdoNetUtility(_config.GetConnectionString("DefaultConnection"));
+            adoNetUtility.WriteOperation("Test query"); 
             _logger.LogError("This is a test error?");
             return View();
         }
