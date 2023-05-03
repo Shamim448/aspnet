@@ -7,14 +7,17 @@ namespace DemoProject.web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public IStudent _student;
+        public HomeController(ILogger<HomeController> logger, IStudent student)
         {
             _logger = logger;
+            _student = student;
+            _student.GetStudent();
         }
-
         public IActionResult Index()
         {
+            
+            _logger.LogError("This is a test error?");
             return View();
         }
 
