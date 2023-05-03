@@ -1,11 +1,13 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using DemoProject.Persistance;
 using DemoProject.web;
 using DemoProject.web.Data;
 using DemoProject.web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -17,8 +19,9 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+var migrationAssembly = Assembly.GetExecutingAssembly().FullName;
+builder.Services.AddDbContext< ApplicationDbContext>(options =>
+    options.UseSqlServer(connectionString, (x) => x.MigrationsAssembly(migrationAssembly)));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
