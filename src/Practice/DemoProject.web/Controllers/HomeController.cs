@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
+
 namespace DemoProject.web.Controllers
 {
     public class HomeController : Controller
@@ -11,12 +12,10 @@ namespace DemoProject.web.Controllers
         public HomeController(ILogger<HomeController> logger, IStudent student)
         {
             _logger = logger;
-            _student = student;
-            _student.GetStudent();
+            _student = student;     
         }
         public IActionResult Index()
-        {
-            
+        {    
             _logger.LogError("This is a test error?");
             return View();
         }
