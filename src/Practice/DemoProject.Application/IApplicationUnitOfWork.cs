@@ -7,6 +7,6 @@ namespace DemoProject.Application
 {
     public interface IApplicationUnitOfWork : IUnitOfWork
     {
-        IStudentRepository Courses { get; }
+        IStudentRepository Students { get; }
     }
 }

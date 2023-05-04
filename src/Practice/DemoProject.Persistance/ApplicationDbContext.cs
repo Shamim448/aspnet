@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using DemoProject.Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace DemoProject.Persistance
+namespace DemoProject.Persistance 
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
     {
         private readonly string _connectionString;
         private readonly string _migrationAssembly;
@@ -11,6 +12,9 @@ namespace DemoProject.Persistance
             _connectionString = connectionString;
             _migrationAssembly = migrationAssembly;
         }
+
+       
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if(!optionsBuilder.IsConfigured)
@@ -23,5 +27,7 @@ namespace DemoProject.Persistance
         {
             
         }
+
+        public DbSet<Student> Students { get; set; }
     }
 }
