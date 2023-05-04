@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FirstDemo.Domain.UnitOfWorks
+namespace DemoProject.Domain.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {

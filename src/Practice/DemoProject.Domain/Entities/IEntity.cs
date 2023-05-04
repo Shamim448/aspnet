@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DemoProject.Domain.Repositories
+namespace DemoProject.Domain.Entities
 {
-    public interface IStudentRepository
+    public interface IEntity<T>
     {
+        T Id { get; set; }
     }
-
 }

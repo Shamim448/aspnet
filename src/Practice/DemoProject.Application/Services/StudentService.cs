@@ -1,4 +1,5 @@
-﻿using DemoProject.Domain.Repositories;
+﻿using DemoProject.Application.Features.Training.Repositories;
+using DemoProject.Domain.Repositories;
 using DemoProject.Domain.Services;
 using System;
 using System.Collections.Generic;

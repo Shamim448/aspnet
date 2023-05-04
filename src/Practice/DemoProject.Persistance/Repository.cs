@@ -8,11 +8,9 @@ using System.Data.Common;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Data.SqlTypes;
-using System.Linq.Dynamic.Core;
-using FirstDemo.Domain.Repositories;
-using FirstDemo.Domain.Entities;
 
-namespace FirstDemo.Persistence
+
+namespace DemoProject.Persistence
 {
     public abstract class Repository<TEntity, TKey>
         : IRepository<TEntity, TKey>
