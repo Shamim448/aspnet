@@ -11,7 +11,12 @@
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.4" />
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
+		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.2" />
 
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\DemoProject.Application\DemoProject.Application.csproj" />
+	  <ProjectReference Include="..\DemoProject.Domain\DemoProject.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

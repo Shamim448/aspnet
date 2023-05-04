@@ -8,7 +8,9 @@ using System.Data.Common;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Data.SqlTypes;
-
+using DemoProject.Domain.Repositories;
+using DemoProject.Domain.Entities;
+using System.Linq.Dynamic.Core;
 
 namespace DemoProject.Persistence
 {
