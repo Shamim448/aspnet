@@ -12,9 +12,6 @@ namespace DemoProject.Persistance
             _connectionString = connectionString;
             _migrationAssembly = migrationAssembly;
         }
-
-       
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if(!optionsBuilder.IsConfigured)

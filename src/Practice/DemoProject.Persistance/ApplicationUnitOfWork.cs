@@ -1,7 +1,5 @@
 ﻿using DemoProject.Application;
 using DemoProject.Application.Features.Training.Repositories;
-using FirstDemo.Application;
-using FirstDemo.Application.Features.Training.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

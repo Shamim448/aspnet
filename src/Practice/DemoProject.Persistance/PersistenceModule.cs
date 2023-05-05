@@ -1,12 +1,9 @@
 ﻿using Autofac;
-using FirstDemo.Application;
-using FirstDemo.Application.Features.Training.Repositories;
-using FirstDemo.Application.Services;
-using FirstDemo.Domain.Services;
-using FirstDemo.Persistence.Features.Training.Repositories;
-using FirstDemo.Persistence;
+using DemoProject.Application;
+using DemoProject.Application.Features.Training.Repositories;
+using DemoProject.Persistence.Features.Training.Repositories;
 
-namespace FirstDemo.Persistence
+namespace DemoProject.Persistance
 {
     public class PersistenceModule : Module
     {
@@ -21,7 +18,7 @@ namespace FirstDemo.Persistence
 
         protected override void Load(ContainerBuilder builder)
         {
-			builder.RegisterType<CourseRepository>().As<ICourseRepository>()
+			builder.RegisterType<StudentRepository>().As<IStudentRepository>()
 				.InstancePerLifetimeScope();
 
 			builder.RegisterType<ApplicationDbContext>().AsSelf()
