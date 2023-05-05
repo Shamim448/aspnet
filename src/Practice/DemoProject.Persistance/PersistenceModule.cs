@@ -28,7 +28,7 @@ namespace DemoProject.Persistance
 
 			builder.RegisterType<ApplicationDbContext>().As<IApplicationDbContext>()
 				.WithParameter("connectionString", _connectionString)
-				.WithParameter("migrationAssembly", _migrationAssemblyName)
+				.WithParameter("migrationAssembly  ", _migrationAssemblyName)
 				.InstancePerLifetimeScope();
 
 			builder.RegisterType<ApplicationUnitOfWork>().As<IApplicationUnitOfWork>()

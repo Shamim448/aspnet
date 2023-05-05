@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DemoProject.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace DemoProject.Domain.Services
 {
     public interface IStudentService
     {
+        public IList<Student> GetStudents();
     }
 }

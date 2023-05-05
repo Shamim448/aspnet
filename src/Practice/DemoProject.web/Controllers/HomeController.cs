@@ -20,10 +20,10 @@ namespace DemoProject.web.Controllers
             _config = config;
         }
         public IActionResult Index()
-        {    
+        {   /* 
             AdoNetUtility adoNetUtility = new AdoNetUtility(_config.GetConnectionString("DefaultConnection"));
             adoNetUtility.WriteOperation("Test query"); 
-            _logger.LogError("This is a test error?");
+            _logger.LogError("This is a test error?");*/
             return View();
         }
 

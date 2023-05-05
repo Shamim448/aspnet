@@ -1,4 +1,5 @@
 ﻿using DemoProject.Application.Features.Training.Repositories;
+using DemoProject.Domain.Entities;
 using DemoProject.Domain.Repositories;
 using DemoProject.Domain.Services;
 using System;
@@ -11,9 +12,14 @@ namespace DemoProject.Application.Services
 {
     public class StudentService:IStudentService
     {
-        private readonly IStudentRepository _studentRepository; 
-        public StudentService(IStudentRepository studentRepository) {
-            _studentRepository = studentRepository;
+        private readonly IApplicationUnitOfWork _unitOfWork; 
+        public StudentService(IApplicationUnitOfWork unitOfWork) {
+            _unitOfWork = unitOfWork;
+        } 
+
+        public IList<Student> GetStudents()
+        {
+           return _unitOfWork.Students.GetAll();
         }
     }
 }

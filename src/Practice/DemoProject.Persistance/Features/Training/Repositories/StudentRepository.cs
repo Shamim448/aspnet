@@ -12,7 +12,7 @@ namespace DemoProject.Persistence.Features.Training.Repositories
 {
 	public class StudentRepository : Repository<Student, Guid>, IStudentRepository
     {
-		public StudentRepository(DbContext context) : base(context)
+		public StudentRepository(ApplicationDbContext context) : base(context)
 		{
 		}
 	}
