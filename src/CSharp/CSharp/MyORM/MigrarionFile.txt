@@ -1,0 +1,393 @@
+﻿CREATE TABLE Course (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Title NVARCHAR(255) NULL,
+    Fees decimal NULL
+);
+
+CREATE TABLE Topic (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Title NVARCHAR(255) NULL,
+    Description NVARCHAR(MAX) NULL,
+    CourseId UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Course(Id)
+);
+CREATE TABLE Session (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    DurationInHour int NULL,
+    LearningObjective NVARCHAR(MAX) NULL,
+    TopicId UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Topic(Id)
+);
+
+CREATE TABLE AdmissionTest (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    StartDateTime    datetime   NULL,
+    EndDateTime datetime       NULL,
+    TestFees decimal        NULL,
+    CourseId UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Course(Id)
+);
+
+CREATE TABLE Instructor (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Name NVARCHAR(255) NULL,
+    Email NVARCHAR(255) NULL,
+    CourseId UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Course(Id)
+);
+
+CREATE TABLE Address (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Street NVARCHAR(255) NULL,
+    City NVARCHAR(255) NULL,
+    Country NVARCHAR(255) NULL,
+    InstructorId UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Instructor(Id)
+);
+
+CREATE TABLE Phone (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Number NVARCHAR(255) NOT NULL,
+    Extension NVARCHAR(255) NULL,
+    CountryCode NVARCHAR(255) NOT NULL,
+    InstructorId UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Instructor(Id)
+);
+
+
+
+-------------------------------------------------------
+
+
+
+
+CREATE TABLE [dbo].[Course] (
+    [Id]              UNIQUEIDENTIFIER NOT NULL,
+    [Title]           NVARCHAR(50) NULL,
+    [Fees]            FLOAT (53)     NULL,
+    CONSTRAINT [PK_Course] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[Topic] (
+    [Id]       UNIQUEIDENTIFIER NOT NULL,
+    [CourseId] UNIQUEIDENTIFIER NULL,
+    [Title]    NVARCHAR (100)   NULL,
+    [Duration] FLOAT (53)       NULL,
+    FOREIGN KEY ([CourseId]) REFERENCES [dbo].[Course] ([Id]),
+    CONSTRAINT [PK_Topics] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[Instructor] (
+    [Id]       UNIQUEIDENTIFIER NOT NULL,
+    [CourseId] UNIQUEIDENTIFIER NULL,
+    [Name]    NVARCHAR (100)    NULL,
+    [Email]    NVARCHAR (100)   NULL,
+    FOREIGN KEY ([CourseId]) REFERENCES [dbo].[Course] ([Id]),
+    CONSTRAINT [PK_Instructor] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+CREATE TABLE [dbo].[Address] (
+    [Id]       UNIQUEIDENTIFIER NOT NULL,
+    [InstructorId] UNIQUEIDENTIFIER NULL,
+    [Street]    NVARCHAR (100)      NULL,
+    [City]    NVARCHAR (100)        NULL,
+    [Country]    NVARCHAR (100)     NULL,
+    FOREIGN KEY ([InstructorId]) REFERENCES [dbo].[Instructor] ([Id]),
+    CONSTRAINT [PK_Address] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+CREATE TABLE [dbo].[AdmissionTest] (
+    [Id]       UNIQUEIDENTIFIER NOT NULL,
+    [CourseId] UNIQUEIDENTIFIER NULL,
+    [StartDateTime]    datetime   NULL,
+    [EndDateTime] datetime       NULL,
+    [TestFees] FLOAT (53)       NULL,
+    FOREIGN KEY ([CourseId]) REFERENCES [dbo].[Course] ([Id]),
+    CONSTRAINT [PK_AdmissionTest] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+---------------------int---------------------------
+CREATE TABLE [dbo].[Courses] (
+    [Id]              int NOT NULL,
+    [Title]           NVARCHAR(50) NULL,
+    [Fees]            FLOAT (53)     NULL,
+    CONSTRAINT [PK_Courses] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[Topics] (
+    [Id]       int NOT NULL,
+    [CourseId] int NULL,
+    [Title]    NVARCHAR (100)   NULL,
+    [Duration] FLOAT (53)       NULL,
+    FOREIGN KEY ([CourseId]) REFERENCES [dbo].[Courses] ([Id]),
+    CONSTRAINT [PK_Topics] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[Instructors] (
+    [Id]       int NOT NULL,
+    [CourseId] int NULL,
+    [Name]    NVARCHAR (100)    NULL,
+    [Email]    NVARCHAR (100)   NULL,
+    FOREIGN KEY ([CourseId]) REFERENCES [dbo].[Courses] ([Id]),
+    CONSTRAINT [PK_Instructors] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+CREATE TABLE [dbo].[Addresss] (
+    [Id]       int NOT NULL,
+    [InstructorId] int NULL,
+    [Street]    NVARCHAR (100)      NULL,
+    [City]    NVARCHAR (100)        NULL,
+    [Country]    NVARCHAR (100)     NULL,
+    FOREIGN KEY ([InstructorId]) REFERENCES [dbo].[Instructors] ([Id]),
+    CONSTRAINT [PK_Addresss] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+CREATE TABLE [dbo].[AdmissionTests] (
+    [Id]       int NOT NULL,
+    [CourseId] int NULL,
+    [StartDateTime]    datetime   NULL,
+    [EndDateTime] datetime       NULL,
+    [TestFees] FLOAT (53)       NULL,
+    FOREIGN KEY ([CourseId]) REFERENCES [dbo].[Courses] ([Id]),
+    CONSTRAINT [PK_AdmissionTests] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE [dbo].[Address] (
+    [Id] [int] NOT NULL,
+    [Street] [nvarchar](max) NOT NULL,
+    [City] [nvarchar](max) NOT NULL,
+    [Country] [nvarchar](max) NOT NULL,
+    CONSTRAINT [PK_Address] PRIMARY KEY CLUSTERED ([Id] ASC)
+)
+
+CREATE TABLE [dbo].[Instructor] (
+    [Id] [int] NOT NULL,
+    [Name] [nvarchar](max) NOT NULL,
+    [Email] [nvarchar](max) NOT NULL,
+    [PresentAddress_Id] [int] NOT NULL,
+    [PermanentAddress_Id] [int] NOT NULL,
+    CONSTRAINT [PK_Instructor] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Instructor_Address_PresentAddress_Id] FOREIGN KEY ([PresentAddress_Id]) REFERENCES [dbo].[Address] ([Id]),
+    CONSTRAINT [FK_Instructor_Address_PermanentAddress_Id] FOREIGN KEY ([PermanentAddress_Id]) REFERENCES [dbo].[Address] ([Id])
+)
+
+CREATE TABLE [dbo].[Phone] (
+    [Id] [int] NOT NULL,
+    [Number] [nvarchar](max) NOT NULL,
+    [Extension] [nvarchar](max) NOT NULL,
+    [CountryCode] [nvarchar](max) NOT NULL,
+    CONSTRAINT [PK_Phone] PRIMARY KEY CLUSTERED ([Id] ASC)
+)
+
+CREATE TABLE [dbo].[Course] (
+    [Id] [int] NOT NULL,
+    [Title] [nvarchar](max) NOT NULL,
+    [Fees] [float] NOT NULL,
+    [Teacher_Id] [int] NOT NULL,
+    CONSTRAINT [PK_Course] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Course_Instructor_Teacher_Id] FOREIGN KEY ([Teacher_Id]) REFERENCES [dbo].[Instructor] ([Id])
+)
+
+CREATE TABLE [dbo].[AdmissionTest] (
+    [Id] [int] NOT NULL,
+    [StartDateTime] [datetime] NOT NULL,
+    [EndDateTime] [datetime] NOT NULL,
+    [TestFees] [float] NOT NULL,
+    [Course_Id] [int] NOT NULL,
+    CONSTRAINT [PK_AdmissionTest] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_AdmissionTest_Course_Course_Id] FOREIGN KEY ([Course_Id]) REFERENCES [dbo].[Course] ([Id])
+)
+
+CREATE TABLE [dbo].[Topic] (
+    [Id] [int] NOT NULL,
+    [Title] [nvarchar](max) NOT NULL,
+    [Description] [nvarchar](max) NOT NULL,
+    [Course_Id] [int] NOT NULL,
+    CONSTRAINT [PK_Topic] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Topic_Course_Course_Id] FOREIGN KEY ([Course_Id]) REFERENCES [dbo].[Course] ([Id])
+)
+
+CREATE TABLE [dbo].[Session] (
+    [Id] [int] NOT NULL,
+    [DurationInHour] [int] NOT NULL,
+    [LearningObjective] [nvarchar](max) NOT NULL,
+    [Topic_Id] [int] NOT NULL,
+    CONSTRAINT [PK_Session] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Session_Topic_Topic_Id] FOREIGN KEY ([Topic_Id]) REFERENCES [dbo].[Topic] ([Id])
+)
+=======
+CREATE TABLE [dbo].[Course] (
+    [Id]              UNIQUEIDENTIFIER NOT NULL,
+    [Title]           NVARCHAR(50) NULL,
+    [Fees]            FLOAT (53)     NULL,
+    [IsActive]        BIT            NULL,
+    [CourseStartDate] DATETIME       NULL,
+    CONSTRAINT [PK_Course] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[Topic] (
+    [Id]       UNIQUEIDENTIFIER NOT NULL,
+    [CourseId] UNIQUEIDENTIFIER NULL,
+    [Title]    NVARCHAR (100)   NULL,
+    [Duration] FLOAT (53)       NULL,
+    FOREIGN KEY ([CourseId]) REFERENCES [dbo].[Course] ([Id]),
+    CONSTRAINT [PK_Topics] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[Instructor] (
+    [Id]       UNIQUEIDENTIFIER NOT NULL,
+    [CourseId] UNIQUEIDENTIFIER NULL,
+    [Name]    NVARCHAR (100)    NULL,
+    [Email]    NVARCHAR (100)   NULL,
+    FOREIGN KEY ([CourseId]) REFERENCES [dbo].[Course] ([Id]),
+    CONSTRAINT [PK_Instructor] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+CREATE TABLE [dbo].[Address] (
+    [Id]       UNIQUEIDENTIFIER NOT NULL,
+    [InstructorId] UNIQUEIDENTIFIER NULL,
+    [Street]    NVARCHAR (100)      NULL,
+    [City]    NVARCHAR (100)        NULL,
+    [Country]    NVARCHAR (100)     NULL,
+    FOREIGN KEY ([InstructorId]) REFERENCES [dbo].[Instructor] ([Id]),
+    CONSTRAINT [PK_Address] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+
+
+CREATE TABLE [dbo].[Address] (
+    [Id] [int] NOT NULL,
+    [Street] [nvarchar](max) NOT NULL,
+    [City] [nvarchar](max) NOT NULL,
+    [Country] [nvarchar](max) NOT NULL,
+    CONSTRAINT [PK_Address] PRIMARY KEY CLUSTERED ([Id] ASC)
+)
+
+CREATE TABLE [dbo].[Instructor] (
+    [Id] [int] NOT NULL,
+    [Name] [nvarchar](max) NOT NULL,
+    [Email] [nvarchar](max) NOT NULL,
+    [PresentAddress_Id] [int] NOT NULL,
+    [PermanentAddress_Id] [int] NOT NULL,
+    CONSTRAINT [PK_Instructor] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Instructor_Address_PresentAddress_Id] FOREIGN KEY ([PresentAddress_Id]) REFERENCES [dbo].[Address] ([Id]),
+    CONSTRAINT [FK_Instructor_Address_PermanentAddress_Id] FOREIGN KEY ([PermanentAddress_Id]) REFERENCES [dbo].[Address] ([Id])
+)
+
+CREATE TABLE [dbo].[Phone] (
+    [Id] [int] NOT NULL,
+    [Number] [nvarchar](max) NOT NULL,
+    [Extension] [nvarchar](max) NOT NULL,
+    [CountryCode] [nvarchar](max) NOT NULL,
+    CONSTRAINT [PK_Phone] PRIMARY KEY CLUSTERED ([Id] ASC)
+)
+
+CREATE TABLE [dbo].[Course] (
+    [Id] [int] NOT NULL,
+    [Title] [nvarchar](max) NOT NULL,
+    [Fees] [float] NOT NULL,
+    [Teacher_Id] [int] NOT NULL,
+    CONSTRAINT [PK_Course] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Course_Instructor_Teacher_Id] FOREIGN KEY ([Teacher_Id]) REFERENCES [dbo].[Instructor] ([Id])
+)
+
+CREATE TABLE [dbo].[AdmissionTest] (
+    [Id] [int] NOT NULL,
+    [StartDateTime] [datetime] NOT NULL,
+    [EndDateTime] [datetime] NOT NULL,
+    [TestFees] [float] NOT NULL,
+    [Course_Id] [int] NOT NULL,
+    CONSTRAINT [PK_AdmissionTest] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_AdmissionTest_Course_Course_Id] FOREIGN KEY ([Course_Id]) REFERENCES [dbo].[Course] ([Id])
+)
+
+CREATE TABLE [dbo].[Topic] (
+    [Id] [int] NOT NULL,
+    [Title] [nvarchar](max) NOT NULL,
+    [Description] [nvarchar](max) NOT NULL,
+    [Course_Id] [int] NOT NULL,
+    CONSTRAINT [PK_Topic] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Topic_Course_Course_Id] FOREIGN KEY ([Course_Id]) REFERENCES [dbo].[Course] ([Id])
+)
+
+CREATE TABLE [dbo].[Session] (
+    [Id] [int] NOT NULL,
+    [DurationInHour] [int] NOT NULL,
+    [LearningObjective] [nvarchar](max) NOT NULL,
+    [Topic_Id] [int] NOT NULL,
+    CONSTRAINT [PK_Session] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Session_Topic_Topic_Id] FOREIGN KEY ([Topic_Id]) REFERENCES [dbo].[Topic] ([Id])
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> .theirs

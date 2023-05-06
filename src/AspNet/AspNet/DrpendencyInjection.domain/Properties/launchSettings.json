@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "DrpendencyInjection.domain": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:62350;http://localhost:62351"
+    }
+  }
+}
