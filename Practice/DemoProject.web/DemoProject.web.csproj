@@ -25,6 +25,31 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\adminlte3\css\adminlte.css.map" />
+    <None Include="wwwroot\adminlte3\css\adminlte.min.css.map" />
+    <None Include="wwwroot\adminlte3\css\alt\adminlte.components.css.map" />
+    <None Include="wwwroot\adminlte3\css\alt\adminlte.components.min.css.map" />
+    <None Include="wwwroot\adminlte3\css\alt\adminlte.core.css.map" />
+    <None Include="wwwroot\adminlte3\css\alt\adminlte.core.min.css.map" />
+    <None Include="wwwroot\adminlte3\css\alt\adminlte.extra-components.css.map" />
+    <None Include="wwwroot\adminlte3\css\alt\adminlte.extra-components.min.css.map" />
+    <None Include="wwwroot\adminlte3\css\alt\adminlte.light.css.map" />
+    <None Include="wwwroot\adminlte3\css\alt\adminlte.light.min.css.map" />
+    <None Include="wwwroot\adminlte3\css\alt\adminlte.pages.css.map" />
+    <None Include="wwwroot\adminlte3\css\alt\adminlte.pages.min.css.map" />
+    <None Include="wwwroot\adminlte3\css\alt\adminlte.plugins.css.map" />
+    <None Include="wwwroot\adminlte3\css\alt\adminlte.plugins.min.css.map" />
+    <None Include="wwwroot\adminlte3\js\adminlte.js" />
+    <None Include="wwwroot\adminlte3\js\adminlte.js.map" />
+    <None Include="wwwroot\adminlte3\js\adminlte.min.js" />
+    <None Include="wwwroot\adminlte3\js\adminlte.min.js.map" />
+    <None Include="wwwroot\adminlte3\js\demo.js" />
+    <None Include="wwwroot\adminlte3\js\pages\dashboard.js" />
+    <None Include="wwwroot\adminlte3\js\pages\dashboard2.js" />
+    <None Include="wwwroot\adminlte3\js\pages\dashboard3.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DemoProject.Application\DemoProject.Application.csproj" />
     <ProjectReference Include="..\DemoProject.Persistance\DemoProject.Persistance.csproj" />
   </ItemGroup>
