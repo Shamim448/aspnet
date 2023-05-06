@@ -4,4 +4,10 @@
 }
 
 <h1>Students</h1>
-
+@foreach(var s in Model.GetTopStudents())
+{
+    <h2>@s.Name</h2>
+    <h2>@s.Email</h2>
+    <h2>@s.Phone</h2>
+    <h2>@s.Address</h2>
+}

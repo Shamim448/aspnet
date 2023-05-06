@@ -13,12 +13,16 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 var migrationAssembly = Assembly.GetExecutingAssembly().FullName;
+
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
-    containerBuilder.RegisterModule(new ApplicationModule(connectionString, migrationAssembly));
-    containerBuilder.RegisterModule(new PersistenceModule(connectionString, migrationAssembly));
-    containerBuilder.RegisterModule(new WebModule(connectionString, migrationAssembly));
+    containerBuilder.RegisterModule(new ApplicationModule(connectionString,
+        migrationAssembly));
+    containerBuilder.RegisterModule(new PersistenceModule(connectionString,
+        migrationAssembly));
+    containerBuilder.RegisterModule(new WebModule(connectionString,
+        migrationAssembly));
 });
 
 

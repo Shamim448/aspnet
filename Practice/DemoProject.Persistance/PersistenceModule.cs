@@ -7,14 +7,14 @@ namespace DemoProject.Persistance
 {
     public class PersistenceModule : Module
     {
-		private readonly string _connectionString;
-		private readonly string _migrationAssemblyName;
+        private readonly string _connectionString;
+        private readonly string _migrationAssemblyName;
 
-		public PersistenceModule(string connectionString, string migrationAssemblyName)
-		{
-			_connectionString = connectionString;
-			_migrationAssemblyName = migrationAssemblyName;
-		}
+        public PersistenceModule(string connectionString, string migrationAssemblyName)
+        {
+            _connectionString = connectionString;
+            _migrationAssemblyName = migrationAssemblyName;
+        }
 
         protected override void Load(ContainerBuilder builder)
         {
@@ -28,7 +28,7 @@ namespace DemoProject.Persistance
 
 			builder.RegisterType<ApplicationDbContext>().As<IApplicationDbContext>()
 				.WithParameter("connectionString", _connectionString)
-				.WithParameter("migrationAssembly  ", _migrationAssemblyName)
+				.WithParameter("migrationAssembly", _migrationAssemblyName)
 				.InstancePerLifetimeScope();
 
 			builder.RegisterType<ApplicationUnitOfWork>().As<IApplicationUnitOfWork>()
