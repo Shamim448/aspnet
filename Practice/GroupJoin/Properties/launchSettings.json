@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "GroupJoin": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:7036;http://localhost:7037"
+    }
+  }
+}
