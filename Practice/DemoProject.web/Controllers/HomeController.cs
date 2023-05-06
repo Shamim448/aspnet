@@ -10,13 +10,11 @@ namespace DemoProject.web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IStudentService _studentService;
+        private readonly ILogger<HomeController> _logger;  
         private readonly IConfiguration _config;
-        public HomeController(ILogger<HomeController> logger, IStudentService studentService, IConfiguration config)
+        public HomeController(ILogger<HomeController> logger,  IConfiguration config)
         {
-            _logger = logger;
-            _studentService = studentService;
+            _logger = logger;           
             _config = config;
         }
         public IActionResult Index()
