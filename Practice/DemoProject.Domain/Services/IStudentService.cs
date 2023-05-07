@@ -10,5 +10,7 @@ namespace DemoProject.Domain.Services
     public interface IStudentService
     {
         public IList<Student> GetStudents();
+        Task <(IList<Student> records, int total, int totalDisplay)> 
+            GetPagedStudentAsync(int pageIndex, int pageSize, string searchText, string orderBy);
     }
 }

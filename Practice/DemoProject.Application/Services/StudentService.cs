@@ -21,5 +21,16 @@ namespace DemoProject.Application.Services
         {
            return _unitOfWork.Students.GetAll();
         }
+        //Used for 
+        public async Task<(IList<Student> records, int total, int totalDisplay)>
+            GetPagedStudentAsync(int pageIndex, int pageSize, string searchText, string orderBy)
+        {
+            return await Task.Run(() => {
+                var result = _unitOfWork.Students.GetDynamic(x => x.Name.Contains(searchText),
+                orderBy, string.Empty, pageIndex, pageSize, true);
+
+                return result;
+            });
+        }
     }
 }

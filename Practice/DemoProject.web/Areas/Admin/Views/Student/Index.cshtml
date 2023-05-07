@@ -1,4 +1,4 @@
-﻿@model DemoProject.web.Models.StudentListModel
+﻿@model StudentListModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -16,46 +16,24 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="student" class="table table-bordered table-striped">
+                        <table id="Students" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Id</th>
                   </tr>
                   </thead>
-                    </tbody>
-                    <tr>
-                        <td>Misc</td>
-                        <td>IE Mobile</td>
-                        <td>Windows Mobile 6</td>
-                        <td>-</td>
-                        <td>C</td>
-                    </tr>
-                    <tr>
-                        <td>Misc</td>
-                        <td>PSP browser</td>
-                        <td>PSP</td>
-                        <td>-</td>
-                        <td>C</td>
-                    </tr>
-                    <tr>
-                        <td>Other browsers</td>
-                        <td>All others</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>U</td>
-                    </tr>
-                    </tbody>
+                   
                   <tfoot>
                   <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Id</th>
                   </tr>
                   </tfoot>
                 </table>
@@ -71,8 +49,6 @@
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-  
-
 @section Scripts{
 
 <!-- DataTables  & Plugins -->
@@ -92,10 +68,13 @@
 <!-- Page specific script -->
 <script>
   $(function () {
-    $("#student").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $("#Students").DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "/Admin/student/GetStudents",
+                }
+    });
     
   });
 </script>
