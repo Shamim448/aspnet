@@ -7,14 +7,13 @@ namespace Crud.web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ICourse _course;
+       
         
 
 
-        public HomeController(ILogger<HomeController> logger, ICourse course)
+        public HomeController(ILogger<HomeController> logger)
         {
-            _logger = logger;
-            _course = course;
+            _logger = logger;  
             
         }
 
