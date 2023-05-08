@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Linq-101-Sample": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:7014;http://localhost:7030"
+    }
+  }
+}

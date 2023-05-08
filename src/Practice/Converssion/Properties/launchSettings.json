@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Converssion": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:7016;http://localhost:7027"
+    }
+  }
+}
