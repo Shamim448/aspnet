@@ -1,4 +1,5 @@
-﻿using Crud.Domain.UnitOfWork;
+﻿using Crud.Application.Features.Training.Repositories;
+using Crud.Domain.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace Crud.Application
 {
     public interface IApplicationUnitOfWork : IUnitOfWork
     {
+        ICourseRepository Courses { get; }
     }
 }

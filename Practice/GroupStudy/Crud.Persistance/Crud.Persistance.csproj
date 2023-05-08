@@ -17,10 +17,4 @@
     <ProjectReference Include="..\Crud.Application\Crud.Application.csproj" />
   </ItemGroup>
 
-  
-
-  <ItemGroup>
-    <Folder Include="Features\Trining\Repositories\" />
-  </ItemGroup>
-
 </Project>
