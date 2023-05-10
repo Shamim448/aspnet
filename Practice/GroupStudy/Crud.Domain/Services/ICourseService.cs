@@ -1,15 +1,15 @@
 ﻿using Crud.Domain.Entities;
-using Crud.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Crud.Application.Features.Training.Repositories
+namespace Crud.Domain.Services
 {
-    public interface ICourseRepository : IRepository<Course, int>
+    public interface ICourseService
     {
+        public IList<Course> GetCourses();
         
     }
 }

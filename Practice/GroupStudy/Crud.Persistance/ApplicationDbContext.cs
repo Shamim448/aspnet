@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Crud.Domain.Entities;
+using Crud.Persistance;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 namespace Crud.Persiatance
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext :DbContext, IApplicationDbContext
     {
         private readonly string _connectionString;
         private readonly string _migrationAssembly;
@@ -11,6 +13,9 @@ namespace Crud.Persiatance
             _connectionString = connectionString;
             _migrationAssembly = migrationAssembly;
         }
+
+   
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -22,6 +27,6 @@ namespace Crud.Persiatance
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         }
-
+        public DbSet<Course> Courses { get; set; }
     }
 }

@@ -1,0 +1,14 @@
+﻿@model CourseModelList
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Dashboard/Index.cshtml";
+}
+
+<h1>Course</h1>
+@foreach(var course in Model.GetPopularCourses())
+{
+    <h2>@course.Name</h2>
+    <h2>@course.Fees</h2>
+
+}
+

@@ -1,27 +1,29 @@
 ﻿using Autofac;
-using Crud.Application;
 using Crud.Application.Features.Training.Repositories;
 using Crud.Application.Services;
 using Crud.Domain.Services;
-using Crud.Persiatance;
-using Crud.Persistance;
-using Crud.Persistance.Features.Trining.Repositories;
-using Crud.web.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Crud.web
+namespace Crud.Application
 {
-    public class WebModule:Module
+    public class ApplicationModule:Module
     {
         private readonly string _connectionString;
         private readonly string _migrationsAssembly;
-        public WebModule(string connectionString, string migrationsAssembly)
+        public ApplicationModule(string connectionString, string migrationsAssembly)
         {
             _connectionString = connectionString;
             _migrationsAssembly = migrationsAssembly;
         }
         protected override void Load(ContainerBuilder builder)
-        {    
-            builder.RegisterType<CourseModelList>().AsSelf().InstancePerLifetimeScope();  
+        {
+           
+            builder.RegisterType<CourseService>().As<ICourseService>().InstancePerLifetimeScope();
+            
         }
     }
 }
