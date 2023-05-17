@@ -3,37 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crud.web", "Crud.web\Crud.web.csproj", "{E3CDD7BC-5C7A-4C79-9588-088C0E9BC0C0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crud.Domain", "Crud.Domain\Crud.Domain.csproj", "{21E76C9C-F42E-4776-802D-6BF5A572A065}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crud.Application", "Crud.Application\Crud.Application.csproj", "{12D9FE36-93A4-4D8A-B2AF-24C78656DB17}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crud.Persistance", "Crud.Persistance\Crud.Persistance.csproj", "{3DFAE845-098F-4F8D-9AC3-C7C18C59777C}"
-EndProject
 Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E3CDD7BC-5C7A-4C79-9588-088C0E9BC0C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3CDD7BC-5C7A-4C79-9588-088C0E9BC0C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3CDD7BC-5C7A-4C79-9588-088C0E9BC0C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3CDD7BC-5C7A-4C79-9588-088C0E9BC0C0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21E76C9C-F42E-4776-802D-6BF5A572A065}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21E76C9C-F42E-4776-802D-6BF5A572A065}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21E76C9C-F42E-4776-802D-6BF5A572A065}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21E76C9C-F42E-4776-802D-6BF5A572A065}.Release|Any CPU.Build.0 = Release|Any CPU
-		{12D9FE36-93A4-4D8A-B2AF-24C78656DB17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12D9FE36-93A4-4D8A-B2AF-24C78656DB17}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12D9FE36-93A4-4D8A-B2AF-24C78656DB17}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12D9FE36-93A4-4D8A-B2AF-24C78656DB17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3DFAE845-098F-4F8D-9AC3-C7C18C59777C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3DFAE845-098F-4F8D-9AC3-C7C18C59777C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3DFAE845-098F-4F8D-9AC3-C7C18C59777C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3DFAE845-098F-4F8D-9AC3-C7C18C59777C}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
