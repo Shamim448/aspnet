@@ -1,10 +1,11 @@
-using Crud.web.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog.Events;
 using Serilog;
 using Autofac.Extensions.DependencyInjection;
 using Autofac;
+using System.Reflection;
+using Crud.Persistance;
 
 var builder = WebApplication.CreateBuilder(args);
 //serilog Configure
@@ -25,8 +26,11 @@ try {
     });
 //Autofac configuration End
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+    //collect MigrationAssembly Path
+    var migrationAssembly = Assembly.GetExecutingAssembly().FullName;
+    //modify this method because applicationdbcontext has different project
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString, (x) => x.MigrationsAssembly(migrationAssembly)));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
