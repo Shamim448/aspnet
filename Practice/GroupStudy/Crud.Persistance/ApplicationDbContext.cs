@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Crud.Persistance
 {
-    public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         private readonly string _connectionString;
         private readonly string _migrationsAssembly;

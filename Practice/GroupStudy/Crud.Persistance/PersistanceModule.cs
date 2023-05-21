@@ -21,11 +21,11 @@ namespace Crud.Persistance
         {
             builder.RegisterType<ApplicationDbContext>().AsSelf()
                 .WithParameter("connectionString", _connectionString)
-                .WithParameter("migrationAssembly", _migrationsAssembly)
+                .WithParameter("migrationsAssembly", _migrationsAssembly)
                 .InstancePerLifetimeScope();
             builder.RegisterType<ApplicationDbContext>().As<IApplicationDbContext>()
                 .WithParameter("connectionString", _connectionString)
-                .WithParameter("migrationAssembly", _migrationsAssembly)
+                .WithParameter("migrationsAssembly", _migrationsAssembly)
                 .InstancePerLifetimeScope();
         }
     }

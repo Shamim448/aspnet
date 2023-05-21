@@ -18,16 +18,17 @@ builder.Host.UseSerilog((hc, lc) => lc //hc== hosting context lc= loging context
 //End Serilog config
 // Add services to the container.
 try {
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+    //collect MigrationAssembly Path
+    var migrationAssembly = Assembly.GetExecutingAssembly().FullName;
     //Autofac configuration Start
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     {
-
+        containerBuilder.RegisterModule(new PersistanceModule(connectionString, migrationAssembly));
     });
 //Autofac configuration End
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-    //collect MigrationAssembly Path
-    var migrationAssembly = Assembly.GetExecutingAssembly().FullName;
+
     //modify this method because applicationdbcontext has different project
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString, (x) => x.MigrationsAssembly(migrationAssembly)));
