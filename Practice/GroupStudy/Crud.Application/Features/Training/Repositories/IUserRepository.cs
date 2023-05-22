@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Crud.Application.Features.Training.Repositories
 {
-    public interface IUserRepository : IRepository<User , Guid>
+    public interface IUserRepository : IRepository<User , int>
     {
     }
 }

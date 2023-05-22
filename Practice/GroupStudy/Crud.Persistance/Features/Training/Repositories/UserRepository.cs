@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Crud.Persistance.Features.Training.Repositories
 {
-    public class UserRepository : Repository<User, Guid>, IUserRepository
+    public class UserRepository : Repository<User, int>, IUserRepository
     {
         public UserRepository(ApplicationDbContext context) : base(context)
         {
