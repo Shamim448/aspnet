@@ -9,6 +9,8 @@ using Crud.Persistance;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Crud.web;
 using Crud.Application;
+using Microsoft.EntityFrameworkCore.Migrations.Internal;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 //serilog Configure
@@ -28,8 +30,8 @@ try {
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     {
-        containerBuilder.RegisterModule(new PersistanceModule(connectionString, migrationAssembly));
         containerBuilder.RegisterModule(new ApplicationModule(connectionString, migrationAssembly));
+        containerBuilder.RegisterModule(new PersistanceModule(connectionString, migrationAssembly));
         containerBuilder.RegisterModule(new WebModule(connectionString, migrationAssembly));
     });
 //Autofac configuration End

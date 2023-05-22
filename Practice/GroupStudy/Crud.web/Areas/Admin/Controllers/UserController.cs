@@ -12,6 +12,7 @@ namespace Crud.web.Areas.Admin
         {
             _scope = scope;
         }
+        
         public IActionResult Index()
         {
             var model = _scope.Resolve<UserListModel>();

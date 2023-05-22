@@ -9,10 +9,10 @@ namespace Crud.Persistance
     {
         private readonly string _connectionString;
         private readonly string _migrationsAssembly;
-        public ApplicationDbContext(string connectionString, string migrationsAssembly)
+        public ApplicationDbContext(string connectionString, string migrationAssembly)
         {
             _connectionString = connectionString;
-            _migrationsAssembly = migrationsAssembly;
+            _migrationsAssembly = migrationAssembly;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

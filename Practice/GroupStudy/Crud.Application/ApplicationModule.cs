@@ -13,10 +13,10 @@ namespace Crud.Application
     {
         private readonly string _connectionString;
         private readonly string _migrationAssembly;
-        public ApplicationModule(string connectionString, string migrationsAssembly)
+        public ApplicationModule(string connectionString, string migrationAssembly)
         {
             _connectionString = connectionString;
-            _migrationAssembly = migrationsAssembly;
+            _migrationAssembly = migrationAssembly;
         }
         protected override void Load(ContainerBuilder builder)
         {
