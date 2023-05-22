@@ -1,4 +1,7 @@
 ﻿using Autofac;
+using Crud.Application;
+using Crud.Application.Features.Training.Repositories;
+using Crud.Persistance.Features.Training.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +22,8 @@ namespace Crud.Persistance
         }
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<ApplicationUnitOfWork>().As<IApplicationUnitOfWork>().InstancePerLifetimeScope();
             builder.RegisterType<ApplicationDbContext>().AsSelf()
                 .WithParameter("connectionString", _connectionString)
                 .WithParameter("migrationsAssembly", _migrationsAssembly)
