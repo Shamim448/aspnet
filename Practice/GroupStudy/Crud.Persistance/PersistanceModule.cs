@@ -22,7 +22,7 @@ namespace Crud.Persistance
         }
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
+           builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
            
             builder.RegisterType<ApplicationDbContext>().AsSelf()
                 .WithParameter("connectionString", _connectionString)

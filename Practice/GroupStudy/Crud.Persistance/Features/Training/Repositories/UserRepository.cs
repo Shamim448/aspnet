@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Crud.Persistance.Features.Training.Repositories
 {
-    public abstract class UserRepository : Repository<User, int>, IUserRepository
+    public class UserRepository : Repository<User, Guid>, IUserRepository
     {
-        protected UserRepository(ApplicationDbContext context) : base(context)
+        public UserRepository(ApplicationDbContext context) : base(context)
         {
         }
     }

@@ -8,9 +8,10 @@ using System.Reflection;
 using Crud.Persistance;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Crud.web;
-using Crud.Application;
+
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Crud.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 //serilog Configure
@@ -22,7 +23,7 @@ builder.Host.UseSerilog((hc, lc) => lc //hc== hosting context lc= loging context
   );
 //End Serilog config
 // Add services to the container.
-try {
+//try {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
     //collect MigrationAssembly Path
     var migrationAssembly = Assembly.GetExecutingAssembly().FullName;
@@ -30,8 +31,8 @@ try {
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     {
-        containerBuilder.RegisterModule(new ApplicationModule(connectionString, migrationAssembly));
         containerBuilder.RegisterModule(new PersistanceModule(connectionString, migrationAssembly));
+        containerBuilder.RegisterModule(new ApplicationModule(connectionString, migrationAssembly));
         containerBuilder.RegisterModule(new WebModule(connectionString, migrationAssembly));
     });
 //Autofac configuration End
@@ -73,12 +74,12 @@ app.UseAuthorization();
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
-    Log.Information("Project Starting");
+   // Log.Information("Project Starting");
 app.Run();
-}
-catch(Exception ex) {
-    Log.Fatal(ex, "Application Terminated Unexpectedly");
-}
-finally {
-Log.CloseAndFlush();
-}
+//}
+//catch(Exception ex) {
+//    Log.Fatal(ex, "Application Terminated Unexpectedly");
+//}
+//finally {
+//Log.CloseAndFlush();
+//}

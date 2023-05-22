@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Crud.Domain.Repositories
+namespace Crud.Domain.UnitOfWork
 {
     public interface IUnitOfWork:IDisposable
     {
