@@ -1,4 +1,5 @@
-﻿using Crud.Application.Services;
+﻿using Autofac;
+using Crud.Application.Services;
 using Crud.Domain.Services;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace Crud.Application
         }
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<UserService>().As<IUserService>();
+            builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
 
         }
 
