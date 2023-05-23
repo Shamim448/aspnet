@@ -16,8 +16,18 @@ namespace Crud.Application.Services
             _unitOfWork = unitOfWork;
         }
         public IList<User> GetAllUser()
-        {
+        {  
             return _unitOfWork.Users.GetAll();
+        }
+
+        public async Task<(IList<User> records, int total, int totalDisplay)> GetPagedUserAsync(int pageIndex, int pageSize, string searchText, string orderBy)
+        {
+            return await Task.Run(() => {
+                var result = _unitOfWork.Users.GetDynamic(x => x.Name.Contains(searchText),
+                orderBy, string.Empty, pageIndex, pageSize, true);
+
+                return result;
+            });
         }
     }
 }

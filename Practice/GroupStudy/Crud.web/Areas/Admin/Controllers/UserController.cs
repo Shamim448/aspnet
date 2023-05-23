@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Crud.web.Models;
+using DemoProject.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Crud.web.Areas.Admin
@@ -16,7 +17,14 @@ namespace Crud.web.Areas.Admin
         public IActionResult Index()
         {
             var model = _scope.Resolve<UserListModel>();
-            return View(model);
+            return View(model); 
+        }
+        public async Task <JsonResult> GetUsers()
+        {
+            var dataTableModel = new DataTablesAjaxRequestUtility(Request);
+            var model = _scope.Resolve<UserListModel>();
+            var data = await model.GetPagedUsers(dataTableModel);
+            return Json(data);
         }
     }
 }

@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Crud.Application\Crud.Application.csproj" />
+    <ProjectReference Include="..\Crud.Infrastructure\Crud.Infrastructure.csproj" />
     <ProjectReference Include="..\Crud.Persistance\Crud.Persistance.csproj" />
   </ItemGroup>
 
