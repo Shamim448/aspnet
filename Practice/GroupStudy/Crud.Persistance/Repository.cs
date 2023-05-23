@@ -28,6 +28,75 @@ namespace Crud.Persistance
             _dbContext = dbContext;
             _dbSet = _dbContext.Set<TEntity>(); 
         }
+        public virtual void Add(TEntity entity)
+        {
+            _dbSet.Add(entity);
+        }
+
+        public virtual void Remove(TKey id)
+        {
+            var entityToDelete = _dbSet.Find(id);
+            Remove(entityToDelete);
+        }
+
+        public virtual void Remove(TEntity entityToDelete)
+        {
+            if (_dbContext.Entry(entityToDelete).State == EntityState.Detached)
+            {
+                _dbSet.Attach(entityToDelete);
+            }
+            _dbSet.Remove(entityToDelete);
+        }
+        //used for GetPagedUserAsync in service page
+        public virtual (IList<TEntity> data, int total, int totalDisplay) GetDynamic(
+        Expression<Func<TEntity, bool>> filter = null,
+        string orderBy = null,
+        string includeProperties = "", int pageIndex = 1, int pageSize = 10, bool isTrackingOff = false)
+        {
+            IQueryable<TEntity> query = _dbSet;
+            var total = query.Count();
+            var totalDisplay = query.Count();
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+                totalDisplay = query.Count();
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                var result = query.OrderBy(orderBy).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+                if (isTrackingOff)
+                    return (result.AsNoTracking().ToList(), total, totalDisplay);
+                else
+                    return (result.ToList(), total, totalDisplay);
+            }
+            else
+            {
+                var result = query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+                if (isTrackingOff)
+                    return (result.AsNoTracking().ToList(), total, totalDisplay);
+                else
+                    return (result.ToList(), total, totalDisplay);
+            }
+        }
+        //public virtual void Remove(Expression<Func<TEntity, bool>> filter)
+        //{
+        //    _dbSet.RemoveRange(_dbSet.Where(filter));
+        //}
+
+        public virtual void Edit(TEntity entityToUpdate)
+        {
+            _dbSet.Attach(entityToUpdate);
+            _dbContext.Entry(entityToUpdate).State = EntityState.Modified;
+        }
+
 
         //public virtual async Task AddAsync(TEntity entity)
         //{
@@ -268,74 +337,7 @@ namespace Crud.Persistance
         //    }
         //}
 
-        public virtual void Add(TEntity entity)
-        {
-            _dbSet.Add(entity);
-        }
 
-        public virtual void Remove(TKey id)
-        {
-            var entityToDelete = _dbSet.Find(id);
-            Remove(entityToDelete);
-        }
-
-        public virtual void Remove(TEntity entityToDelete)
-        {
-            if (_dbContext.Entry(entityToDelete).State == EntityState.Detached)
-            {
-                _dbSet.Attach(entityToDelete);
-            }
-            _dbSet.Remove(entityToDelete);
-        }
-    //used for GetPagedUserAsync in service page
-    public virtual (IList<TEntity> data, int total, int totalDisplay) GetDynamic(
-    Expression<Func<TEntity, bool>> filter = null,
-    string orderBy = null,
-    string includeProperties = "", int pageIndex = 1, int pageSize = 10, bool isTrackingOff = false)
-        {
-            IQueryable<TEntity> query = _dbSet;
-            var total = query.Count();
-            var totalDisplay = query.Count();
-
-            if (filter != null)
-            {
-                query = query.Where(filter);
-                totalDisplay = query.Count();
-            }
-
-            foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-
-            if (orderBy != null)
-            {
-                var result = query.OrderBy(orderBy).Skip((pageIndex - 1) * pageSize).Take(pageSize);
-                if (isTrackingOff)
-                    return (result.AsNoTracking().ToList(), total, totalDisplay);
-                else
-                    return (result.ToList(), total, totalDisplay);
-            }
-            else
-            {
-                var result = query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
-                if (isTrackingOff)
-                    return (result.AsNoTracking().ToList(), total, totalDisplay);
-                else
-                    return (result.ToList(), total, totalDisplay);
-            }
-        }
-        //public virtual void Remove(Expression<Func<TEntity, bool>> filter)
-        //{
-        //    _dbSet.RemoveRange(_dbSet.Where(filter));
-        //}
-
-        public virtual void Edit(TEntity entityToUpdate)
-        {
-            _dbSet.Attach(entityToUpdate);
-            _dbContext.Entry(entityToUpdate).State = EntityState.Modified;
-        }
 
         //public virtual int GetCount(Expression<Func<TEntity, bool>> filter = null)
         //{
