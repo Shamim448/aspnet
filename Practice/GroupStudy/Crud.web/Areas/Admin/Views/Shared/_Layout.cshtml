@@ -9,6 +9,7 @@
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    @await RenderSectionAsync("Styles", required: false)
     <!-- Font Awesome -->
     <link rel="stylesheet" href="~/AdminTLT/dist/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
@@ -922,7 +923,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="~/AdminTLT/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
 
