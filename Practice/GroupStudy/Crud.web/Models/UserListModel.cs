@@ -27,7 +27,7 @@ namespace Crud.web.Models
                dataTablesUtility.PageIndex,
                dataTablesUtility.PageSize,
                dataTablesUtility.SearchText,
-               dataTablesUtility.GetSortText(new string[] { "Name", "Fee" }));
+               dataTablesUtility.GetSortText(new string[] {"Id", "Name", "Email", "Phone","Address" }));
 
             return new
             {
