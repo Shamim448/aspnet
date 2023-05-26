@@ -1,4 +1,5 @@
-﻿using Crud.Application.Features.Training.Services;
+﻿using Autofac;
+using Crud.Application.Features.Training.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace Crud.web.Areas.Admin.Models
@@ -13,11 +14,15 @@ namespace Crud.web.Areas.Admin.Models
         public string Phone { get; set; }
         [Required]
         public string Address { get; set; }
-        private readonly IUserService _userService;
+        private  IUserService _userService;
         public UserCreateModel() { }
         public UserCreateModel(IUserService userService)
         {
             _userService = userService;
+        }
+        public void ResolveDependency(ILifetimeScope scope)
+        {
+            _userService = scope.Resolve<IUserService>();
         }
     }
 }

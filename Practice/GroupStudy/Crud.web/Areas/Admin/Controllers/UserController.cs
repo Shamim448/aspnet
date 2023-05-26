@@ -24,6 +24,12 @@ namespace Crud.web.Areas.Admin
             var model = _scope.Resolve<UserCreateModel>();
             return View(model);
         }
+        [HttpPost]
+        public IActionResult Create(UserCreateModel model)
+        {
+            model.ResolveDependency(_scope);
+            return View(model);
+        }
         public async Task <JsonResult> GetUsers()
         {
             var dataTableModel = new DataTablesAjaxRequestUtility(Request);
