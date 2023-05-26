@@ -1,11 +1,6 @@
 ﻿using Autofac;
 using Crud.Application.Features.Training.Services;
 using Crud.Infrastructure.Features.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Crud.Infrastructure
 {

@@ -1,11 +1,6 @@
 ﻿using Crud.Application;
 using Crud.Application.Features.Training.Services;
 using Crud.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Crud.Infrastructure.Features.Services
 {

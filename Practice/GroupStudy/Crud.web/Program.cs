@@ -6,13 +6,8 @@ using Autofac.Extensions.DependencyInjection;
 using Autofac;
 using System.Reflection;
 using Crud.Persistance;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Crud.web;
-
-using Microsoft.EntityFrameworkCore.Migrations.Internal;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Crud.Application;
-
 using Crud.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
