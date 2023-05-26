@@ -2,7 +2,7 @@
 using Crud.Domain.Entities;
 using DemoProject.Infrastructure;
 
-namespace Crud.web.Models
+namespace Crud.web.Areas.Admin.Models
 {
     public class UserListModel
     {
@@ -27,7 +27,7 @@ namespace Crud.web.Models
                dataTablesUtility.PageIndex,
                dataTablesUtility.PageSize,
                dataTablesUtility.SearchText,
-               dataTablesUtility.GetSortText(new string[] {"Id", "Name", "Email", "Phone","Address" }));
+               dataTablesUtility.GetSortText(new string[] { "Id", "Name", "Email", "Phone", "Address" }));
 
             return new
             {
@@ -36,12 +36,12 @@ namespace Crud.web.Models
                 data = (from record in data.records
                         select new string[]
                         {
-                                record.Id.ToString(), 
+                                record.Id.ToString(),
                                 record.Name,
                                 record.Email,
                                 record.Phone,
                                 record.Address,
-                                
+
                         }
                     ).ToArray()
             };

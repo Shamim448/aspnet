@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Crud.web.Models;
+using Crud.web.Areas.Admin.Models;
 
 namespace Crud.web
 {
