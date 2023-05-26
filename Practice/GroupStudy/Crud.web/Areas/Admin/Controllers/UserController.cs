@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Crud.Infrastructure.Features.Exceptions;
 using Crud.web.Areas.Admin.Models;
 using DemoProject.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +10,11 @@ namespace Crud.web.Areas.Admin
     public class UserController : Controller
     {
         ILifetimeScope _scope;
-        public UserController(ILifetimeScope scope) 
+        ILogger<UserController> _logger;
+        public UserController(ILifetimeScope scope, ILogger<UserController> logger) 
         {
             _scope = scope;
+            _logger = logger;
         }
         
         public IActionResult Index()
@@ -30,7 +33,16 @@ namespace Crud.web.Areas.Admin
             model.ResolveDependency(_scope);
             if (ModelState.IsValid)
             {
-                model.CreateUser();
+                
+                try {
+                    model.CreateUser();
+                }
+                catch (DuplicateNameException ex) {
+                    _logger.LogError(ex, ex.Message);
+                }
+                catch (Exception c) {
+                    _logger.LogError(c, "Server Error");
+                }
             }
             return View(model);
         }

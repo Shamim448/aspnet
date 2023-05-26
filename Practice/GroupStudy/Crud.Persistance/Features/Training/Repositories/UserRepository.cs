@@ -14,5 +14,16 @@ namespace Crud.Persistance.Features.Training.Repositories
         public UserRepository(ApplicationDbContext context) : base(context)
         {
         }
+            public bool IsDuplicateName(string name, int? id)
+            {
+                int? exeistingValue = null;
+                if (id.HasValue)
+                    exeistingValue = GetCount(x => x.Name == name && x.Id != id.Value);
+                else           
+                    exeistingValue = GetCount(x => x.Name == name);
+                    return exeistingValue > 0;
+                
+            }
+        
     }
 }

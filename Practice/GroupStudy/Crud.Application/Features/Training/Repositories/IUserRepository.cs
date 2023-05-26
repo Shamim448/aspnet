@@ -10,5 +10,6 @@ namespace Crud.Application.Features.Training.Repositories
 {
     public interface IUserRepository : IRepository<User , int>
     {
+         bool IsDuplicateName(string name, int? id);
     }
 }

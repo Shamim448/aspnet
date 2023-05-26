@@ -329,22 +329,22 @@ namespace Crud.Persistance
         //}
 
 
+        //Used for IsDuplicate value check validation in creation
+        public virtual int GetCount(Expression<Func<TEntity, bool>> filter = null)
+        {
+            IQueryable<TEntity> query = _dbSet;
+            var count = 0;
 
-        //public virtual int GetCount(Expression<Func<TEntity, bool>> filter = null)
-        //{
-        //    IQueryable<TEntity> query = _dbSet;
-        //    var count = 0;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+                count = query.Count();
+            }
+            else
+                count = query.Count();
 
-        //    if (filter != null)
-        //    {
-        //        query = query.Where(filter);
-        //        count = query.Count();
-        //    }
-        //    else
-        //        count = query.Count();
-
-        //    return count;
-        //}
+            return count;
+        }
 
         //public virtual IList<TEntity> Get(Expression<Func<TEntity, bool>> filter,
         //    Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)

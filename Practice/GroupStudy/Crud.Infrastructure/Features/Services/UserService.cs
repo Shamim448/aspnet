@@ -1,6 +1,7 @@
 ﻿using Crud.Application;
 using Crud.Application.Features.Training.Services;
 using Crud.Domain.Entities;
+using Crud.Infrastructure.Features.Exceptions;
 
 namespace Crud.Infrastructure.Features.Services
 {
@@ -14,7 +15,13 @@ namespace Crud.Infrastructure.Features.Services
         //create user 
         public void CreateUser(string name, string email, string phone, string address)
         {
-             
+           if(_unitOfWork.Users.IsDuplicateName(name, null))
+            
+                throw new DuplicateNameException("User Name is duplicate");
+           //create user 
+           User user = new User { Name = name, Email = email, Phone = phone, Address = address };
+            _unitOfWork.Users.Add(user);
+            _unitOfWork.Save();
         }
 
         public IList<User> GetAllUser()
