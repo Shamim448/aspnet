@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Crud.web.Models;
+using Crud.web.Areas.Admin.Models;
 using DemoProject.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +18,17 @@ namespace Crud.web.Areas.Admin
         {
             var model = _scope.Resolve<UserListModel>();
             return View(model); 
+        }
+        public IActionResult Create() 
+        {
+            var model = _scope.Resolve<UserCreateModel>();
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult Create(UserCreateModel model)
+        {
+            model.ResolveDependency(_scope);
+            return View(model);
         }
         public async Task <JsonResult> GetUsers()
         {

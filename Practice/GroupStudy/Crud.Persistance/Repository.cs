@@ -1,18 +1,9 @@
 ﻿using Crud.Domain.Entities;
 using Crud.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Data.SqlTypes;
 using System.Data;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Linq.Dynamic.Core;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
 
 namespace Crud.Persistance
 {
