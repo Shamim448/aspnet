@@ -11,6 +11,12 @@ namespace Crud.Infrastructure.Features.Services
         {
             _unitOfWork = unitOfWork;
         }
+        //create user 
+        public void CreateUser(string name, string email, string phone, string address)
+        {
+             
+        }
+
         public IList<User> GetAllUser()
         {
             return _unitOfWork.Users.GetAll();

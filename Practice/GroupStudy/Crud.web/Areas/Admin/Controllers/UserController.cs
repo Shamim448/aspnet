@@ -24,10 +24,14 @@ namespace Crud.web.Areas.Admin
             var model = _scope.Resolve<UserCreateModel>();
             return View(model);
         }
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Create(UserCreateModel model)
         {
             model.ResolveDependency(_scope);
+            if (ModelState.IsValid)
+            {
+                model.CreateUser();
+            }
             return View(model);
         }
         public async Task <JsonResult> GetUsers()
