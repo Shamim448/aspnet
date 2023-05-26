@@ -1,22 +1,22 @@
 ﻿using Autofac;
 using Crud.Application.Features.Training.Services;
+using Crud.Infrastructure.Features.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Crud.Application
+namespace Crud.Infrastructure
 {
-    public class ApplicationModule : Module
-    {       
-        public ApplicationModule()
+    public class InfrastructureModule : Module
+    {     
+        public InfrastructureModule()
         {
-            
         }
         protected override void Load(ContainerBuilder builder)
         {
-          //  builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
+            builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
 
         }
 

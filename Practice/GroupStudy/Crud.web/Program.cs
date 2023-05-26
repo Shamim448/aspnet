@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Crud.Application;
 
+using Crud.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 //serilog Configure
 builder.Host.UseSerilog((hc, lc) => lc //hc== hosting context lc= loging context
@@ -32,8 +34,9 @@ builder.Host.UseSerilog((hc, lc) => lc //hc== hosting context lc= loging context
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     {
         containerBuilder.RegisterModule(new PersistanceModule(connectionString, migrationAssembly));
-        containerBuilder.RegisterModule(new ApplicationModule(connectionString, migrationAssembly));
-        containerBuilder.RegisterModule(new WebModule(connectionString, migrationAssembly));
+        containerBuilder.RegisterModule(new ApplicationModule());
+        containerBuilder.RegisterModule(new InfrastructureModule());
+        containerBuilder.RegisterModule(new WebModule());
     });
 //Autofac configuration End
 

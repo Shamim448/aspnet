@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Crud.Domain.Services
+namespace Crud.Application.Features.Training.Services
 {
     public interface IUserService
     {

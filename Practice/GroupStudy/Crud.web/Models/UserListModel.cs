@@ -1,5 +1,5 @@
-﻿using Crud.Domain.Entities;
-using Crud.Domain.Services;
+﻿using Crud.Application.Features.Training.Services;
+using Crud.Domain.Entities;
 using DemoProject.Infrastructure;
 
 namespace Crud.web.Models
