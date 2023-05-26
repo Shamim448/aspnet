@@ -24,5 +24,12 @@ namespace Crud.web.Areas.Admin.Models
         {
             _userService = scope.Resolve<IUserService>();
         }
+        public void CreateUser()
+        {
+            if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Email))
+            {
+                _userService.CreateUser(Name, Email, Phone, Address);
+            }
+        }
     }
 }

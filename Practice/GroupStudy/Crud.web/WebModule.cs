@@ -12,6 +12,7 @@ namespace Crud.web
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<UserListModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<UserCreateModel>().AsSelf().InstancePerLifetimeScope();
         }
     }
 }
