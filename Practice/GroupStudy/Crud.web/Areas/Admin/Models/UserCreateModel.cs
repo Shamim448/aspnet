@@ -14,17 +14,21 @@ namespace Crud.web.Areas.Admin.Models
         public string Phone { get; set; }
         [Required]
         public string Address { get; set; }
+
         private  IUserService _userService;
-        public UserCreateModel() { }
+        public UserCreateModel() 
+        { 
+        
+        }
         public UserCreateModel(IUserService userService)
         {
             _userService = userService;
         }
-        public void ResolveDependency(ILifetimeScope scope)
+        internal void ResolveDependency(ILifetimeScope scope)
         {
             _userService = scope.Resolve<IUserService>();
         }
-        public void CreateUser()
+        internal void CreateUser()
         {
             if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Email))
             {
