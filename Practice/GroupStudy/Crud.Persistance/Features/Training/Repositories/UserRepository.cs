@@ -11,7 +11,7 @@ namespace Crud.Persistance.Features.Training.Repositories
 {
     public class UserRepository : Repository<User, int>, IUserRepository
     {
-        public UserRepository(ApplicationDbContext context) : base(context)
+        public UserRepository(IApplicationDbContext context) : base((DbContext)context)
         {
         }
             public bool IsDuplicateName(string name, int? id)
