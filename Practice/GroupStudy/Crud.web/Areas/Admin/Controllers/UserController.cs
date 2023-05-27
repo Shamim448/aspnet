@@ -32,16 +32,15 @@ namespace Crud.web.Areas.Admin
         {
             model.ResolveDependency(_scope);
             if (ModelState.IsValid)
-            {
-                
+            {  
                 try {
                     model.CreateUser();
                 }
                 catch (DuplicateNameException ex) {
                     _logger.LogError(ex, ex.Message);
                 }
-                catch (Exception c) {
-                    _logger.LogError(c, "Server Error");
+                catch (Exception e) {
+                    _logger.LogError(e, "Server Error");
                 }
             }
             return View(model);
