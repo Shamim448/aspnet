@@ -6,9 +6,11 @@ using Autofac.Extensions.DependencyInjection;
 using Autofac;
 using System.Reflection;
 using Crud.Persistance;
+using Crud.Persistance.Extentions;
 using Crud.web;
 using Crud.Application;
 using Crud.Infrastructure;
+
 
 var builder = WebApplication.CreateBuilder(args);
 //serilog Configure
@@ -41,8 +43,7 @@ builder.Host.UseSerilog((hc, lc) => lc //hc== hosting context lc= loging context
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
