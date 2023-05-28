@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using Crud.Infrastructure.Features.Exceptions;
 using Crud.web.Areas.Admin.Models;
+using Crud.Web.Models;
+using Crud.Web.Utilities;
 using DemoProject.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,12 +38,28 @@ namespace Crud.web.Areas.Admin
             {  
                 try {
                     model.CreateUser();
+                    TempData.Put<ResponseModel>("ResponseMessage", new ResponseModel
+                    {
+                        Message = "Successfully added a new User.",
+                        Type = ResponseTypes.Success
+                    });
+                    return RedirectToAction("Index");
                 }
                 catch (DuplicateNameException ex) {
                     _logger.LogError(ex, ex.Message);
+                    TempData.Put<ResponseModel>("ResponseMessage", new ResponseModel
+                    {
+                        Message = ex.Message,
+                        Type = ResponseTypes.Danger
+                    });
                 }
                 catch (Exception e) {
                     _logger.LogError(e, "Server Error");
+                    TempData.Put<ResponseModel>("ResponseMessage", new ResponseModel
+                    {
+                        Message = "There was a problem in creating course.",
+                        Type = ResponseTypes.Danger
+                    });
                 }
             }
             return View(model);
@@ -63,20 +81,36 @@ namespace Crud.web.Areas.Admin
                 try
                 {
                     model.UpdateUser();
+                    TempData.Put<ResponseModel>("ResponseMessage", new ResponseModel
+                    {
+                        Message = "Successfully Update a selected user.",
+                        Type = ResponseTypes.Success
+                    });
+                    return RedirectToAction("Index");
                 }
                 catch (DuplicateNameException ex)
                 {
                     _logger.LogError(ex, ex.Message);
+                    TempData.Put<ResponseModel>("ResponseMessage", new ResponseModel
+                    {
+                        Message = ex.Message,
+                        Type = ResponseTypes.Danger
+                    });
                 }
                 catch (Exception e)
                 {
                     _logger.LogError(e, "Server Error");
+                    TempData.Put<ResponseModel>("ResponseMessage", new ResponseModel
+                    {
+                        Message = "There was a problem in Updating user.",
+                        Type = ResponseTypes.Danger
+                    });
                 }
             }
             return View(model);
         }
         //-------End section for Update--------
-        //-------Staer section for Delete--------
+        //-------Start section for Delete--------
         public IActionResult Delete(int id)
         {
             var model = _scope.Resolve<UserListModel>();
