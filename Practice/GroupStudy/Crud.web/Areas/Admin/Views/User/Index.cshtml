@@ -1,4 +1,4 @@
-﻿@model UserListModel
+﻿ @model UserListModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -23,24 +23,30 @@
                     <table id="users"  class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Id</th>
+                               
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Address</th>
+                                <th style="width:150px">Actions</th>
+                                
                             </tr>
                         </thead>
                         <tbody></tbody>
                         <tfoot>
                             <tr>
-                                <th>Id</th>
+                                
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Address</th>
+                                <th style="width:150px">Actions</th>
+                                
+                                
                             </tr>
                         </tfoot>
                     </table>
+                       @* <partial name="_ModalPartial" />*@
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -72,8 +78,41 @@
                 "serverSide": true,
                 "ajax" : {
                     "url": "/admin/user/GetUsers" //collect jeson data from controller
-                }
+                },
+                //used for update button
+                "columnDefs": [
+                    {
+                        "orderable": false,
+                        "targets": 4,
+                        "render": function (data, type, row) {
+                            return `<button type="submit" class="btn btn-info btn-sm" onclick="window.location.href='/admin/user/update/${data}'" value='${data}'>
+                                            <i class="fas fa-pencil-alt">
+                                            </i>
+                                            Edit
+                                        </button>
+                                        <button type="submit" class="btn btn-danger btn-sm show-bs-modal" data-id='${data}' value='${data}'>
+                                            <i class="fas fa-trash">
+                                            </i>
+                                            Delete
+                                        </button>`;
+                        }
+                    }
+                ]
             });
+            //delete
+            $('#users').on('click', '.show-bs-modal', function (event) {
+                var id = $(this).data("id");
+                var modal = $("#modal-default");
+                modal.find('.modal-body p').text('Are you sure you want to delete this record?');
+                $("#deleteId").val(id);
+                $("#deleteForm").attr("action", "/admin/user/delete");
+                modal.modal('show');
+            });
+
+            $("#deleteButton").click(function () {
+                $("#deleteForm").submit();
+            });
+        
             //$("#example1").DataTable({
             //    "responsive": true, "lengthChange": false, "autoWidth": false,
             //    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]

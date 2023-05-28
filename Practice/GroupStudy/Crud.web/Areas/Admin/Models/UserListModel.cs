@@ -35,12 +35,12 @@ namespace Crud.web.Areas.Admin.Models
                 recordsFiltered = data.totalDisplay,
                 data = (from record in data.records
                         select new string[]
-                        {
-                                record.Id.ToString(),
+                        {   
                                 record.Name,
                                 record.Email,
                                 record.Phone,
                                 record.Address,
+                                record.Id.ToString(),
 
                         }
                     ).ToArray()
