@@ -22,6 +22,7 @@ namespace Crud.web.Areas.Admin
             var model = _scope.Resolve<UserListModel>();
             return View(model); 
         }
+        //-------Used for create--------
         public IActionResult Create() 
         {
             var model = _scope.Resolve<UserCreateModel>();
@@ -45,6 +46,37 @@ namespace Crud.web.Areas.Admin
             }
             return View(model);
         }
+        //-------End section for create--------
+        //-------Used for Update--------
+        public IActionResult Update(int id)
+        {
+            var model = _scope.Resolve<UserUpdateModel>();
+            model.Load(id);
+            return View(model);
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult Update(UserUpdateModel model)
+        {
+            model.ResolveDependency(_scope);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    model.UpdateUser();
+                }
+                catch (DuplicateNameException ex)
+                {
+                    _logger.LogError(ex, ex.Message);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e, "Server Error");
+                }
+            }
+            return View(model);
+        }
+        //-------End section for create--------
+
         public async Task <JsonResult> GetUsers()
         {
             var dataTableModel = new DataTablesAjaxRequestUtility(Request);

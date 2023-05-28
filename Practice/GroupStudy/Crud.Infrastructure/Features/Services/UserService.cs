@@ -18,11 +18,29 @@ namespace Crud.Infrastructure.Features.Services
            if(_unitOfWork.Users.IsDuplicateName(name, null))
                 throw new DuplicateNameException("User Name is duplicate");
            //create user 
-           User user = new User() { Name = name, Email = email, Phone = phone, Address = address };
+            User user = new User() { Name = name, Email = email, Phone = phone, Address = address };
             _unitOfWork.Users.Add(user);
             _unitOfWork.Save();
         }
-
+        //Update user
+        public User GetUser(int  id)
+        {
+            return _unitOfWork.Users.GetById(id);
+        }
+        public void UpdateUser(int id, string name, string email, string phone, string address)
+        {
+            if (_unitOfWork.Users.IsDuplicateName(name, id))
+                throw new DuplicateNameException("User Name is duplicate");
+            //create user 
+            User user = _unitOfWork.Users.GetById(id);
+            user.Name = name;
+            user.Email = email;
+            user.Phone = phone;
+            user.Address = address;
+            _unitOfWork.Save();
+        }
+        //Update user end
+        //Data view for data table
         public IList<User> GetAllUser()
         {
             return _unitOfWork.Users.GetAll();
@@ -38,5 +56,7 @@ namespace Crud.Infrastructure.Features.Services
                 return result;
             });
         }
+        //End Data view for data table
+
     }
 }

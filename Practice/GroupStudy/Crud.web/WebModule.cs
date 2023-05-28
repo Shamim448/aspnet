@@ -13,6 +13,7 @@ namespace Crud.web
         {
             builder.RegisterType<UserListModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<UserCreateModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<UserUpdateModel>().AsSelf().InstancePerLifetimeScope();
         }
     }
 }
