@@ -46,5 +46,10 @@ namespace Crud.web.Areas.Admin.Models
                     ).ToArray()
             };
         }
+
+        internal void DeleteUser(int id)
+        {
+            _userService.DeleteUser(id);
+        }
     }
 }

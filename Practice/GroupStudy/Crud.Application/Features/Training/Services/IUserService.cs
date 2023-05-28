@@ -9,6 +9,8 @@ namespace Crud.Application.Features.Training.Services
         //For Update
         User GetUser(int id);
         void UpdateUser(int id, string name, string email, string phone, string address);
+        //Delete
+        void DeleteUser(int id);
         //View Data Table
         public IList<User> GetAllUser();
         Task<(IList<User> records, int total, int totalDisplay)>

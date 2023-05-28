@@ -40,6 +40,12 @@ namespace Crud.Infrastructure.Features.Services
             _unitOfWork.Save();
         }
         //Update user end
+        //Delete
+        public void DeleteUser(int id)
+        {
+            _unitOfWork.Users.Remove(id);
+            _unitOfWork.Save();
+        }
         //Data view for data table
         public IList<User> GetAllUser()
         {
@@ -56,6 +62,8 @@ namespace Crud.Infrastructure.Features.Services
                 return result;
             });
         }
+
+        
         //End Data view for data table
 
     }

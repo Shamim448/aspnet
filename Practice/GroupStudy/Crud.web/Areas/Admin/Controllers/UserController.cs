@@ -75,7 +75,25 @@ namespace Crud.web.Areas.Admin
             }
             return View(model);
         }
-        //-------End section for create--------
+        //-------End section for Update--------
+        //-------Staer section for Delete--------
+        public IActionResult Delete(int id)
+        {
+            var model = _scope.Resolve<UserListModel>();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    model.DeleteUser(id);
+                }
+                
+                catch (Exception e)
+                {
+                    _logger.LogError(e, "Server Error");
+                }
+            }
+            return RedirectToAction("Index");
+        }
 
         public async Task <JsonResult> GetUsers()
         {
