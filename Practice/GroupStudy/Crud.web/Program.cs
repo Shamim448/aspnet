@@ -36,8 +36,9 @@ builder.Host.UseSerilog((hc, lc) => lc //hc== hosting context lc= loging context
 //Autofac configuration End
 
     //modify this method because applicationdbcontext has different project
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString, (x) => x.MigrationsAssembly(migrationAssembly)));
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//    options.UseSqlServer(connectionString, (x) => x.MigrationsAssembly(migrationAssembly)));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
