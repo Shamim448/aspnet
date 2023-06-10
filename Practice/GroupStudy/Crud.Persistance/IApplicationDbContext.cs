@@ -10,6 +10,6 @@ namespace Crud.Persistance
 {
     public interface IApplicationDbContext
     {
-       public DbSet<User> Users { get; }
+       public DbSet<Student> Students { get; }
     }
 }
