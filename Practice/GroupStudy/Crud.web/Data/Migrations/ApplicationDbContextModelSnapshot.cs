@@ -21,7 +21,7 @@ namespace Crud.web.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Crud.Domain.Entities.Student", b =>
+            modelBuilder.Entity("Crud.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,29 +30,37 @@ namespace Crud.web.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Students");
+                    b.ToTable("Users");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Address = "Naogaon",
-                            Name = "Saba"
+                            Email = "Saba@gmail.com",
+                            Name = "Saba",
+                            Phone = "01746902499"
                         },
                         new
                         {
                             Id = 2,
-                            Address = "Naogaon",
-                            Name = "Fatema"
+                            Address = "Dhaka",
+                            Email = "Saba@gmail.com",
+                            Name = "Fatema",
+                            Phone = "01746902499"
                         });
                 });
 #pragma warning restore 612, 618

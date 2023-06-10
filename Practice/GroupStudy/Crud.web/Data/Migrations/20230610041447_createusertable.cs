@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Crud.web.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateStudentInfoTable : Migration
+    public partial class createusertable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,26 +35,28 @@ namespace Crud.web.Data.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.CreateTable(
-                name: "Students",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.InsertData(
-                table: "Students",
-                columns: new[] { "Id", "Address", "Name" },
+                table: "Users",
+                columns: new[] { "Id", "Address", "Email", "Name", "Phone" },
                 values: new object[,]
                 {
-                    { 1, "Naogaon", "Saba" },
-                    { 2, "Naogaon", "Fatema" }
+                    { 1, "Naogaon", "Saba@gmail.com", "Saba", "01746902499" },
+                    { 2, "Dhaka", "Saba@gmail.com", "Fatema", "01746902499" }
                 });
         }
 
@@ -62,7 +64,7 @@ namespace Crud.web.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Students");
+                name: "Users");
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",

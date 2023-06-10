@@ -24,8 +24,8 @@ namespace Crud.Persistance
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Student>().HasData(StudentSeed.Students );
+            modelBuilder.Entity<User>().HasData(UserSeed.Users );
         }
-        public DbSet<Student> Students { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
