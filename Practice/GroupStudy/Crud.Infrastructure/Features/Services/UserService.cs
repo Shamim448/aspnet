@@ -1,4 +1,5 @@
-﻿using Crud.Application;
+﻿using AutoMapper;
+using Crud.Application;
 using Crud.Application.Features.Training.Services;
 using Crud.Domain.Entities;
 using Crud.Infrastructure.Features.Exceptions;
@@ -8,9 +9,11 @@ namespace Crud.Infrastructure.Features.Services
     public class UserService : IUserService
     {
         private readonly IApplicationUnitOfWork _unitOfWork;
-        public UserService(IApplicationUnitOfWork unitOfWork)
+        private IMapper _mapper;
+        public UserService(IApplicationUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
         //create user 
         public void CreateUser(string name, string email, string phone, string address)
@@ -18,7 +21,7 @@ namespace Crud.Infrastructure.Features.Services
            if(_unitOfWork.Users.IsDuplicateName(name, null))
                 throw new DuplicateNameException("User Name is duplicate");
            //create user 
-            User user = new User() { Name = name, Email = email, Phone = phone, Address = address };
+            User user = new User() { Name = name, Email = email, Phone = phone, Address = address };          
             _unitOfWork.Users.Add(user);
             _unitOfWork.Save();
         }

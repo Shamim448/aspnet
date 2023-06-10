@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Crud.Domain.Entities;
+using Crud.Infrastructure.Features.Services;
 using Crud.web.Areas.Admin.Models;
 
 namespace Crud.web
@@ -10,6 +11,7 @@ namespace Crud.web
         {
             CreateMap<UserUpdateModel, User>()
                 .ReverseMap();
+            
         }
     }
 }
