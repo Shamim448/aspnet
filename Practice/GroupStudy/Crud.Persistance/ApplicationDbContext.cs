@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Crud.Persistance
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser,
-        ApplicationRole, Guid,
-        ApplicationUserClaim, ApplicationUserRole,
-        ApplicationUserLogin, ApplicationRoleClaim,
-        ApplicationUserToken>,
-        IApplicationDbContext
+    //public class ApplicationDbContext : IdentityDbContext<ApplicationUser,
+    //    ApplicationRole, Guid,
+    //    ApplicationUserClaim, ApplicationUserRole,
+    //    ApplicationUserLogin, ApplicationRoleClaim,
+    //    ApplicationUserToken>,
+    public class ApplicationDbContext :DbContext, IApplicationDbContext
     {
         private readonly string _connectionString;
         private readonly string _migrationsAssembly;
@@ -35,7 +35,7 @@ namespace Crud.Persistance
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>().HasData(UserSeed.Users);
-            modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(l => new { l.LoginProvider, l.ProviderKey });
+            //modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(l => new { l.LoginProvider, l.ProviderKey });
             // Add other entity configurations if needed
 
         }
