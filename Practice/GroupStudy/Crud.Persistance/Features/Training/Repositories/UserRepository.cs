@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Crud.Persistance.Features.Training.Repositories
 {
-    public class UserRepository : Repository<User, int>, IUserRepository
+    public class UserRepository : Repository<User, Guid>, IUserRepository
     {
         public UserRepository(IApplicationDbContext context) : base((DbContext)context)
         {
         }
-            public bool IsDuplicateName(string name, int? id)
+            public bool IsDuplicateName(string name, Guid? id)
             {
                 int? exeistingValue = null;
                 if (id.HasValue)

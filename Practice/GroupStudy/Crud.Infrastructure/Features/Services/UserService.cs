@@ -26,11 +26,11 @@ namespace Crud.Infrastructure.Features.Services
             _unitOfWork.Save();
         }
         //Update user
-        public User GetUser(int  id)
+        public User GetUser(Guid  id)
         {
             return _unitOfWork.Users.GetById(id);
         }
-        public void UpdateUser(int id, string name, string email, string phone, string address)
+        public void UpdateUser(Guid id, string name, string email, string phone, string address)
         {
             if (_unitOfWork.Users.IsDuplicateName(name, id))
                 throw new DuplicateNameException("User Name is duplicate");
@@ -44,7 +44,7 @@ namespace Crud.Infrastructure.Features.Services
         }
         //Update user end
         //Delete
-        public void DeleteUser(int id)
+        public void DeleteUser(Guid id)
         {
             _unitOfWork.Users.Remove(id);
             _unitOfWork.Save();

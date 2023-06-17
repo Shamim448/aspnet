@@ -66,7 +66,7 @@ namespace Crud.web.Areas.Admin
         }
         //-------End section for create--------
         //-------Used for Update--------
-        public IActionResult Update(int id)
+        public IActionResult Update(Guid id)
         {
             var model = _scope.Resolve<UserUpdateModel>();
             model.Load(id);
@@ -111,7 +111,7 @@ namespace Crud.web.Areas.Admin
         }
         //-------End section for Update--------
         //-------Start section for Delete--------
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             var model = _scope.Resolve<UserListModel>();
             if (ModelState.IsValid)

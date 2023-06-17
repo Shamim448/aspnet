@@ -15,8 +15,8 @@ namespace Crud.Persistance.DataSeeding
             {
                 return new List<User>()
                 {
-                    new User { Id=1, Name="Saba", Email="Saba@gmail.com", Phone="01746902499", Address = "Naogaon"},
-                    new User { Id=2, Name="Fatema", Email="Saba@gmail.com", Phone="01746902499", Address = "Dhaka"},
+                    new User { Id= new Guid("A41D000C-5FB1-47B7-ADDF-F0C73FAEBEEA"), Name="Saba", Email="Saba@gmail.com", Phone="01746902499", Address = "Naogaon"},
+                    
                     
                 };
             }

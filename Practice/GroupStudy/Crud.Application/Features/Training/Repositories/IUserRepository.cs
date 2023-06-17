@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Crud.Application.Features.Training.Repositories
 {
-    public interface IUserRepository : IRepository<User , int>
+    public interface IUserRepository : IRepository<User , Guid>
     {
-         bool IsDuplicateName(string name, int? id);
+         bool IsDuplicateName(string name, Guid? id);
     }
 }

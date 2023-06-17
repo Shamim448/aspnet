@@ -9,7 +9,7 @@ namespace Crud.web.Areas.Admin.Models
     public class UserUpdateModel
     {
         [Required]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
@@ -35,7 +35,7 @@ namespace Crud.web.Areas.Admin.Models
             _userService = scope.Resolve<IUserService>();
             _mapper = scope.Resolve<IMapper>();
         }
-        internal void Load(int id)
+        internal void Load(Guid id)
         {
             User user = _userService.GetUser(id);
             if(user != null)
