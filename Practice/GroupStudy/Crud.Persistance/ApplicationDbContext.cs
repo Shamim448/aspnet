@@ -1,6 +1,7 @@
 ﻿using Crud.Domain.Entities;
 using Crud.Persistance.DataSeeding;
 using Crud.Persistance.Features.Membership;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,22 +30,16 @@ namespace Crud.Persistance
                 optionsBuilder.UseSqlServer(_connectionString, (x) => x.MigrationsAssembly(_migrationsAssembly));
             }
         }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<User>().HasData(UserSeed.Users);
-            //modelBuilder.Entity<ApplicationUserLogin>().HasNoKey();
-            //modelBuilder.Entity<ApplicationUserRole>().HasNoKey();
-            //modelBuilder.Entity<ApplicationUserToken>().HasNoKey();
-            //modelBuilder.Entity<ApplicationUser>().HasNoKey();
-            //// Add foreign key relationship between User and ApplicationUser
-            //modelBuilder.Entity<User>()
-            //    .HasOne(u => u.ApplicationUser)
-            //    .WithOne()
-            //    .HasForeignKey<ApplicationUser>(au => au.Id)
-            //    .IsRequired();
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>().HasData(UserSeed.Users);
 
+            //modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(l => new { l.LoginProvider, l.ProviderKey });
+            // Add other entity configurations if needed
         }
-        
+
         public DbSet<User> Users { get; set; }
 
     }
