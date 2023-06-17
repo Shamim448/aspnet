@@ -58,8 +58,10 @@ builder.Host.UseSerilog((htc, lc) => lc
 
     app.UseRouting();
 
-    app.UseAuthorization();
-    app.MapControllerRoute(
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
     app.MapControllerRoute(
