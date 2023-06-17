@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Crud.web.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class createUserTable : Migration
+    public partial class createusertable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,6 +48,15 @@ namespace Crud.web.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Address", "Email", "Name", "Phone" },
+                values: new object[,]
+                {
+                    { 1, "Naogaon", "Saba@gmail.com", "Saba", "01746902499" },
+                    { 2, "Dhaka", "Saba@gmail.com", "Fatema", "01746902499" }
                 });
         }
 

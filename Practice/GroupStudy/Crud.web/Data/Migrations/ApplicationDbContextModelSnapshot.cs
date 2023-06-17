@@ -21,27 +21,6 @@ namespace Crud.web.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Crud.Domain.Entities.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Students");
-                });
-
             modelBuilder.Entity("Crud.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -65,6 +44,24 @@ namespace Crud.web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Naogaon",
+                            Email = "Saba@gmail.com",
+                            Name = "Saba",
+                            Phone = "01746902499"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "Dhaka",
+                            Email = "Saba@gmail.com",
+                            Name = "Fatema",
+                            Phone = "01746902499"
+                        });
                 });
 #pragma warning restore 612, 618
         }

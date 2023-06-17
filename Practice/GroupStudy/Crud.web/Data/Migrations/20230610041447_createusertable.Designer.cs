@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Crud.web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230528125737_studentTable")]
-    partial class studentTable
+    [Migration("20230610041447_createusertable")]
+    partial class createusertable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,27 +23,6 @@ namespace Crud.web.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Crud.Domain.Entities.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Students");
-                });
 
             modelBuilder.Entity("Crud.Domain.Entities.User", b =>
                 {
@@ -68,6 +47,24 @@ namespace Crud.web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Naogaon",
+                            Email = "Saba@gmail.com",
+                            Name = "Saba",
+                            Phone = "01746902499"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "Dhaka",
+                            Email = "Saba@gmail.com",
+                            Name = "Fatema",
+                            Phone = "01746902499"
+                        });
                 });
 #pragma warning restore 612, 618
         }

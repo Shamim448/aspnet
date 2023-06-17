@@ -27,6 +27,7 @@ try
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
     //collect MigrationAssembly Path
     var migrationAssembly = Assembly.GetExecutingAssembly().FullName;
+
     //Autofac configuration Start
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
@@ -38,16 +39,17 @@ try
     });
 //Autofac configuration End
 
-    //modify this method because applicationdbcontext has different project
+ //modify this method because applicationdbcontext has different project
 //builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //    options.UseSqlServer(connectionString, (x) => x.MigrationsAssembly(migrationAssembly)));
 
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+    builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+    //Auto Mapper
+    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+    builder.Services.AddIdentity();
+    builder.Services.AddControllersWithViews();
 
-builder.Services.AddIdentity();
-builder.Services.AddControllersWithViews();
-
-var app = builder.Build();
+    var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
@@ -75,6 +77,7 @@ app.UseAuthorization();
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+<<<<<<< HEAD
 Log.Information("Project Starting");
 app.Run();
 }
@@ -82,5 +85,16 @@ catch(Exception ex) {
     Log.Fatal(ex, "Application Terminated Unexpectedly");
 }
 finally {
+
+   Log.Information("Project Starting");
+app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application Terminated Unexpectedly");
+}
+finally
+{
+
     Log.CloseAndFlush();
 }

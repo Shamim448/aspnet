@@ -1,5 +1,6 @@
 ﻿using Crud.Domain.Entities;
 using Crud.Persistance;
+using Crud.Persistance.DataSeeding;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,11 +22,10 @@ namespace Crud.Persistance
                 optionsBuilder.UseSqlServer(_connectionString, (x) => x.MigrationsAssembly(_migrationsAssembly));
             }
         }
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.Entity<User>().HasData(UserSeed.Users );
         }
         public DbSet<User> Users { get; set; }
-        public DbSet<Student> Students { get; set; }
     }
 }
