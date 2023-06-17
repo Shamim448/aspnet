@@ -36,11 +36,11 @@ try{
         containerBuilder.RegisterModule(new InfrastructureModule());
         containerBuilder.RegisterModule(new WebModule());
     });
-//Autofac configuration End
+    //Autofac configuration End
 
- //modify this method because applicationdbcontext has different project
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//    options.UseSqlServer(connectionString, (x) => x.MigrationsAssembly(migrationAssembly)));
+    //modify this method because applicationdbcontext has different project
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(connectionString, (x) => x.MigrationsAssembly(migrationAssembly)));
 
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
     //Auto Mapper
