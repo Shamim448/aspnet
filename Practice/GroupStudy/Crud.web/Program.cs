@@ -21,9 +21,8 @@ builder.Host.UseSerilog((hc, lc) => lc //hc== hosting context lc= loging context
   .ReadFrom.Configuration(builder.Configuration)
   );
 //End Serilog config
-// Add services to the container.
-try
-{
+
+try{
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
     //collect MigrationAssembly Path
     var migrationAssembly = Assembly.GetExecutingAssembly().FullName;
@@ -76,10 +75,9 @@ app.UseAuthorization();
     app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();
-<<<<<<< HEAD
-Log.Information("Project Starting");
-app.Run();
+    app.MapRazorPages();
+    Log.Information("Project Starting");
+    app.Run();
 }
 catch(Exception ex) {
     Log.Fatal(ex, "Application Terminated Unexpectedly");
@@ -87,14 +85,6 @@ catch(Exception ex) {
 finally {
 
    Log.Information("Project Starting");
-app.Run();
+   
 }
-catch (Exception ex)
-{
-    Log.Fatal(ex, "Application Terminated Unexpectedly");
-}
-finally
-{
 
-    Log.CloseAndFlush();
-}
