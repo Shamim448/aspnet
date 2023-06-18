@@ -20,7 +20,8 @@ builder.Host.UseSerilog((htc, lc) => lc
 .Enrich.FromLogContext()
 .ReadFrom.Configuration(builder.Configuration)
 );
-//try { 
+try
+{
     // Add services to the container.
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
     var migrationAssembly = Assembly.GetExecutingAssembly().FullName;
@@ -70,11 +71,11 @@ app.MapControllerRoute(
     app.MapRazorPages();
     //Log.Information("Application Strating...");
     app.Run();
-//}
-//catch(Exception ex)
-//{
-//    Log.Fatal(ex, "Failed to start application");
-//}
-//finally { 
-//    Log.CloseAndFlush();
-//}
+}
+catch(Exception ex)
+{
+    Log.Fatal(ex, "Failed to start application");
+}
+finally {
+    Log.CloseAndFlush();
+}
