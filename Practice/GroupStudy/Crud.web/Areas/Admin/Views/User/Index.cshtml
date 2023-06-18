@@ -1,4 +1,4 @@
-﻿ @model UserListModel
+﻿@model UserListModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -13,47 +13,42 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-            <!-- /.card -->
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">DataTable with default features</h3>
-                </div>
-                <!-- /.card-header -->
-                    <div class="card-body" >
+                <!-- /.card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DataTable with default features</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
                         <partial name="_ResponsePartial" />
                         <table id="users" class="table table-bordered table-striped example1">
-                        <thead>
-                            <tr>
-                               
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Address</th>
-                                <th style="width:150px">Actions</th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                        <tfoot>
-                            <tr>
-                                
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Address</th>
-                                <th style="width:150px">Actions</th>
-                                
-                                
-                            </tr>
-                        </tfoot>
-                    </table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th style="width:150px">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th style="width:150px">Actions</th>
+                                </tr>
+                            </tfoot>
+                        </table>
                         <partial name="_ModalPartial" />
+                    </div>
+                    <!-- /.card-body -->
                 </div>
-                <!-- /.card-body -->
+                <!-- /.card -->
             </div>
-            <!-- /.card -->
         </div>
-    </div>
     </div>
 </section>
 
@@ -73,11 +68,11 @@
     <script src="~/AdminTLT/dist/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <!-- Page specific script -->
     <script>
-        $(function () {            
+        $(function () {
             $("#users").DataTable({
                 "processing": true,
                 "serverSide": true,
-                "ajax" : {
+                "ajax": {
                     "url": "/admin/user/GetUsers" //collect jeson data from controller
                 },
                 //used for update button
@@ -87,15 +82,15 @@
                         "targets": 4,
                         "render": function (data, type, row) {
                             return `<button type="submit" class="btn btn-info btn-sm" onclick="window.location.href='/admin/user/update/${data}'" value='${data}'>
-                                            <i class="fas fa-pencil-alt">
-                                            </i>
-                                            Edit
-                                        </button>
-                                        <button type="submit" class="btn btn-danger btn-sm show-bs-modal" data-id='${data}' value='${data}'>
-                                            <i class="fas fa-trash">
-                                            </i>
-                                            Delete
-                                        </button>`;
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                        Edit
+                                    </button>
+                                    <button type="submit" class="btn btn-danger btn-sm show-bs-modal" data-id='${data}' value='${data}'>
+                                        <i class="fas fa-trash">
+                                        </i>
+                                        Delete
+                                    </button>`;
                         }
                     }
                 ]
@@ -113,7 +108,7 @@
             $("#deleteButton").click(function () {
                 $("#deleteForm").submit();
             });
-        
+
             //$(".example1").DataTable({
             //    "responsive": true, "lengthChange": false, "autoWidth": false,
             //    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
