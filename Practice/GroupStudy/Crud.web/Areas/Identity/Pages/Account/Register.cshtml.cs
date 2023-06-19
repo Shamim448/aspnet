@@ -21,7 +21,7 @@ namespace Crud.web.Areas.Identity.Pages.Account
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager; 
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
@@ -31,10 +31,10 @@ namespace Crud.web.Areas.Identity.Pages.Account
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
-            _userManager                                                          = userManager;
-            _signInManager                                                        = signInManager;
-            _logger                                                               = logger;
-            _emailSender                                                          = emailSender;
+            _userManager       = userManager;
+            _signInManager     = signInManager;
+            _logger            = logger;
+            _emailSender       = emailSender;
         }
 
         [BindProperty]

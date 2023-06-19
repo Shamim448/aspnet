@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Crud.web.Areas.Admin.Models;
+using Crud.web.Models;
 
 namespace Crud.web
 {
@@ -14,6 +15,7 @@ namespace Crud.web
             builder.RegisterType<UserListModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<UserCreateModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<UserUpdateModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<RegisterModel>().AsSelf().InstancePerLifetimeScope();
         }
     }
 }
