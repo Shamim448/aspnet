@@ -34,7 +34,7 @@ namespace Crud.web.Controllers
             //model.ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             return View(model);
         }
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterAsync(RegisterModel model)
         {
             model.ReturnUrl??= Url.Content("~/");
@@ -67,7 +67,7 @@ namespace Crud.web.Controllers
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = model.Email, returnUrl = model.ReturnUrl });
+                        return RedirectToAction("RegisterConfirmation", new { email = model.Email, returnUrl = model.ReturnUrl });
                     }
                     else
                     {
