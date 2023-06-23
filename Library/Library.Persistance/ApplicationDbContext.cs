@@ -1,16 +1,11 @@
 ﻿using Library.Domain.Entities;
-using Library.Persistance.Features.Membership;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.Persistance
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser,
-        ApplicationRole, Guid,
-        ApplicationUserClaim, ApplicationUserRole,
-        ApplicationUserLogin, ApplicationRoleClaim,
-        ApplicationUserToken>, IApplicationDbContext
+    public class ApplicationDbContext : DbContext,IApplicationDbContext
     {
         private readonly string _connectionString;
         private readonly string _migrationAssembly;
