@@ -1,7 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Library.Persistance;
-using Library.web.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,11 +32,12 @@ try
         containerBuilder.RegisterModule(new InfrastructureModule());
         containerBuilder.RegisterModule(new WebModule());
     });
-    //builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    //    options.UseSqlServer(connectionString));
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(connectionString,
+                    (x) => x.MigrationsAssembly(migrationAssembly)));
 
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-    builder.Services.AddIdentityCollection();
+    builder.Services.AddIdentity();
     builder.Services.AddControllersWithViews();
 
     var app = builder.Build();
@@ -59,7 +59,7 @@ try
 
     app.UseRouting();
 
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
