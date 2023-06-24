@@ -119,5 +119,21 @@ namespace Crud.web.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        //Logout page
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> LogoutAsync(string returnUrl = null)
+        {
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out.");
+            if (returnUrl != null)
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
     }
 }

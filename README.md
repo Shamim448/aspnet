@@ -449,7 +449,6 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
      <summary>Login MVC Page</summary>
     
      ```c#
-    @page
     @model LoginModel
 
     @{
@@ -506,6 +505,64 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
      ```
     </details>
 
+
+5. Edit LoginPartial-27\
+    asp route add (area, controller, action)
+   <details>
+     <summary>LoginPartial Add</summary>
+    
+     ```c#
+    @using Crud.Persistance.Features.Membership;
+    @using Microsoft.AspNetCore.Identity
+    @inject SignInManager<ApplicationUser> SignInManager
+    @inject UserManager<ApplicationUser> UserManager
+
+    <ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+    <li class="nav-item">
+        <a  class="nav-link text-dark"  asp-area ="Admin" asp-controller="Dashboard" asp-action="Index"  title="Manage">Hello @User.Identity?.Name!</a>
+    </li>
+    <li class="nav-item">
+        <form  class="form-inline" asp-antiforgery="true" asp-area=" " asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+    </li>
+    }
+    else
+    {
+    <li class="nav-item">
+            <a class="nav-link text-dark" asp-area=" " asp-controller="Account" asp-action="Register">Register</a>
+    </li>
+    <li class="nav-item">
+            <a class="nav-link text-dark" asp-area=" " asp-controller="Account" asp-action="Login">Login</a>
+    </li>
+    }
+    </ul>
+     ```
+    </details>
+
+6. Logout Scaffold and IAction-35\
+    Create a New Scaffold item Logout and post IAction past to Account controller
+   <details>
+     <summary>Logout IAction into AccountController</summary>
+    
+     ```c#
+    public async Task<IActionResult> LogoutAsync(string returnUrl = null)
+        {
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out.");
+            if (returnUrl != null)
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+     ```
+    </details>
 1. Title here
    <details>
      <summary>Dummy</summary>
