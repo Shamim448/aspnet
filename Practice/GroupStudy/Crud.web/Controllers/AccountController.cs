@@ -97,7 +97,7 @@ namespace Crud.web.Controllers
             model.ReturnUrl = returnUrl;
             return View(model);
         }
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginAsync(LoginModel model)
         {
             model.ReturnUrl ??= Url.Content("~/");
@@ -111,13 +111,11 @@ namespace Crud.web.Controllers
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(model.ReturnUrl);
                 }
-                
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt."); 
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
