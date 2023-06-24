@@ -364,3 +364,56 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     ```
    </details>
 
+
+## Class-32 Login-Logout Page
+1. Create LoginModel-3\
+    Copy inpitmethon property from login.cshtml.cs mvvm page and past Loginmodel also copy-past returnurl
+    <details>
+     <summary>LoginModel</summary>
+    
+     ```c#
+     namespace Crud.web.Models
+     {
+     public class LoginModel
+     {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Display(Name = "Remember me?")]
+        public bool RememberMe { get; set; }
+
+        public string? ReturnUrl { get; set; }
+     }
+     }   
+     ```
+    </details>
+2. Register LoginModel into WebModule - 5
+   <details>
+    <summary>Dummy</summary>
+    
+    ```c#
+    protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<UserListModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<UserCreateModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<UserUpdateModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<RegisterModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<LoginModel>().AsSelf().InstancePerLifetimeScope();
+        }
+    ```
+    </details>
+
+1. Title here
+   <details>
+     <summary>Dummy</summary>
+    
+     ```c#
+    
+     ```
+    </details>
+   
