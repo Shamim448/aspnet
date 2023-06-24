@@ -356,14 +356,6 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
  তারপরে একটা ভিউ পেজ ক্রিয়েট করব যেটা মডেল থেকে আসবে এবং ভিউ পেজের কনটেন্ট আসবে রেজোড়ের ভিউ পেজ থেকে তারপর সেখানে এরিয়া কন্ট্রোলার অ্যাকশন এগুলো দেখিয়ে দেব form ar 
  vitor এবং মডেল ক্লাসের ভিতরে আমাদের রিটার্ন ইউআরএল টা nullable এবং সেট করে দিতে হবে এবং কন্ট্রোলারে একটা ভিউ মডেল রিটার্ন করবে আই যেটা IAcction return করবে, ইমেল স্যান্ডার 
  এবং এক্সটার্নাল লগইন এগুলো ডিজাবুল করে দিব
-   <details>
-    <summary>Dummy</summary>
-    
-    ```c#
-    
-    ```
-   </details>
-
 
 ## Class-32 Login-Logout Page
 1. Create LoginModel-3\
@@ -406,6 +398,49 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
             builder.RegisterType<LoginModel>().AsSelf().InstancePerLifetimeScope();
         }
     ```
+    </details>
+
+3. Add Login IAction in AccountController-7\
+    Copy Get and post method from login.cshtml.cs and past to AccountController
+    <details>
+     <summary>Add IAcction into AccountController</summary>
+    
+     ```c#
+    //Login Page
+        public async Task<IActionResult> LoginAsync(string returnUrl = null)
+        {
+            returnUrl ??= Url.Content("~/");
+            var model = _scope.Resolve<LoginModel>();
+            // Clear the existing external cookie to ensure a clean login process
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            model.ReturnUrl = returnUrl;
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> LoginAsync(LoginModel model)
+        {
+            model.ReturnUrl ??= Url.Content("~/");
+            if (ModelState.IsValid)
+            {
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User logged in.");
+                    return LocalRedirect(model.ReturnUrl);
+                }
+                
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt."); 
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+     ```
     </details>
 
 1. Title here
