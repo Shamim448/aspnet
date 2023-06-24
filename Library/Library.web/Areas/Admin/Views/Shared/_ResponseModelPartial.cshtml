@@ -1,9 +1,0 @@
-﻿@using Library.web.Utilities
-
-@if(TempData.Peek<ResponseModel>("ResponseMessage") != null)
-{
-var response = TempData.Get<ResponseModel>("ResponseMessage");
-<div class="alert alert-@(response.Type.ToString().ToLower())" role="alert">
-    @response.Message
-</div>
-}
