@@ -563,6 +563,18 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
         }
      ```
     </details>
+7. Restriction Apply in Dashboard-60\
+    Admin area could not access without login, if we add ** Authorize ** anotation in top of the 
+    sepecific controller then we can't access without login all of actioe under the controller.
+    But ws need access specific action without action need ** Anonymouse ** anotation top of the action
+   <details>
+     <summary>Area Access Restriction</summary>
+    
+     ```c#
+     [Area("Admin"), Authorize] //used for restriction
+     [AllowAnonymous]//allow without login
+     ```
+    </details>
 1. Title here
    <details>
      <summary>Dummy</summary>

@@ -4,11 +4,12 @@ using Crud.web.Areas.Admin.Models;
 using Crud.Web.Models;
 using Crud.Web.Utilities;
 using DemoProject.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Crud.web.Areas.Admin
 {
-    [Area("Admin")]
+    [Area("Admin"), Authorize]
     public class UserController : Controller
     {
         ILifetimeScope _scope;
@@ -18,7 +19,7 @@ namespace Crud.web.Areas.Admin
             _scope = scope;
             _logger = logger;
         }
-        
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var model = _scope.Resolve<UserListModel>();
