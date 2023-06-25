@@ -575,6 +575,8 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
      [AllowAnonymous]//allow without login
      ```
     </details>
+  Note: Authontication: Check userd login or not
+        Authorization: Check user permited the visit an area
 1. Title here
    <details>
      <summary>Dummy</summary>
