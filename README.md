@@ -577,12 +577,48 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     </details>
   Note: Authontication: Check userd login or not
         Authorization: Check user permited the visit an area
-1. Title here
+
+## Class-33 (Role-Management)
+
+1. SettingController Create(10)
    <details>
      <summary>Dummy</summary>
     
      ```c#
     
+     ```
+    </details>
+2. View Page Create
+   <details>
+     <summary>Dummy</summary>
+    
+     ```c#
+    
+     ```
+    </details>
+3. CreateroleModel-14
+   <details>
+     <summary>Dummy</summary>
+    
+     ```c#
+    
+     ```
+    </details>
+4. RoleListModel-14
+   <details>
+     <summary>Dummy</summary>
+    
+     ```c#
+    
+     ```
+    </details>
+4. Binging WebModule-15
+   <details>
+     <summary>WebModule</summary>
+    
+     ```c#
+    builder.RegisterType<CreateRoleModel>().AsSelf().InstancePerLifetimeScope();
+    builder.RegisterType<RoleListModel>().AsSelf().InstancePerLifetimeScope();
      ```
     </details>
    
