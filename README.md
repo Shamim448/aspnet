@@ -580,28 +580,124 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 
 ## Class-33 (Role-Management)
 
-1. SettingController Create(10)
+1. SettingController Create(10,21,29)
    <details>
      <summary>Dummy</summary>
     
      ```c#
-    
+    public async Task <IActionResult> CreateRole()
+        {
+            var model = _scope.Resolve<RoleCreateModel>();
+            return View(model);
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateRole(RoleCreateModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.ResolveDependency(_scope);
+               await model.CreateRole();
+            }
+           return RedirectToAction(nameof(Roles));
+        }
      ```
     </details>
-2. View Page Create
+2. View Page Create & CreateRole Action View-25
    <details>
      <summary>Dummy</summary>
     
      ```c#
-    
+    @model RoleCreateModel
+    @{
+    ViewData["Title"] = "CreateRole";
+    }
+
+    <div class="container-fluid">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Create User</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form" asp-antiforgery="true" asp-action="CreateRole"
+                      asp-area="Admin" asp-controller="Setting" method="post">
+                    <div class="card-body">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Name"></label>
+                            <input type="text" class="form-control" asp-for="Name" placeholder="Enter title">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.card -->
+
+        </div>
+        <!--/.col (left) -->
+     </div>
+     <!-- /.row -->
+     </div><!-- /.container-fluid -->
+     @section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+     }
+
+
+
      ```
     </details>
-3. CreateroleModel-14
+3. CreateRoleModel-14
    <details>
-     <summary>Dummy</summary>
+     <summary>CreateRoleModel-19</summary>
     
      ```c#
-    
+    namespace Crud.web.Areas.Admin.Models
+    {
+    public class CreateRoleModel
+    {
+        [Required]
+        public string Name { get; set; }
+
+        private RoleManager<ApplicationRole> _roleManager;
+        private UserManager<ApplicationUser> _userManager;
+        
+        public CreateRoleModel() { 
+
+        }
+        public CreateRoleModel(RoleManager<ApplicationRole> roleManager,
+            UserManager<ApplicationUser> userManager)
+        {
+            _roleManager = roleManager;
+            _userManager = userManager;
+        }
+
+        internal void ResolveDependency (ILifetimeScope scope)
+        {
+            _roleManager = scope.Resolve<RoleManager<ApplicationRole>>();
+            _userManager = scope.Resolve<UserManager<ApplicationUser>>();
+        }
+
+        public async Task  CreateRole()
+        {
+            if(!string.IsNullOrWhiteSpace(Name))
+            {
+                await _roleManager.CreateAsync(new ApplicationRole(Name));
+            }
+        }
+     }
+     }
+
      ```
     </details>
 4. RoleListModel-14

@@ -5,18 +5,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Crud.web.Areas.Admin.Models
 {
-    public class CreateRoleModel
+    public class RoleCreateModel
     {
         [Required]
-        public string UserName { get; set; }
+        public string Name { get; set; }
 
-        private RoleManager<ApplicationUserRole> _roleManager;
+        private RoleManager<ApplicationRole> _roleManager;
         private UserManager<ApplicationUser> _userManager;
         
-        public CreateRoleModel() { 
+        public RoleCreateModel() { 
 
         }
-        public CreateRoleModel(RoleManager<ApplicationUserRole> roleManager,
+        public RoleCreateModel(RoleManager<ApplicationRole> roleManager,
             UserManager<ApplicationUser> userManager)
         {
             _roleManager = roleManager;
@@ -25,12 +25,16 @@ namespace Crud.web.Areas.Admin.Models
 
         internal void ResolveDependency (ILifetimeScope scope)
         {
-            _roleManager = scope.Resolve<RoleManager<ApplicationUserRole>>();
+            _roleManager = scope.Resolve<RoleManager<ApplicationRole>>();
             _userManager = scope.Resolve<UserManager<ApplicationUser>>();
         }
 
-
-
-
+        public async Task  CreateRole()
+        {
+            if(!string.IsNullOrWhiteSpace(Name))
+            {
+                await _roleManager.CreateAsync(new ApplicationRole(Name));
+            }
+        }
     }
 }
