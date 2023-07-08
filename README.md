@@ -737,6 +737,8 @@ Note: nameof(method name)-31 if we pass method name as a string try to used name
     Monolethik Application এ minimal api use  করে তেমন উপকার হয় না microservice application a minimal api ব্যবহার করা ভাল।
 5. RSET Api-33\
     Rest api মূলত একটা convention. Controller, Action এর নাম একটা নিদিষ্ট ফরম্যাটে করার কনভেনশন হছে রেস্ট আপিয়াই। 
+
+    web project এর controller এ অ্যাকশান গুলোর রিটার্ন টাইপ IAction না হয়ে IEnamurable হয় কারন web- api এর ভিউ থাকে না। 
    <details>
      <summary>Dummy</summary>
     
