@@ -719,4 +719,29 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     </details>
 
 Note: nameof(method name)-31 if we pass method name as a string try to used nameof 
+
+### Class-34 (Web API)
+1. Service-02\
+    যখন আমরা কোন সফটওয়্যার থেকে সেবা গ্রহন করি সেটা হছে service like pament gateway service.
+    service আবার ২ ব্যবহার করা হয় ১) open(any-one can used) 2) restricted (need to credential)
+    Service 2 ধরনের হয় 1) web service 2) windows service/Nativ service
+2. Web Service-04\
+    Web service ডাটা provide  করার জন্য একটা web application, এটা Presentation , View  Provide করে না। 
+    Web service  ওয়েব সারভারে রাখতে হয়। 
+3. WEB Api-13\
+    Application Programming/Programable Interface. web api হতে হলে একটা service এর অবশ্যই restricted হতে হবে।  
+4. Create Dot.net Core Web Api Project-25\
+    একটা ওয়েব API প্রোজেক্ট নিতে হবে। প্রোজেক্ট তৈরি করতে গেলে আমরা দেখতে পারব Aditional Information এর মধ্যে minimal Api 
+    সিলেক্ট করার একটা অপশন আছে।
+    minimal apl হছে কন্ট্রোলার ছাড়া প্রোজেক্ট তৈরি করা। কারন controller  একটা হেভি class । প্রোজেক্ট এর লোড কমানোর জন্য এইটা ব্যবহার করা হয়
+    Monolethik Application এ minimal api use  করে তেমন উপকার হয় না microservice application a minimal api ব্যবহার করা ভাল।
+5. RSET Api-33\
+    Rest api মূলত একটা convention. Controller, Action এর নাম একটা নিদিষ্ট ফরম্যাটে করার কনভেনশন হছে রেস্ট আপিয়াই। 
+   <details>
+     <summary>Dummy</summary>
+    
+     ```c#
+    
+     ```
+    </details>
    
