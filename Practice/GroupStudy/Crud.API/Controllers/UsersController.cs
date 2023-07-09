@@ -32,7 +32,7 @@ namespace Crud.API.Controllers
             }
         }
         [HttpGet("{id}")]
-        public User Get(int id) {
+        public User Get(Guid id) {
             var model = _scope.Resolve<UserModel>();
             return model.GetUsers(id);
         }
@@ -56,9 +56,24 @@ namespace Crud.API.Controllers
                 return BadRequest();
             }
         }
+        [HttpPut]
+        public IActionResult Put(UserModel model)
+        {
+            try
+            {
+                model.ResolveDepenency(_scope);
+                model.UpdateUser();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Couldn't Updete user");
+                return BadRequest();
+            }
+        }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             try
             {
