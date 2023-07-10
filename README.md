@@ -798,7 +798,7 @@ Note: nameof(method name)-31 if we pass method name as a string try to used name
     একটা controller create হবে এবং logger & scop এর dependency injection করতে হবে। 
     তারপর Get, Post,Put, Delete এই মেথড গুলো তৈরি করতে হবে। এগুলোর কাজ হবে CRUD Operation করা। 
     controller এর route এ একটা ভার্সন নাম্বার দিতে হয়, কারন ভার্সন মেইন্তেইন করেই api url তৈরি করতে হয়। 
-    
+
    <details>
      <summary>UserController</summary>
     
@@ -983,7 +983,7 @@ Note: nameof(method name)-31 if we pass method name as a string try to used name
     </details>
 
 9. Create ApiModule class-70\
-    model class বাইন্ডিং করার জন্য একটা Module class তৈরি করতে হয় 
+    model class বাইন্ডিং করার জন্য একটা Module class তৈরি করতে হয় এবং এই ক্লাস টা program.cs a অটো ফেক এর ভিতর বাইন্ডিং করতে হবে।  
     <details>
      <summary>ApiModule</summary>
     
@@ -1001,6 +1001,7 @@ Note: nameof(method name)-31 if we pass method name as a string try to used name
      }
      ```
     </details>
+
     <details>
      <summary></summary>
     
