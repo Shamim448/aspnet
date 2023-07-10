@@ -579,7 +579,6 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
         Authorization: Check user permited the visit an area
 
 ## Class-33 (Role-Management)
-
 1. SettingController Create(10,21,29)
    <details>
      <summary>Dummy</summary>
@@ -720,7 +719,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 
 Note: nameof(method name)-31 if we pass method name as a string try to used nameof 
 
-### Class-34 (Web API)
+## Class-34 (Web API)
 1. Service-02\
     যখন আমরা কোন সফটওয়্যার থেকে সেবা গ্রহন করি সেটা হছে service like pament gateway service.
     service আবার ২ ব্যবহার করা হয় ১) open(any-one can used) 2) restricted (need to credential)
@@ -737,10 +736,273 @@ Note: nameof(method name)-31 if we pass method name as a string try to used name
     Monolethik Application এ minimal api use  করে তেমন উপকার হয় না microservice application a minimal api ব্যবহার করা ভাল।
 5. RSET Api-33\
     Rest api মূলত একটা convention. Controller, Action এর নাম একটা নিদিষ্ট ফরম্যাটে করার কনভেনশন হছে রেস্ট আপিয়াই। 
-
     web project এর controller এ অ্যাকশান গুলোর রিটার্ন টাইপ IAction না হয়ে IEnamurable হয় কারন web- api এর ভিউ থাকে না। 
+6.  Serilog  & Autofac Configure\
+    SerilogAsp.Net Core & Autofac প্যাকেজ ইন্সটল করে program.cs  configure korte hobe
+    <details>
+     <summary>Serilog configure in Program.cs-71</summary>
+    
+     ```c#
+    builder.Host.UseSerilog((hc, lc) => lc //hc== hosting context lc= loging context
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+    .Enrich.FromLogContext()
+    .ReadFrom.Configuration(builder.Configuration)
+     );
+     ```
+    </details>
+    <details>
+     <summary>Serilog configure in Apsetting.jeson</summary>
+    
+     ```c#
+    "Serilog": {
+    "WriteTo": [
+      {
+        "Name": "File",
+        "Args": {
+          "path": "Logs/web-log-.log",
+          "rollingInterval": "Day"
+        }
+      }
+     ]
+     },
+     ```
+    </details>
+    <details>
+     <summary>Autofac configure in Program.cs-77</summary>
+    
+     ```c#
+        // Add services to the container.
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+    //collect MigrationAssembly Path
+    var migrationAssembly = Assembly.GetExecutingAssembly().FullName;
+
+    //Autofac configuration Start
+    builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+    builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+    {
+        containerBuilder.RegisterModule(new PersistanceModule(connectionString, migrationAssembly));
+        containerBuilder.RegisterModule(new ApplicationModule());
+        containerBuilder.RegisterModule(new InfrastructureModule());
+        containerBuilder.RegisterModule(new ApiModule());
+
+    });
+    //Autofac configuration End
+    builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+    //Auto Mapper
+    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+     ```
+    </details>
+
+7. Create a controller-50\
+    একটা controller create হবে এবং logger & scop এর dependency injection করতে হবে। 
+    তারপর Get, Post,Put, Delete এই মেথড গুলো তৈরি করতে হবে। এগুলোর কাজ হবে CRUD Operation করা। 
+    controller এর route এ একটা ভার্সন নাম্বার দিতে হয়, কারন ভার্সন মেইন্তেইন করেই api url তৈরি করতে হয়। 
+    
    <details>
+     <summary>UserController</summary>
+    
+     ```c#
+    namespace Crud.API.Controllers
+    {
+    [Route("v3/[controller]")]
+    [ApiController]
+    public class UsersController : ControllerBase
+    {
+        private readonly ILifetimeScope _scope;
+        private readonly ILogger<UsersController> _logger;
+
+        public UsersController(ILifetimeScope scope, ILogger<UsersController> logger)
+        {
+            _scope = scope;
+            _logger = logger;
+        }
+
+        [HttpGet]
+        public IEnumerable<User> Get() { 
+            try
+            {
+                var model = _scope.Resolve<UserModel>();
+                return model.GetUsers();
+            }
+            catch(Exception ex) {
+                _logger.LogError(ex, "Couldn't get courses");
+                return null;
+            }
+        }
+        [HttpGet("{id}")]
+        public User Get(Guid id) {
+            var model = _scope.Resolve<UserModel>();
+            return model.GetUser(id);
+        }
+        //[HttpGet("{name}")]
+        //public User Get(string name)
+        //{
+        //    var model = _scope.Resolve<UserModel>();
+        //    return model.GetUser(name);
+        //}
+
+        [HttpPost()]
+        public IActionResult Post(UserModel model)
+        {
+            try {
+                model.ResolveDepenency(_scope);
+                model.CreateUser();
+                return Ok();
+            }
+            catch (Exception ex) {
+                _logger.LogError(ex, "Couldn't Updete user");
+                return BadRequest();
+            }
+        }
+        [HttpPut]
+        public IActionResult Put(UserModel model)
+        {
+            try
+            {
+                model.ResolveDepenency(_scope);
+                model.UpdateUser();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Couldn't Updete user");
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
+        {
+            try
+            {
+                var model = _scope.Resolve<UserModel>();
+                model.DeleteUser(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Couldn't delete user");
+                return BadRequest();
+            }
+        }
+        }
+    }
+     ```
+    </details>
+
+8. Create a Model Class-53/
+    controller এ মেথড গুলা লেখা হইসে সেগুলার ইমপ্লেমেন্ত করতে হবে , dependency resolve করতে হবে। মডেল ক্লাস এর একটা 
+    এমটি constractor থাকবে। এবং একটা paramiterized constractor থাকবে যেখানে পারামিতের হিসাবে থাকবে IService
+
+    <details>
      <summary>Dummy</summary>
+    
+     ```c#
+    namespace Crud.API.Models
+    {
+    public class UserModel
+    {
+        private IUserService? _userService;
+        private IMapper _mapper;
+
+        public Guid Id { get; set; }
+        public string? Name { get; set; }
+        public string? Email { get; set; }
+        public string? Phone { get; set; }
+        public string? Address { get; set; }
+
+        public UserModel()
+        {
+
+        }
+        public UserModel(IUserService userService, IMapper mapper)
+        {
+            _userService = userService;
+            _mapper = mapper;
+        }
+        public void ResolveDepenency(ILifetimeScope scope)
+        {
+            _userService = scope.Resolve<IUserService>();
+            _mapper = scope.Resolve<IMapper>();
+        }
+
+        internal IList<User>? GetUsers()
+        {
+            return _userService?.GetAllUser();
+        }
+        internal void DeleteUser(Guid id)
+        {
+            _userService?.DeleteUser(id);
+        }
+        internal void CreateUser()
+        {   
+            _userService?.CreateUser(Name, Email, Phone, Address);
+        }
+        internal void UpdateUser()
+        { 
+            _userService?.UpdateUser(Id, Name, Email, Phone, Address);
+        }
+        //internal User GetUser(string name)
+        //{
+        //    return _userService.GetUser(name);
+        //}
+        internal User? GetUser(Guid id)
+        {
+            return _userService?.GetUser(id);
+        }
+
+        public async Task<object?> GetPagedUsers(DataTablesAjaxRequestUtility dataTablesUtility)
+        {
+            var data = await _userService? .GetPagedUserAsync(
+               dataTablesUtility.PageIndex,
+               dataTablesUtility.PageSize,
+               dataTablesUtility.SearchText,
+               dataTablesUtility.GetSortText(new string[] { "Id", "Name", "Email", "Phone", "Address" }));
+
+            return new
+            {
+                recordsTotal = data.total,
+                recordsFiltered = data.totalDisplay,
+                data = (from record in data.records
+                        select new string[]
+                        {
+                                record.Name,
+                                record.Email,
+                                record.Phone,
+                                record.Address,
+                                record.Id.ToString(),
+
+                        }
+                    ).ToArray()
+            };
+        } 
+     }
+     }
+     ```
+    </details>
+
+9. Create ApiModule class-70\
+    model class বাইন্ডিং করার জন্য একটা Module class তৈরি করতে হয় 
+    <details>
+     <summary>ApiModule</summary>
+    
+     ```c#
+    namespace Crud.API.Models
+    {
+    public class ApiModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<UserModel>().AsSelf();
+            base.Load(builder);
+        }
+     }
+     }
+     ```
+    </details>
+    <details>
+     <summary></summary>
     
      ```c#
     
