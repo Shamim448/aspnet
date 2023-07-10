@@ -2,6 +2,7 @@
 using AutoMapper;
 using Crud.Application.Features.Training.Services;
 using Crud.Domain.Entities;
+using DemoProject.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Crud.API.Models
@@ -32,31 +33,55 @@ namespace Crud.API.Models
             _mapper = scope.Resolve<IMapper>();
         }
 
-        internal IList<User> GetUsers()
+        internal IList<User>? GetUsers()
         {
             return _userService?.GetAllUser();
         }
         internal void DeleteUser(Guid id)
         {
-            _userService.DeleteUser(id);
+            _userService?.DeleteUser(id);
         }
         internal void CreateUser()
-        {
-            User user = _mapper.Map<User>(this);
-            _userService.CreateUser(user);
+        {   
+            _userService?.CreateUser(Name, Email, Phone, Address);
         }
         internal void UpdateUser()
-        {
-            User user = _mapper.Map<User>(this);
-            _userService.EditUser(user);
+        { 
+            _userService?.UpdateUser(Id, Name, Email, Phone, Address);
         }
-        internal User GetUser(string name)
+        //internal User GetUser(string name)
+        //{
+        //    return _userService.GetUser(name);
+        //}
+        internal User? GetUser(Guid id)
         {
-            return _userService.GetUser(name);
+            return _userService?.GetUser(id);
         }
-        internal User GetUser(Guid id)
+
+        public async Task<object?> GetPagedUsers(DataTablesAjaxRequestUtility dataTablesUtility)
         {
-            return _userService.GetUser(id);
-        }
+            var data = await _userService? .GetPagedUserAsync(
+               dataTablesUtility.PageIndex,
+               dataTablesUtility.PageSize,
+               dataTablesUtility.SearchText,
+               dataTablesUtility.GetSortText(new string[] { "Id", "Name", "Email", "Phone", "Address" }));
+
+            return new
+            {
+                recordsTotal = data.total,
+                recordsFiltered = data.totalDisplay,
+                data = (from record in data.records
+                        select new string[]
+                        {
+                                record.Name,
+                                record.Email,
+                                record.Phone,
+                                record.Address,
+                                record.Id.ToString(),
+
+                        }
+                    ).ToArray()
+            };
+        } 
     }
 }

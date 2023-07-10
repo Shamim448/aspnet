@@ -34,14 +34,14 @@ namespace Crud.API.Controllers
         [HttpGet("{id}")]
         public User Get(Guid id) {
             var model = _scope.Resolve<UserModel>();
-            return model.GetUsers(id);
+            return model.GetUser(id);
         }
-        [HttpGet("{name}")]
-        public User Get(string name)
-        {
-            var model = _scope.Resolve<UserModel>();
-            return model.GetUsers(name);
-        }
+        //[HttpGet("{name}")]
+        //public User Get(string name)
+        //{
+        //    var model = _scope.Resolve<UserModel>();
+        //    return model.GetUser(name);
+        //}
 
         [HttpPost()]
         public IActionResult Post(UserModel model)
