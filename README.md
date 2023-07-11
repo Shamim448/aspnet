@@ -1001,7 +1001,171 @@ Note: nameof(method name)-31 if we pass method name as a string try to used name
      }
      ```
     </details>
-## Class-35 (Web Api)
+## Class-35 (Web Api-JWT Token)
+1. JWT Token-55\
+    ইউজার যখন কোন রিকুয়েস্ট পাঠাবে সারভারএ তখন ইউজার কে লগিন করতে হয়, এখন api তে যখন ইউজার রিকুয়েস্ট পাঠাবে
+    তখন api HTTP based হওয়াই ইউজার এর ক্রিদেন্তিয়াল ধরে রাখবে না। এই সমসসা সমাধানে জন্য JWT Token ব্যবহার করা হয়।
+    এটা একটা টোকেন তৈরি করে প্রতি রিকুয়েস্ট এর সাথে পাঠাই দেই যার কারনে বারবার লগিন করতে হয়ই না।
+    সহজ কথাই JWT হছে API request authentication system
+2. Create TokenController-59\
+    এখানে ইউজার ম্যানেজার, সাইন-ইন ম্যানেজার, আই-কনফিগারাসিওন, টোকেন সার্ভিস থাকে।
+    Get method এর মাধমে email, password নিয়ে চেকিং করে, সব ঠিক থাকলে টোকেন সার্ভিস
+    এর মাধমে টোকেন জেনেরাট করে স্ট্রিং করে রিটার্ন করে দেই। 
+
+    <details>
+     <summary>TokenController</summary>
+    
+     ```c#
+    namespace Crud.API.Controllers
+    {
+    [Route("v3/[controller]")]
+    [ApiController]
+    public class TokenController : ControllerBase 
+    {  
+        private readonly IConfiguration _configuration;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ITokenService _tokenService;
+
+        public TokenController(IConfiguration config,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            ITokenService tokenService)
+        {
+            _configuration = config;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _tokenService = tokenService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get(string email, string password)
+        {
+            if (email != null && password != null)
+            {
+                var user = await _userManager.FindByEmailAsync(email);
+                var result = await _signInManager.CheckPasswordSignInAsync(user, password, true);
+
+                if (result != null && result.Succeeded)
+                {
+                    var claims = (await _userManager.GetClaimsAsync(user)).ToArray();
+                    var token = await _tokenService.GetJwtToken(claims);
+
+                    return Ok(token);
+                }
+                else
+                {
+                    return BadRequest("Invalid credentials");
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+    }
+    }
+     ```
+    </details>
+3. Create TokenService Class for create Token-60\
+    এখানে ইন্টারফেস এবং ক্লাস ২ টাই থাকবে। এইটা infrastructure layer ar security folder এর ভিতর তৈরি করব। 
+    এর কাজ হবে টোকেন জেনারেত করা । এবং আপ সেটিং এ key টা দিয়ে দিতে হবে। 
+    need package: Microsoft.AspNetCore.Authentication.JwtBearer
+    <details>
+     <summary>ITokenService</summary>
+    
+     ```c#
+    namespace Crud.Infrastructure.Securities
+    {
+    public interface ITokenService
+    {
+        Task<string> GetJwtToken(IList<Claim> claims);
+    }
+    }
+     ```
+    </details>
+    <details>
+     <summary>TokenService</summary>
+    
+     ```c#
+    namespace Crud.Infrastructure.Securities
+    {
+    public class TokenService : ITokenService
+    {
+        private readonly IConfiguration _configuration;
+
+        public TokenService(IConfiguration config)
+        {
+            _configuration = config;
+        }
+        //Used to generate token
+        public async Task<string> GetJwtToken(IList<Claim> claims)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims.ToArray()),
+                Issuer = _configuration["Jwt:Issuer"],
+                Audience = _configuration["Jwt:Audience"],
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
+        }
+    }
+    }
+     ```
+    </details>
+    <details>
+     <summary>Appsetting.jeson-67 for token key</summary>
+    
+     ```c#
+    "Jwt": {
+    "Key": "akjfjskghghjkfskjwjfewjifjksdjfksjfkdsfk",
+    "Issuer": "https://localhost:44322",
+    "Audience": "https://localhost:44322",
+    "ClientId": "Demo",
+    "Subject": "AccessToken"
+    },
+     ```
+    </details>
+4. Binding Tokenservice in module class-91
+    <details>
+     <summary>Tokenservice Binding for dependency</summary>
+    
+     ```c#
+    public class InfrastructureModule : Module
+    {     
+        public InfrastructureModule()
+        {
+        }
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
+            builder.RegisterType<TokenService>().As<ITokenService>().InstancePerLifetimeScope();
+
+        }
+        
+    }
+     ```
+    </details>
+5. Add AddIdentity in Program.cs-92\
+    Need Package: Microsoft.AspNetCore.Identity.UI
+    <details>
+     <summary>AddIdentity add in program file</summary>
+    
+     ```c#
+    builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+    //Auto Mapper
+    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+    builder.Services.AddIdentity();
+     ```
+    </details>
+
+    
     <details>
      <summary></summary>
     
