@@ -7,6 +7,7 @@ using Serilog.Events;
 using System.Reflection;
 using Crud.API.Models;
 using Crud.Persistance;
+using Crud.Persistance.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 //serilog Configure
@@ -38,6 +39,7 @@ try
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
     //Auto Mapper
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+    builder.Services.AddIdentity();
 
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
