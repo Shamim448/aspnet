@@ -28,7 +28,7 @@ namespace Crud.web.Areas.Admin.Models
             _roleManager = scope.Resolve<RoleManager<ApplicationRole>>();
             _userManager = scope.Resolve<UserManager<ApplicationUser>>();
         }
-
+        //used for create role
         public async Task  CreateRole()
         {
             if(!string.IsNullOrWhiteSpace(Name))

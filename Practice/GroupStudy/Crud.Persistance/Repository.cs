@@ -8,7 +8,8 @@ using System.Linq.Dynamic.Core;
 namespace Crud.Persistance
 {
     public abstract class Repository<TEntity, TKey> 
-        : IRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>
+        : IRepository<TEntity, TKey> where TKey : IComparable
+        where TEntity : class, IEntity<TKey>
     {
         protected  DbContext _dbContext;
         protected  DbSet<TEntity> _dbSet;

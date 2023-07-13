@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 namespace Crud.Domain.Repositories
 {
     public interface IRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>
+        where TKey : IComparable
     {
         void Add(TEntity entity);
        // Task AddAsync(TEntity entity);
