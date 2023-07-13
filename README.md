@@ -579,7 +579,8 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
         Authorization: Check user permited the visit an area
 
 ## Class-33 (Role-Management)
-1. SettingController Create(10,21,29)
+1. SettingController Create(10,21,29)\
+    এখানে লগার, স্কপ এবং রোল তৈরী এবং রোল এসাইন এর একশন তৈরী করা হই
    <details>
      <summary>SettingController-29</summary>
     
@@ -621,7 +622,8 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 
      ```
     </details>
-2. View Page Create & CreateRole Action View-25
+2. View Page Create & CreateRole Action View-25\
+    রোল এর ভিউ এবং ক্রিয়েট রোল এর ভিউ থাকবে। 
    <details>
      <summary>CreateRole view</summary>
     
@@ -676,7 +678,9 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 
      ```
     </details>
-3. CreateRoleModel-14
+3. CreateRoleModel-14\
+    এখানে রোল তৈরি কড়ার জন্যে Name একটা প্রপার্টি এবং Rolemanager & usermanager field
+    থাকবে। 
    <details>
      <summary>CreateRoleModel-19</summary>
     
@@ -736,7 +740,8 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     builder.RegisterType<RoleListModel>().AsSelf().InstancePerLifetimeScope();
      ```
     </details>
-6. Assign Role Controller-37
+6. Assign Role Controller-37\
+    AssignRole আই- একশন বানাতে হবে। এখানে ডাটা তুলে আনার জন্নে Loaddata() method থাকবে।
    <details>
      <summary>AssignRole Action</summary>
     
@@ -760,9 +765,11 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
         }
      ```
     </details>
-7. RoleAssignModel class-39
+7. RoleAssignModel class-39\
+    এখানে list এর মধ্যে role and user তুলে নিয়ে আসবে। Loaddata used করে
+    username অনুযায়ী রোল সেট কড়ার জন্য ২ টা প্রপার্টি নিতে হবে। 
    <details>
-     <summary>Dummy</summary>
+     <summary>RoleAssignModel</summary>
     
      ```c#
     namespace Crud.web.Areas.Admin.Models
@@ -818,7 +825,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     </details>
 8. AssignRole View-50-14
    <details>
-     <summary>Dummy</summary>
+     <summary>AssignRole View </summary>
     
      ```c#
     @model RoleAssignModel
