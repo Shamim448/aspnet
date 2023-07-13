@@ -45,7 +45,7 @@ namespace Crud.web.Areas.Admin.Controllers
             return View(model);
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> AsignRole(RoleAssignModel model)
+        public async Task<IActionResult> AssignRole(RoleAssignModel model)
         {
             if (ModelState.IsValid)
             {

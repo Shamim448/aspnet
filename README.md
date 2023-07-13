@@ -1,4 +1,4 @@
-# aspnet-b8-shamimhosen
+  # aspnet-b8-shamimhosen
 Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, Project)
 
 
@@ -581,10 +581,27 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 ## Class-33 (Role-Management)
 1. SettingController Create(10,21,29)
    <details>
-     <summary>Dummy</summary>
+     <summary>SettingController-29</summary>
     
      ```c#
-    public async Task <IActionResult> CreateRole()
+    namespace Crud.web.Areas.Admin.Controllers
+    {
+    [Area("Admin")]
+    public class SettingController : Controller
+    {
+        private readonly ILifetimeScope _scope;
+        private readonly ILogger<SettingController> _logger;
+        public SettingController(ILogger<SettingController> logger, ILifetimeScope scope)
+        {
+            _logger = logger;
+            _scope = scope;
+        }
+        public IActionResult Roles()
+        {
+            return View();
+        }
+
+        public async Task <IActionResult> CreateRole()
         {
             var model = _scope.Resolve<RoleCreateModel>();
             return View(model);
@@ -599,11 +616,14 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
             }
            return RedirectToAction(nameof(Roles));
         }
+    }
+    }
+
      ```
     </details>
 2. View Page Create & CreateRole Action View-25
    <details>
-     <summary>Dummy</summary>
+     <summary>CreateRole view</summary>
     
      ```c#
     @model RoleCreateModel
@@ -707,7 +727,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     
      ```
     </details>
-4. Binging WebModule-15
+5. Binging WebModule-14
    <details>
      <summary>WebModule</summary>
     
@@ -716,7 +736,152 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     builder.RegisterType<RoleListModel>().AsSelf().InstancePerLifetimeScope();
      ```
     </details>
+6. Assign Role Controller-37
+   <details>
+     <summary>AssignRole Action</summary>
+    
+     ```c#
+    //asign role
+        public async Task<IActionResult> AssignRole()
+        {
+            var model = _scope.Resolve<RoleAssignModel>();
+            await model.LoadData();
+            return View(model);
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> AssignRole(RoleAssignModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.ResolveDependency(_scope);
+                await model.AssignRole();
+            }
+            return RedirectToAction(nameof(Roles));
+        }
+     ```
+    </details>
+7. RoleAssignModel class-39
+   <details>
+     <summary>Dummy</summary>
+    
+     ```c#
+    namespace Crud.web.Areas.Admin.Models
+    {
+    public class RoleAssignModel
+    {
+        [Required]
+        public string Username { get; set; }
+        [Required]
+        public string RoleName { get; set; }
+        public List<SelectListItem>? Roles { get;private set; }
+        public List<SelectListItem>? LUsers { get; private set; }
 
+        private RoleManager<ApplicationRole> _roleManager;
+        private UserManager<ApplicationUser> _userManager;
+        
+        public RoleAssignModel() { 
+
+        }
+        public RoleAssignModel(RoleManager<ApplicationRole> roleManager, 
+            UserManager<ApplicationUser> userManager)
+        {
+            _roleManager = roleManager;
+            _userManager = userManager;
+        }
+
+        internal void ResolveDependency (ILifetimeScope scope)
+        {
+            _roleManager = scope.Resolve<RoleManager<ApplicationRole>>();
+            _userManager = scope.Resolve<UserManager<ApplicationUser>>();
+        }
+        //used for Load Username and role name in vied page
+        internal async Task LoadData()
+        {
+            LUsers = await (from c in _userManager.Users
+                           select new SelectListItem($"{c.FirstName} {c.LastName}", c.UserName))
+            .ToListAsync();
+
+            Roles = await (from c in _roleManager.Roles
+                           select new SelectListItem(c.Name, c.Name))
+                     .ToListAsync();
+        }
+        //assign role
+        internal async Task AssignRole()
+        {
+            ApplicationUser user = await _userManager.FindByNameAsync(Username);
+            await _userManager.AddToRoleAsync(user, RoleName);   
+        }
+
+    }
+    }
+     ```
+    </details>
+8. AssignRole View-50-14
+   <details>
+     <summary>Dummy</summary>
+    
+     ```c#
+    @model RoleAssignModel
+    @{
+    ViewData["Title"] = "AssignRole";
+    }
+
+    <div class="container-fluid">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Create User</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form" asp-antiforgery="true" asp-action="AssignRole"
+                      asp-area="Admin" asp-controller="Setting" method="post">
+                    <div class="card-body">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Username"></label>
+                            <select asp-items="@Model.LUsers"  asp-for="Username" ></select>
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RoleName"></label>
+                            <select asp-items="@Model.Roles" asp-for="RoleName"></select>
+                            <span asp-validation-for="RoleName" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.card -->
+
+        </div>
+        <!--/.col (left) -->
+    </div>
+    <!-- /.row -->
+    </div><!-- /.container-fluid -->
+    @section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+    }
+
+     ```
+    </details>
+9. Register AssignRole -58
+   <details>
+     <summary>WebModule</summary>
+    
+     ```c#
+    builder.RegisterType<RoleAssignModel>().AsSelf().InstancePerLifetimeScope();
+     ```
+    </details>
 Note: nameof(method name)-31 if we pass method name as a string try to used nameof 
 
 ## Class-34 (Web API)
