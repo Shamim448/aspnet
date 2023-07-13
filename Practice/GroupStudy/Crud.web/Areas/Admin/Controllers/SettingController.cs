@@ -37,7 +37,6 @@ namespace Crud.web.Areas.Admin.Controllers
         }
 
         //asign role
-
         public async Task<IActionResult> AssignRole()
         {
             var model = _scope.Resolve<RoleAssignModel>();
