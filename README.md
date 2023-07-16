@@ -889,6 +889,27 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     builder.RegisterType<RoleAssignModel>().AsSelf().InstancePerLifetimeScope();
      ```
     </details>
+10. Policy Based Authorization-80\
+    একাধিক Role কে একত্র করে একটা পলেছি বেজ authorization তৈরি করা হয়
+     পলেছি বেজ এ যে কইটা role অ্যাড করব , কোন ইউজার আআর ওপর  সেই পলেছি অ্যাপ্লাই
+     করতে হলে আবসসই পলেছি সব রোলে ইউজার এর মধ্যে অ্যাড করতে হবে। 
+     একটা area or controller a  একাধিক পলিচ্য অ্যাড করা যাই  না।
+   <details>
+     <summary>Code in servicecollectionextention</summary>
+    
+     ```c#
+        //Policy Based Role Management
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ITPerson", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireRole("HR");
+                    policy.RequireRole("IT");
+                });
+            });
+     ```
+    </details>
 Note: nameof(method name)-31 if we pass method name as a string try to used nameof 
 
 ## Class-34 (Web API)

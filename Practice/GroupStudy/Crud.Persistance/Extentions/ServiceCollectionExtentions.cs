@@ -54,6 +54,17 @@ namespace Crud.Persistance.Extentions
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = true;
             });
+            //Policy Based Role Management
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ITPerson", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireRole("HR");
+                    policy.RequireRole("IT");
+                });
+            });
+
             services.AddRazorPages();
         }
     }
