@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Crud.web.Areas.Admin
 {
-    [Area("Admin"), Authorize]
+    [Area("Admin"), Authorize(Policy ="ITPerson")]
     public class UserController : Controller
     {
         ILifetimeScope _scope;

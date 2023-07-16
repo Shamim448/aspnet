@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Crud.web.Areas.Admin.Controllers
 {
-    [Area("Admin"), Authorize]
+    [Area("Admin"), Authorize(Roles ="Admin")]
     public class SettingController : Controller
     {
         private readonly ILifetimeScope _scope;
