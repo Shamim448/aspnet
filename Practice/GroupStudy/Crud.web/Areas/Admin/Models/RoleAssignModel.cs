@@ -52,5 +52,10 @@ namespace Crud.web.Areas.Admin.Models
             await _userManager.AddToRoleAsync(user, RoleName);   
         }
 
+        internal async Task AsignStaticClaim()
+        {
+            ApplicationUser user = await _userManager.FindByNameAsync("it@crud.com");
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("ViewUser", "true"));
+        }
     }
 }
