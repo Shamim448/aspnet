@@ -19,7 +19,7 @@ namespace Crud.web.Areas.Admin
             _scope = scope;
             _logger = logger;
         }
-        [Authorize(Policy = "UserViewPolicy")]
+        [Authorize(Policy = "UserViewRequirementPolicy")]
         public IActionResult Index()
         {
             var model = _scope.Resolve<UserListModel>();
@@ -132,7 +132,7 @@ namespace Crud.web.Areas.Admin
             }
             return RedirectToAction("Index");
         }
-        [Authorize(Policy = "UserViewPolicy")]
+        [Authorize(Policy = "UserViewRequirementPolicy")]
         public async Task <JsonResult> GetUsers()
         {
             var dataTableModel = new DataTablesAjaxRequestUtility(Request);

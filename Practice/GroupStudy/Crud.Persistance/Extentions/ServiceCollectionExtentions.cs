@@ -1,5 +1,7 @@
-﻿using Crud.Persistance.Features.Membership;
+﻿using Crud.Infrastructure.Securities;
+using Crud.Persistance.Features.Membership;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -70,9 +72,16 @@ namespace Crud.Persistance.Extentions
                     policy.RequireAuthenticatedUser();
                     policy.RequireClaim("ViewUser", "true");
                 });
+                //Alternative option for Claim Based
+                options.AddPolicy("UserViewRequirementPolicy", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.Requirements.Add(new UserViewRequirement());
+                });
             });
-             
-            
+            //part of Alternative option for Claim Based
+            services.AddSingleton<IAuthorizationHandler, UserViewRequirementHandler>();
+
             services.AddRazorPages();
         }
     }

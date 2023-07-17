@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Crud.Application\Crud.Application.csproj" />
     <ProjectReference Include="..\Crud.Domain\Crud.Domain.csproj" />
+    <ProjectReference Include="..\Crud.Infrastructure\Crud.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
