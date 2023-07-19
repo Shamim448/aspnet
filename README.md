@@ -894,22 +894,23 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
      পলেছি বেজ এ যে কইটা role অ্যাড করব , কোন ইউজার আআর ওপর  সেই পলেছি অ্যাপ্লাই
      করতে হলে আবসসই পলেছি সব রোলে ইউজার এর মধ্যে অ্যাড করতে হবে। 
      একটা area or controller a  একাধিক পলিচ্য অ্যাড করা যাই  না।
-   <details>
+    <details>
      <summary>Code in servicecollectionextention</summary>
     
      ```c#
-        //Policy Based Role Management
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("ITPerson", policy =>
-                {
-                    policy.RequireAuthenticatedUser();
-                    policy.RequireRole("HR");
-                    policy.RequireRole("IT");
-                });
-            });
+    //Policy Based Role Management
+    services.AddAuthorization(options =>
+    {
+        options.AddPolicy("ITPerson", policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.RequireRole("HR");
+            policy.RequireRole("IT");
+         });
+    });
      ```
     </details>
+
 11. Configure Claim Based-90/
    <details>
      <summary> add claim option in ServiceCollectionExtention</summary>
