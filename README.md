@@ -912,27 +912,27 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     </details>
 
 11. Configure Claim Based-90/
-   <details>
-     <summary> add claim option in ServiceCollectionExtention</summary>
+    <details>
+    <summary> add claim option in ServiceCollectionExtention</summary>
     
      ```c#
     //Role Management
-            services.AddAuthorization(options =>
-            {
-                //Policy Based
-                options.AddPolicy("ITPerson", policy =>
-                {
-                    policy.RequireAuthenticatedUser();
-                    policy.RequireRole("HR");
-                    policy.RequireRole("IT");
-                });
-                //Claim Based
-                options.AddPolicy("UserViewPolicy", policy =>
-                {
-                    policy.RequireAuthenticatedUser();
-                    policy.RequireClaim("ViewUser", "true");
-                });
-            });
+    services.AddAuthorization(options =>
+    {
+        //Policy Based
+        options.AddPolicy("ITPerson", policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.RequireRole("HR");
+            policy.RequireRole("IT");
+        });
+        //Claim Based
+        options.AddPolicy("UserViewPolicy", policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.RequireClaim("ViewUser", "true");
+        });
+    });
      ```
     </details>
     <details>
@@ -948,12 +948,12 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     
      ```c#
     //Assign Claim
-        public async Task<IActionResult> AssignClaim()
-        {
-            var model = _scope.Resolve<RoleAssignModel>();
-            await model.AsignStaticClaim();
-            return View();
-        }
+    public async Task<IActionResult> AssignClaim()
+    {
+        var model = _scope.Resolve<RoleAssignModel>();
+        await model.AsignStaticClaim();
+        return View();
+    }
      ```
     </details>
     <details>
@@ -961,10 +961,10 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     
      ```c#
     internal async Task AsignStaticClaim()
-        {
-            ApplicationUser user = await _userManager.FindByNameAsync("it@crud.com");
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("ViewUser", "true"));
-        }
+    {
+        ApplicationUser user = await _userManager.FindByNameAsync("it@crud.com");
+        await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("ViewUser", "true"));
+    }
      ```
     </details>
    now run project and go to AssignClaim action url. তাহলেই ক্লেয়াম অ্যাড হয়ে যাবে নিদ্দিস্ত ইউজার এ 
@@ -975,14 +975,14 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     
      ```c#
     //Alternative option for Claim Based
-      options.AddPolicy("UserViewRequirementPolicy", policy =>
+    options.AddPolicy("UserViewRequirementPolicy", policy =>
          {
                     policy.RequireAuthenticatedUser();
                     policy.Requirements.Add(new UserViewRequirement());
         });
-        });
+    });
         //part of Alternative option for Claim Based
-        services.AddSingleton<IAuthorizationHandler, UserViewRequirementHandler>();
+    services.AddSingleton<IAuthorizationHandler, UserViewRequirementHandler>();
      ```
     </details>
     <details>
