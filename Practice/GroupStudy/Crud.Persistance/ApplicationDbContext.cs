@@ -21,7 +21,6 @@ namespace Crud.Persistance
             _migrationsAssembly = migrationAssembly;
         }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
