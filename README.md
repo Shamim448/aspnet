@@ -1021,7 +1021,7 @@ claim  ইউজার এবং রোল দুইতাতে দেওয়া
 
      ```
     </details>
-Note: nameof(method name)-31 if we pass method name as a string try to used nameof 
+    Note: nameof(method name)-31 if we pass method name as a string try to used nameof 
 
 ## Class-34 (Web API)
 1. Service-02\
@@ -1200,7 +1200,7 @@ Note: nameof(method name)-31 if we pass method name as a string try to used name
     এমটি constractor থাকবে। এবং একটা paramiterized constractor থাকবে যেখানে পারামিতের হিসাবে থাকবে IService
 
     <details>
-     <summary>Dummy</summary>
+     <summary>UserMode Class3</summary>
     
      ```c#
     namespace Crud.API.Models
