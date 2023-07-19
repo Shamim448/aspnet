@@ -966,8 +966,8 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
         }
      ```
     </details>
-now run project and go to AssignClaim action url. তাহলেই ক্লেয়াম অ্যাড হয়ে যাবে নিদ্দিস্ত ইউজার এ 
-claim  ইউজার এবং রোল দুইতাতে দেওয়া যায়। 
+   now run project and go to AssignClaim action url. তাহলেই ক্লেয়াম অ্যাড হয়ে যাবে নিদ্দিস্ত ইউজার এ 
+   claim  ইউজার এবং রোল দুইতাতে দেওয়া যায়। 
 13. Alternative option for Claim Based - 104
    <details>
      <summary>add claim option in ServiceCollectionExtention</summary>
