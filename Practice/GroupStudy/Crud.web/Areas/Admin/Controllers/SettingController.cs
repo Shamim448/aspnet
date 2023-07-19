@@ -53,5 +53,13 @@ namespace Crud.web.Areas.Admin.Controllers
             }
             return RedirectToAction(nameof(Roles));
         }
+
+        //Assign Claim
+        public async Task<IActionResult> AssignClaim()
+        {
+            var model = _scope.Resolve<RoleAssignModel>();
+            await model.AsignStaticClaim();
+            return View();
+        }
     }
 }

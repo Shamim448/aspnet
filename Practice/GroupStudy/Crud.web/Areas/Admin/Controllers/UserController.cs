@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Crud.web.Areas.Admin
 {
-    [Area("Admin"), Authorize(Policy ="ITPerson")]
+    [Area("Admin")]
     public class UserController : Controller
     {
         ILifetimeScope _scope;
@@ -19,19 +19,20 @@ namespace Crud.web.Areas.Admin
             _scope = scope;
             _logger = logger;
         }
-        [AllowAnonymous]
+        [Authorize(Policy = "UserViewRequirementPolicy")]
         public IActionResult Index()
         {
             var model = _scope.Resolve<UserListModel>();
             return View(model); 
         }
         //-------Used for create--------
+        [Authorize(Policy = "ITPerson")]
         public IActionResult Create() 
         {
             var model = _scope.Resolve<UserCreateModel>();
             return View(model);
         }
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken,  Authorize(Policy = "ITPerson")]
         public IActionResult Create(UserCreateModel model)
         {
             model.ResolveDependency(_scope);
@@ -67,13 +68,14 @@ namespace Crud.web.Areas.Admin
         }
         //-------End section for create--------
         //-------Used for Update--------
+        [Authorize(Policy = "ITPerson")]
         public IActionResult Update(Guid id)
         {
             var model = _scope.Resolve<UserUpdateModel>();
             model.Load(id);
             return View(model);
         }
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken,  Authorize(Policy = "ITPerson")]
         public IActionResult Update(UserUpdateModel model)
         {
             model.ResolveDependency(_scope);
@@ -112,6 +114,7 @@ namespace Crud.web.Areas.Admin
         }
         //-------End section for Update--------
         //-------Start section for Delete--------
+        [Authorize(Policy = "ITPerson")]
         public IActionResult Delete(Guid id)
         {
             var model = _scope.Resolve<UserListModel>();
@@ -129,7 +132,7 @@ namespace Crud.web.Areas.Admin
             }
             return RedirectToAction("Index");
         }
-
+        [Authorize(Policy = "UserViewRequirementPolicy")]
         public async Task <JsonResult> GetUsers()
         {
             var dataTableModel = new DataTablesAjaxRequestUtility(Request);

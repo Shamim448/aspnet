@@ -894,23 +894,135 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
      পলেছি বেজ এ যে কইটা role অ্যাড করব , কোন ইউজার আআর ওপর  সেই পলেছি অ্যাপ্লাই
      করতে হলে আবসসই পলেছি সব রোলে ইউজার এর মধ্যে অ্যাড করতে হবে। 
      একটা area or controller a  একাধিক পলিচ্য অ্যাড করা যাই  না।
-   <details>
+    <details>
      <summary>Code in servicecollectionextention</summary>
     
      ```c#
-        //Policy Based Role Management
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("ITPerson", policy =>
-                {
-                    policy.RequireAuthenticatedUser();
-                    policy.RequireRole("HR");
-                    policy.RequireRole("IT");
-                });
-            });
+    //Policy Based Role Management
+    services.AddAuthorization(options =>
+    {
+        options.AddPolicy("ITPerson", policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.RequireRole("HR");
+            policy.RequireRole("IT");
+         });
+    });
      ```
     </details>
-Note: nameof(method name)-31 if we pass method name as a string try to used nameof 
+
+11. Configure Claim Based-90/
+    <details>
+    <summary> add claim option in ServiceCollectionExtention</summary>
+    
+     ```c#
+    //Role Management
+    services.AddAuthorization(options =>
+    {
+        //Policy Based
+        options.AddPolicy("ITPerson", policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.RequireRole("HR");
+            policy.RequireRole("IT");
+        });
+        //Claim Based
+        options.AddPolicy("UserViewPolicy", policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.RequireClaim("ViewUser", "true");
+        });
+    });
+     ```
+    </details>
+    <details>
+     <summary>Set authorization role for view</summary>
+    
+     ```c#
+    [Authorize(Policy = "UserViewPolicy")]
+     ```
+    </details>
+12. Create AssignClaim IAction -94
+    <details>
+     <summary>AssignClaim</summary>
+    
+     ```c#
+    //Assign Claim
+    public async Task<IActionResult> AssignClaim()
+    {
+        var model = _scope.Resolve<RoleAssignModel>();
+        await model.AsignStaticClaim();
+        return View();
+    }
+     ```
+    </details>
+    <details>
+     <summary>create AsignStaticClaim() in RoleAssignModel</summary>
+    
+     ```c#
+    internal async Task AsignStaticClaim()
+    {
+        ApplicationUser user = await _userManager.FindByNameAsync("it@crud.com");
+        await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("ViewUser", "true"));
+    }
+     ```
+    </details>
+    now run project and go to AssignClaim action url. তাহলেই ক্লেয়াম অ্যাড হয়ে যাবে নিদ্দিস্ত ইউজার এ 
+    claim  ইউজার এবং রোল দুইতাতে দেওয়া যায়। 
+13. Alternative option for Claim Based - 104
+    <details>
+     <summary>add claim option in ServiceCollectionExtention</summary>
+    
+     ```c#
+    //Alternative option for Claim Based
+    options.AddPolicy("UserViewRequirementPolicy", policy =>
+         {
+                    policy.RequireAuthenticatedUser();
+                    policy.Requirements.Add(new UserViewRequirement());
+        });
+    });
+        //part of Alternative option for Claim Based
+    services.AddSingleton<IAuthorizationHandler, UserViewRequirementHandler>();
+     ```
+    </details>
+    <details>
+     <summary>Add UserViewRequirement method in infrastructure </summary>
+    
+     ```c#
+    namespace Crud.Infrastructure.Securities
+    { 
+    public class UserViewRequirement : IAuthorizationRequirement
+    {
+    }
+    }
+     ```
+    </details>
+    <details>
+     <summary>Add UserViewRequirementHandler method in infrastructure</summary>
+    
+     ```c#
+    namespace Crud.Infrastructure.Securities
+    {
+    public class UserViewRequirementHandler :
+          AuthorizationHandler<UserViewRequirement>
+    {
+        protected override Task HandleRequirementAsync(
+               AuthorizationHandlerContext context,
+               UserViewRequirement requirement)
+        {
+            if (context.User.HasClaim(x => x.Type == "ViewUser" && x.Value == "true"))
+            {
+                context.Succeed(requirement);
+            }
+
+            return Task.CompletedTask;
+        }
+    }
+    }
+
+     ```
+    </details>
+    Note: nameof(method name)-31 if we pass method name as a string try to used nameof 
 
 ## Class-34 (Web API)
 1. Service-02\
@@ -1089,7 +1201,7 @@ Note: nameof(method name)-31 if we pass method name as a string try to used name
     এমটি constractor থাকবে। এবং একটা paramiterized constractor থাকবে যেখানে পারামিতের হিসাবে থাকবে IService
 
     <details>
-     <summary>Dummy</summary>
+     <summary>UserMode Class3</summary>
     
      ```c#
     namespace Crud.API.Models
