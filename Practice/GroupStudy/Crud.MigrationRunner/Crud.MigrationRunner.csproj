@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Crud.Application\Crud.Application.csproj" />
+    <ProjectReference Include="..\Crud.Domain\Crud.Domain.csproj" />
+    <ProjectReference Include="..\Crud.Infrastructure\Crud.Infrastructure.csproj" />
+    <ProjectReference Include="..\Crud.Persistance\Crud.Persistance.csproj" />
+  </ItemGroup>
+
+</Project>
