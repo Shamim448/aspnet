@@ -44,7 +44,7 @@ namespace Crud.API.Controllers
         //}
 
         [HttpPost()]
-        public IActionResult Post(UserModel model)
+        public IActionResult Post([FromBody]UserModel model)
         {
             try {
                 model.ResolveDepenency(_scope);
