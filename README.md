@@ -1511,9 +1511,14 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 
         static void Main(string[] args)
         {
-            _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", false)
+            //collect appsetting.jeson file path
+            DirectoryInfo root = new DirectoryInfo(Directory.GetCurrentDirectory());
+            string settingsPath = Path.Combine(root.Parent.Parent.Parent.FullName, "appsettings.json");
+            //load appsetting
+            _configuration = new ConfigurationBuilder().AddJsonFile(settingsPath, false) 
                 .AddEnvironmentVariables()
                 .Build();
+
             _connectionString = _configuration.GetConnectionString("DefaultConnection");
             _migrationAssemblyName = typeof(Program).Assembly.FullName;
 
@@ -1552,7 +1557,66 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     }
      ```
     </details>
+6. Add Authentication in API Project-50\
+    Separate bellow code block from servicecollectionextention to program.cs file
+
     <details>
+     <summary>Cookie based authuntication setting in Program.cs </summary>
+    
+     ```c#
+    //cookie setting for identity for web
+    builder.Services.AddAuthentication()
+        .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+        {
+            options.LoginPath = new PathString("/Account/Login");
+            options.AccessDeniedPath = new PathString("/Account/Login");
+            options.LogoutPath = new PathString("/Account/Logout");
+            options.Cookie.Name = "FirstDemoPortal.Identity";
+            options.SlidingExpiration = true;
+            options.ExpireTimeSpan = TimeSpan.FromHours(1);
+        });
+     ```
+    </details>
+    Add this bellow block in API Program.cs file then det the authintication base in IAction
+    then goto postman and collect jwt token then goto a method which we add authenticatio
+    like GET url and pest the Authorization  select type Bearer Token and pest the token
+    in token field
+    <details>
+     <summary>Add Policy based Authintication in API Project-51 and class 37-03</summary>
+    
+     ```c#
+    //Authentication service for Jwt token
+    builder.Services.AddAuthentication()
+        .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, x =>
+        {
+            x.RequireHttpsMetadata = false;
+            x.SaveToken = true;
+            x.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                ValidAudience = builder.Configuration["Jwt:Audience"],
+            };
+        });
+    builder.Services.AddAuthorization( options =>
+        {
+            //Alternative option for Claim Based
+            options.AddPolicy("UserViewRequirementPolicy", policy =>
+            {
+                policy.AuthenticationSchemes.Clear();
+                policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                policy.RequireAuthenticatedUser();
+                policy.Requirements.Add(new UserViewRequirement());
+            });
+    });
+    //part of Alternative option for Claim Based
+    builder.Services.AddSingleton<IAuthorizationHandler, UserViewRequirementHandler>();
+     ```
+    </details>
+        <details>
      <summary></summary>
     
      ```c#

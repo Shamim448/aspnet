@@ -8,6 +8,13 @@ using System.Reflection;
 using Crud.API.Models;
 using Crud.Persistance;
 using Crud.Persistance.Extentions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Autofac.Core;
+using Crud.Infrastructure.Securities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 //serilog Configure
@@ -40,11 +47,41 @@ try
     //Auto Mapper
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     builder.Services.AddIdentity();
+    //Authentication service for Jwt token
+    builder.Services.AddAuthentication()
+        .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, x =>
+        {
+            x.RequireHttpsMetadata = false;
+            x.SaveToken = true;
+            x.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                ValidAudience = builder.Configuration["Jwt:Audience"],
+            };
+        });
+    builder.Services.AddAuthorization( options =>
+        {
+            //Alternative option for Claim Based
+            options.AddPolicy("UserViewRequirementPolicy", policy =>
+            {
+                policy.AuthenticationSchemes.Clear();
+                policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                policy.RequireAuthenticatedUser();
+                policy.Requirements.Add(new UserViewRequirement());
+            });
+    });
+    //part of Alternative option for Claim Based
+    builder.Services.AddSingleton<IAuthorizationHandler, UserViewRequirementHandler>();
 
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+    
 
     var app = builder.Build();
 

@@ -19,7 +19,11 @@ namespace Crud.MigrationRunner
 
         static void Main(string[] args)
         {
-            _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", false)
+            //collect appsetting.jeson file path
+            DirectoryInfo root = new DirectoryInfo(Directory.GetCurrentDirectory());
+            string settingsPath = Path.Combine(root.Parent.Parent.Parent.FullName, "appsettings.json");
+            //load appsetting
+            _configuration = new ConfigurationBuilder().AddJsonFile(settingsPath, false) 
                 .AddEnvironmentVariables()
                 .Build();
             _connectionString = _configuration.GetConnectionString("DefaultConnection");
