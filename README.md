@@ -1585,10 +1585,8 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     like GET url and pest the Authorization  select type Bearer Token and pest the token
     in token field
     
-<<<<<<< HEAD
-=======
     ![image](https://github.com/Shamim448/aspnet/assets/43339514/412adfb9-8290-4350-9ea3-9dbd609b302f)
->>>>>>> 865cf73b16800639ee3fb861491e43aebe2501aa
+
     <details>
      <summary>Add Policy based Authintication in API Project-51 and class 37-03</summary>
     
@@ -1631,9 +1629,4 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     
      ```
     </details>
-<<<<<<< HEAD
 
-   
-=======
-   
->>>>>>> 865cf73b16800639ee3fb861491e43aebe2501aa
