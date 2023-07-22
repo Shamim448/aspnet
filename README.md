@@ -1622,6 +1622,13 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     builder.Services.AddSingleton<IAuthorizationHandler, UserViewRequirementHandler>();
      ```
     </details>
+## Class-37 (Worker Service)
+
+1. Worker Service(18)\
+    Web service  কে আমরা সার্ভার এ host করে URL দিয়ে HTTP Method a access করি। 
+    কিন্ত worker service এক্তা computer এ service হিসাবে run করে। এতাকে HTTP দিয়ে call করা যাই না। 
+    এটা নিজে নিজে রান করতে থাকে, এটা দিয়ে কিছু কাজ করা যাই কিন্তু এতাকে কল করা যাই না। 
+
     <details>
      <summary></summary>
     
