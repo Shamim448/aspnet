@@ -1581,6 +1581,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     then goto postman and collect jwt token then goto a method which we add authenticatio
     like GET url and pest the Authorization  select type Bearer Token and pest the token
     in token field
+    
     <details>
      <summary>Add Policy based Authintication in API Project-51 and class 37-03</summary>
     
@@ -1623,4 +1624,5 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     
      ```
     </details>
+
    
