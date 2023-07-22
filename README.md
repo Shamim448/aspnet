@@ -1470,7 +1470,88 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
      ```
     </details>
 
+
+## Class-36 (Generate Migration in Console App)
+1. Web Service (8)\
+    Machine to Machine communicate করে এজন্য ইউজার ইন্টারফেস থাকে না।
+    বেশিরভাগ সময়ই web service কে অন্য একটি প্রগ্রাম ব্যবহার করে।
+    Web service ডাটা provide  করার জন্য একটা web application, এটা Presentation , View  Provide করে না। 
+    Web service  ওয়েব সারভারে রাখতে হয়। 
+2. Web Application\
+    Web Application has User Interface for Humen interaction. 
+    it is dynamic application.(Database driven, business logic, program). 
+    it is subset of web site.
+3. Web Site\
+    it is a static site. It created by html, css only. like portfolio site
+    it is a superset of web application.
+
+    Note: Every web applition can be web site but web site can not be web applition.
+4. WEB Api-13\
+    Application Programming/Programable Interface. web api হতে হলে একটা service এর অবশ্যই restricted হতে হবে।  
+    it follow the RSET Atchitucture (GET, POST, PUT, DELETE)
+5. Console Project for Migration Generator-15\
+    এখানে Logger, Dependency Injection এর কনফিগারেশন থাকবে। 
+    Need this package: Autofac.Extensions.DependencyInjection
+    Microsoft.EntityFrameworkCore.Design
+    Serilog.Extensions.Hosting
+    Serilog.Settings.Configuration
+    এবং সব প্রোজেক্ট এর reference দিয়ে দিতে হবে। 
     
+    <details>
+     <summary>Program</summary>
+    
+     ```c#
+    namespace Crud.MigrationRunner
+    {
+    public class Program
+    {
+        private static string _connectionString;
+        private static string _migrationAssemblyName;
+        private static IConfiguration _configuration;
+
+        static void Main(string[] args)
+        {
+            _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", false)
+                .AddEnvironmentVariables()
+                .Build();
+            _connectionString = _configuration.GetConnectionString("DefaultConnection");
+            _migrationAssemblyName = typeof(Program).Assembly.FullName;
+
+            //Serilog configuration
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+                .Enrich.FromLogContext()
+                .ReadFrom.Configuration(_configuration)
+                .CreateLogger();
+
+            try {
+                Log.Information("Application Starting up");
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex) {
+                Log.Fatal(ex, "Application start-up failed");
+            }
+            finally { 
+                Log.CloseAndFlush();
+            }
+        }
+
+        //Dependency Injection
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+            .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+            .UseSerilog()
+            .ConfigureContainer<ContainerBuilder>(builder =>
+            {
+                builder.RegisterModule(new PersistanceModule(_connectionString, _migrationAssemblyName));
+                builder.RegisterModule(new ApplicationModule());
+                builder.RegisterModule(new InfrastructureModule());
+            });
+    }
+    }
+     ```
+    </details>
     <details>
      <summary></summary>
     
