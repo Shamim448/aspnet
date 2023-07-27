@@ -1628,6 +1628,104 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     Web service  কে আমরা সার্ভার এ host করে URL দিয়ে HTTP Method a access করি। 
     কিন্ত worker service এক্তা computer এ service হিসাবে run করে। এতাকে HTTP দিয়ে call করা যাই না। 
     এটা নিজে নিজে রান করতে থাকে, এটা দিয়ে কিছু কাজ করা যাই কিন্তু এতাকে কল করা যাই না। 
+2. Create Worker Service Project(35)\
+    Project create করে AutoFac, serilog configure করতে হবে Program.cs file এ । 
+    appsetting.json file ta o add korte hobe.
+    Package: Microsoft.Extensions.Hosting.WindowsServices
+    Serilog.Extensions.Hosting
+    Serilog.Settings.Configuration
+    Serilog.Sinks.File
+    <details>
+     <summary>Program.cs - 67</summary>
+    
+     ```c#
+    var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", false)
+                .AddEnvironmentVariables()
+                .Build();
+
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        var migrationAssemblyName = typeof(Worker).Assembly.FullName;
+
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+            .Enrich.FromLogContext()
+            .ReadFrom.Configuration(configuration)
+            .CreateLogger();
+
+        try
+        {
+            Log.Information("Application Starting up");
+
+            IHost host = Host.CreateDefaultBuilder(args)
+                .UseWindowsService()
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .UseSerilog()
+                .ConfigureContainer<ContainerBuilder>(builder =>
+                {
+                    builder.RegisterModule(new WorkerModule());
+                })
+                .ConfigureServices(services =>
+                {
+                    services.AddHostedService<Worker>();
+                })
+                .Build();
+
+            await host.RunAsync();
+        }
+        catch (Exception ex)
+        {
+            Log.Fatal(ex, "Application start-up failed");
+        }
+        finally
+        {
+            Log.CloseAndFlush();
+    }
+     ```
+    </details>
+    <details>
+     <summary>WorkerModule</summary>
+    
+     ```c#
+    namespace Crud.EmailWorker
+    {
+    internal class WorkerModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            base.Load(builder);
+        }
+    }
+    }
+     ```
+    </details>
+    <details>
+     <summary>Appsettings - 77</summary>
+    
+     ```c#
+    "Serilog": {
+    "WriteTo": [
+      {
+        "Name": "File",
+        "Args": {
+          "path": "F:/Projects/aspnet/Practice/GroupStudy/Crud.EmailWorker/Logs/worker-log-.log",
+          "rollingInterval": "Day"
+        }
+      }
+     ]
+     }
+     ```
+    </details>
+3. Published worker service - 77\
+    প্রোজেক্ট এ right button click  করে Folder select করে next তারপর location দিয়ে (if needed)
+    Finished করতে হবে। এবার publish button এ click করতে হবে। 
+    এবার service install করার জন্য command promt addministrator mode এ ওপেন করতে হবে
+    sc.exe create service name binpath=service ar exe file path start=auto
+    Uninstall service: stop service 
+    sc.exe delete service name
+
+    Note: appsetting ar log folder path pc এর drivar path দিতে হবে।
 
     <details>
      <summary></summary>
@@ -1636,4 +1734,5 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     
      ```
     </details>
+
 
