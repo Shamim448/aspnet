@@ -1727,13 +1727,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 
     Note: appsetting ar log folder path pc এর drivar path দিতে হবে।
 
-    <details>
-     <summary></summary>
-    
-     ```c#
-    
-     ```
-    </details>
+
 ## Class -38 (Unit Test)
 1. Type of Testing(18-26)\
     i) Unit Test
@@ -1763,7 +1757,13 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
    * Test যেকোনো Machine হতে Runable হতে হবে কোন প্রকার Configuration ছাড়াই ।
    * Test খুব দ্রত Run হতে হবে।
 
-
+    <details>
+     <summary></summary>
+    
+     ```c#
+    
+     ```
+    </details>
 
 
 
