@@ -1734,5 +1734,37 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     
      ```
     </details>
+## Class -38 (Unit Test)
+1. Type of Testing(18-26)\
+    i) Unit Test
+    ii) Intregration Test
+    iii) System Test
+    iv) Load Test
+    আরও কিছু Test আছে, যা এই কোর্সে আলোচনা করা হবে না। যেমনঃ  
+    (Smoke Test, End to end test, Functional Test etc) 
+
+    i) Unit Test: যদি কোন Method এর জন্য Test লিখি তাহলে ঐ method এর ভিতর যদি অন্য কোন Class এর কোন Method থাকে 
+    (Dependency হিসাবে) তাহলে সেই Method কে Call করা যাবে না। তবে যদি same class এর কোন Public/Private Method এর ওপর Dependent হয়
+     তাহলে সেই Method কে Call করা যাবে। 
+    ii) Intregration Test: যদি কোন Method এর Testing Code হতে অন্য কোন Class এর Medhod কে (Dependent ) হবার কারনে Call
+    করা যায় তাহলে সেটা Intregration Test
+    iii) System Test: আর যদি কোন Method হতে পুরা System (Database, Filesystem, Network) Call করা যায়, তবে সেটা হবে System Test
+    iv)  Load Test: At a time কত জন ইউজার Software ব্যবহার করতে পারবে সেটা Laod Test দ্বারা করা হয়। 
+
+    Note: বিভিন্ন ধরনের Testing এর Codeing গত কোন পার্থক্য নেই, শধুমাত্র Call কতদূর পর্যন্ত করা যাবে তার ওপর ভিত্তি করে Testing এর
+    প্রকারভেদ নির্ণয়ই করা হয়।
+
+2. Unit Testing এর বৈশিষ্ট্য -(26-27)\
+   * এক Class এর Method হতে অন্য Class এর Method কে কল করা যাবে না।
+     কারন যদি Test Failed হয়, তাহলে কোন Method এর কারনে Failed হইসে বুঝা 
+     যাবে না। যেকোন একটা  Method Failed হলেই Test Failed হবে।
+   * External Resource এ Call যেতে পারবে না।(Database, Filesystem, Network)
+   * Test one Click এ Run হতে হবে।
+   * Test যেকোনো Machine হতে Runable হতে হবে কোন প্রকার Configuration ছাড়াই ।
+   * Test খুব দ্রত Run হতে হবে।
+
+
+
+
 
 
