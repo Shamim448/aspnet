@@ -1760,6 +1760,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     একটা Test Folder এর ভিতর NUnit Test Project Create করব।
     Project এর Name Structure হবে, যেই Project এর জন্য Test Project Create করছি 
     সেই Name পুরোটা দিয়ে তারপর .Test (Crud.Application.Test)
+    Need Package: Autofac.Extras.moq
 
 4. এখানে Unit Test অনুশীলন করার জন্য Application Project এ কিছু Method Create করছি। 
     <details>
@@ -1829,6 +1830,12 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     
     Test Method এর নামে করনের একটা ফরম্যাট আছে। 
     (CreateUser_LargeUsername_TruncateUsername)
+
+    * SETUP: It's Run before every Test run
+    * OneTimeSetup: Its run onetime when unit test run
+    * Teardown : It's Run after every Test run
+    * OneTimeTearDown: Its run onetime when unit test run finished
+
 
     <details>
      <summary>AccountServiceTests</summary>
