@@ -42,8 +42,9 @@ namespace Crud.Application.Tests
                                     mynameisshamimhosenmynameisshamimhosen";
             string expectedResult = username.Substring(0, 30);
             const string password = "fgdhgfhgngdfjkgj";
-
+            _accountRepositoryMock.Setup(x => x.CreateAccount(expectedResult, password)).Verifiable();
             _accountService.CreateAccount(username, password);
+            _accountRepositoryMock.VerifyAll();
         }
     }
 }
