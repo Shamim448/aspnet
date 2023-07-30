@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Crud.API.Models;
 using Crud.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +20,7 @@ namespace Crud.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Policy = "UserViewRequirementPolicy")]
         public IEnumerable<User> Get() { 
             try
             {
@@ -44,7 +45,7 @@ namespace Crud.API.Controllers
         //}
 
         [HttpPost()]
-        public IActionResult Post(UserModel model)
+        public IActionResult Post([FromBody]UserModel model)
         {
             try {
                 model.ResolveDepenency(_scope);

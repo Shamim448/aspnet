@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuple", "Tuple\Tuple.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generices", "Generices\Generices.csproj", "{529B3805-AA0F-4A00-81FF-BBD20916A7FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyORM", "MyORM\MyORM.csproj", "{D46851B7-4BDD-45F5-BBAB-2183DCFB9602}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyORM", "MyORM\MyORM.csproj", "{D46851B7-4BDD-45F5-BBAB-2183DCFB9602}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exprements", "Exprements\Exprements.csproj", "{42EECA91-F5A2-423C-8164-FD12B810B29C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{D46851B7-4BDD-45F5-BBAB-2183DCFB9602}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D46851B7-4BDD-45F5-BBAB-2183DCFB9602}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D46851B7-4BDD-45F5-BBAB-2183DCFB9602}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42EECA91-F5A2-423C-8164-FD12B810B29C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42EECA91-F5A2-423C-8164-FD12B810B29C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42EECA91-F5A2-423C-8164-FD12B810B29C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42EECA91-F5A2-423C-8164-FD12B810B29C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

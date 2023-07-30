@@ -26,7 +26,9 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
    </details>
 2. Add Membership class-31\
    ![image](https://github.com/Shamim448/aspnet-b8-shamimhosen/assets/43339514/37cd35f6-003c-4892-8174-2388a90cb733)
-3. Modify ServiceCollectionExtention> AddIdentity-37\
+  
+
+4. Modify ServiceCollectionExtention> AddIdentity-37\
    আমরা প্রোগ্রাম ডট সিএস থেকে যে আইডেন্টিটি ডিফল্ট যে মেথডটা নিয়ে এসে একটা একটা সার্ভিস কালেকশন তৈরি করেছি সেখানে যে ম্যাপটা তৈরি করেছি staticদিয়ে তার ভিতরে কিছু কনফিগারেশন 
    আমাদের দিয়ে দিতে হবে. যার ভিতরে বিভিন্ন ধরনের লগইন logout এই পাথরগুলো থাকবে এবং কুকি থাকবে তারপরে গিয়ে পাসওয়ার্ড সেটিং থাকবে লক আউট সেটিং থাকবে এই টাইপের কোড 
    এবং নিচে সার্ভিস ডট রেজাল্ট পেজ এটা দিয়ে দিতে হবে services.AddRazorPages();
@@ -85,7 +87,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     }
     ```
    </details>
-4. Edit _LoginPartial-43\
+5. Edit _LoginPartial-43\
    যখন আমরা উপরের কাজগুলো করব তখন লগ ইন পার্শিয়াল এর মধ্যে আইডেন্টিটি ইউজার থাকবে সেটা চেঞ্জ করে যেহেতু
    আমরা আইডেন্টিটি ইউজারের পরিবর্তে অ্যাপ্লিকেশন ইউজার ক্লাস তৈরি করেছি 
    সুতরাং সেখানেও আইডেন্টিটি টিউজারের পরিবর্তে অ্যাপ্লিকেশন user দিয়ে দিতে হবে
@@ -1470,7 +1472,427 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
      ```
     </details>
 
+
+## Class-36 (Generate Migration in Console App)
+1. Web Service (8)\
+    Machine to Machine communicate করে এজন্য ইউজার ইন্টারফেস থাকে না।
+    বেশিরভাগ সময়ই web service কে অন্য একটি প্রগ্রাম ব্যবহার করে।
+    Web service ডাটা provide  করার জন্য একটা web application, এটা Presentation , View  Provide করে না। 
+    Web service  ওয়েব সারভারে রাখতে হয়। 
+2. Web Application\
+    Web Application has User Interface for Humen interaction. 
+    it is dynamic application.(Database driven, business logic, program). 
+    it is subset of web site.
+3. Web Site\
+    it is a static site. It created by html, css only. like portfolio site
+    it is a superset of web application.
+
+    Note: Every web applition can be web site but web site can not be web applition.
+4. WEB Api-13\
+    Application Programming/Programable Interface. web api হতে হলে একটা service এর অবশ্যই restricted হতে হবে।  
+    it follow the RSET Atchitucture (GET, POST, PUT, DELETE)
+5. Console Project for Migration Generator-15\
+    এখানে Logger, Dependency Injection এর কনফিগারেশন থাকবে। 
+    Need this package: Autofac.Extensions.DependencyInjection
+    Microsoft.EntityFrameworkCore.Design
+    Serilog.Extensions.Hosting
+    Serilog.Settings.Configuration
+    এবং সব প্রোজেক্ট এর reference দিয়ে দিতে হবে। 
     
+    <details>
+     <summary>Program</summary>
+    
+     ```c#
+    namespace Crud.MigrationRunner
+    {
+    public class Program
+    {
+        private static string _connectionString;
+        private static string _migrationAssemblyName;
+        private static IConfiguration _configuration;
+
+        static void Main(string[] args)
+        {
+            //collect appsetting.jeson file path
+            DirectoryInfo root = new DirectoryInfo(Directory.GetCurrentDirectory());
+            string settingsPath = Path.Combine(root.Parent.Parent.Parent.FullName, "appsettings.json");
+            //load appsetting
+            _configuration = new ConfigurationBuilder().AddJsonFile(settingsPath, false) 
+                .AddEnvironmentVariables()
+                .Build();
+
+            _connectionString = _configuration.GetConnectionString("DefaultConnection");
+            _migrationAssemblyName = typeof(Program).Assembly.FullName;
+
+            //Serilog configuration
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+                .Enrich.FromLogContext()
+                .ReadFrom.Configuration(_configuration)
+                .CreateLogger();
+
+            try {
+                Log.Information("Application Starting up");
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex) {
+                Log.Fatal(ex, "Application start-up failed");
+            }
+            finally { 
+                Log.CloseAndFlush();
+            }
+        }
+
+        //Dependency Injection
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+            .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+            .UseSerilog()
+            .ConfigureContainer<ContainerBuilder>(builder =>
+            {
+                builder.RegisterModule(new PersistanceModule(_connectionString, _migrationAssemblyName));
+                builder.RegisterModule(new ApplicationModule());
+                builder.RegisterModule(new InfrastructureModule());
+            });
+    }
+    }
+     ```
+    </details>
+6. Add Authentication in API Project-50\
+  
+    Separate bellow code block from servicecollectionextention to program.cs file
+
+    <details>
+     <summary>Cookie based authuntication setting in Program.cs </summary>
+    
+     ```c#
+    //cookie setting for identity for web
+    builder.Services.AddAuthentication()
+        .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+        {
+            options.LoginPath = new PathString("/Account/Login");
+            options.AccessDeniedPath = new PathString("/Account/Login");
+            options.LogoutPath = new PathString("/Account/Logout");
+            options.Cookie.Name = "FirstDemoPortal.Identity";
+            options.SlidingExpiration = true;
+            options.ExpireTimeSpan = TimeSpan.FromHours(1);
+        });
+     ```
+    </details>
+    Add this bellow block in API Program.cs file then det the authintication base in IAction
+    then goto postman and collect jwt token then goto a method which we add authenticatio
+    like GET url and pest the Authorization  select type Bearer Token and pest the token
+    in token field
+    
+    ![image](https://github.com/Shamim448/aspnet/assets/43339514/412adfb9-8290-4350-9ea3-9dbd609b302f)
+
+    <details>
+     <summary>Add Policy based Authintication in API Project-51 and class 37-03</summary>
+    
+     ```c#
+    //Authentication service for Jwt token
+    builder.Services.AddAuthentication()
+        .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, x =>
+        {
+            x.RequireHttpsMetadata = false;
+            x.SaveToken = true;
+            x.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                ValidAudience = builder.Configuration["Jwt:Audience"],
+            };
+        });
+    builder.Services.AddAuthorization( options =>
+        {
+            //Alternative option for Claim Based
+            options.AddPolicy("UserViewRequirementPolicy", policy =>
+            {
+                policy.AuthenticationSchemes.Clear();
+                policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                policy.RequireAuthenticatedUser();
+                policy.Requirements.Add(new UserViewRequirement());
+            });
+    });
+    //part of Alternative option for Claim Based
+    builder.Services.AddSingleton<IAuthorizationHandler, UserViewRequirementHandler>();
+     ```
+    </details>
+## Class-37 (Worker Service)
+
+1. Worker Service(18)\
+    Web service  কে আমরা সার্ভার এ host করে URL দিয়ে HTTP Method a access করি। 
+    কিন্ত worker service এক্তা computer এ service হিসাবে run করে। এতাকে HTTP দিয়ে call করা যাই না। 
+    এটা নিজে নিজে রান করতে থাকে, এটা দিয়ে কিছু কাজ করা যাই কিন্তু এতাকে কল করা যাই না। 
+2. Create Worker Service Project(35)\
+    Project create করে AutoFac, serilog configure করতে হবে Program.cs file এ । 
+    appsetting.json file ta o add korte hobe.
+    Package: Microsoft.Extensions.Hosting.WindowsServices
+    Serilog.Extensions.Hosting
+    Serilog.Settings.Configuration
+    Serilog.Sinks.File
+    <details>
+     <summary>Program.cs - 67</summary>
+    
+     ```c#
+    var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", false)
+                .AddEnvironmentVariables()
+                .Build();
+
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        var migrationAssemblyName = typeof(Worker).Assembly.FullName;
+
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+            .Enrich.FromLogContext()
+            .ReadFrom.Configuration(configuration)
+            .CreateLogger();
+
+        try
+        {
+            Log.Information("Application Starting up");
+
+            IHost host = Host.CreateDefaultBuilder(args)
+                .UseWindowsService()
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .UseSerilog()
+                .ConfigureContainer<ContainerBuilder>(builder =>
+                {
+                    builder.RegisterModule(new WorkerModule());
+                })
+                .ConfigureServices(services =>
+                {
+                    services.AddHostedService<Worker>();
+                })
+                .Build();
+
+            await host.RunAsync();
+        }
+        catch (Exception ex)
+        {
+            Log.Fatal(ex, "Application start-up failed");
+        }
+        finally
+        {
+            Log.CloseAndFlush();
+    }
+     ```
+    </details>
+    <details>
+     <summary>WorkerModule</summary>
+    
+     ```c#
+    namespace Crud.EmailWorker
+    {
+    internal class WorkerModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            base.Load(builder);
+        }
+    }
+    }
+     ```
+    </details>
+    <details>
+     <summary>Appsettings - 77</summary>
+    
+     ```c#
+    "Serilog": {
+    "WriteTo": [
+      {
+        "Name": "File",
+        "Args": {
+          "path": "F:/Projects/aspnet/Practice/GroupStudy/Crud.EmailWorker/Logs/worker-log-.log",
+          "rollingInterval": "Day"
+        }
+      }
+     ]
+     }
+     ```
+    </details>
+3. Published worker service - 77\
+    প্রোজেক্ট এ right button click  করে Folder select করে next তারপর location দিয়ে (if needed)
+    Finished করতে হবে। এবার publish button এ click করতে হবে। 
+    এবার service install করার জন্য command promt addministrator mode এ ওপেন করতে হবে
+    sc.exe create service name binpath=service ar exe file path start=auto
+    Uninstall service: stop service 
+    sc.exe delete service name
+
+    Note: appsetting ar log folder path pc এর drivar path দিতে হবে।
+
+
+## Class -38 (Unit Test)
+1. Type of Testing(18-26)\
+    i) Unit Test
+    ii) Intregration Test
+    iii) System Test
+    iv) Load Test
+    আরও কিছু Test আছে, যা এই কোর্সে আলোচনা করা হবে না। যেমনঃ  
+    (Smoke Test, End to end test, Functional Test etc) 
+
+    i) Unit Test: যদি কোন Method এর জন্য Test লিখি তাহলে ঐ method এর ভিতর যদি অন্য কোন Class এর কোন Method থাকে 
+    (Dependency হিসাবে) তাহলে সেই Method কে Call করা যাবে না। তবে যদি same class এর কোন Public/Private Method এর ওপর Dependent হয়
+     তাহলে সেই Method কে Call করা যাবে। 
+    ii) Intregration Test: যদি কোন Method এর Testing Code হতে অন্য কোন Class এর Medhod কে (Dependent ) হবার কারনে Call
+    করা যায় তাহলে সেটা Intregration Test
+    iii) System Test: আর যদি কোন Method হতে পুরা System (Database, Filesystem, Network) Call করা যায়, তবে সেটা হবে System Test
+    iv)  Load Test: At a time কত জন ইউজার Software ব্যবহার করতে পারবে সেটা Laod Test দ্বারা করা হয়। 
+
+    Note: বিভিন্ন ধরনের Testing এর Codeing গত কোন পার্থক্য নেই, শধুমাত্র Call কতদূর পর্যন্ত করা যাবে তার ওপর ভিত্তি করে Testing এর
+    প্রকারভেদ নির্ণয়ই করা হয়।
+
+2. Unit Testing এর বৈশিষ্ট্য -(26-27)\
+   * এক Class এর Method হতে অন্য Class এর Method কে কল করা যাবে না।
+     কারন যদি Test Failed হয়, তাহলে কোন Method এর কারনে Failed হইসে বুঝা 
+     যাবে না। যেকোন একটা  Method Failed হলেই Test Failed হবে।
+   * External Resource এ Call যেতে পারবে না।(Database, Filesystem, Network)
+   * Test one Click এ Run হতে হবে।
+   * Test যেকোনো Machine হতে Runable হতে হবে কোন প্রকার Configuration ছাড়াই ।
+   * Test খুব দ্রত Run হতে হবে।
+3. Create NUnits Test Project-41\
+    একটা Test Folder এর ভিতর NUnit Test Project Create করব।
+    Project এর Name Structure হবে, যেই Project এর জন্য Test Project Create করছি 
+    সেই Name পুরোটা দিয়ে তারপর .Test (Crud.Application.Test)
+    Need Package: Autofac.Extras.moq
+
+4. এখানে Unit Test অনুশীলন করার জন্য Application Project এ কিছু Method Create করছি। 
+    <details>
+     <summary>AccountService</summary>
+    
+     ```c#
+    namespace Crud.Application.Features.Training.Services
+    {
+    public class AccountService
+    {
+        private readonly IAccountRepository _accountRepository;
+        private readonly IEmailService _emailService;
+        public AccountService(IAccountRepository accountRepository, IEmailService emailService)
+        {
+            _accountRepository = accountRepository;
+            _emailService = emailService;
+        }
+        public void CreateAccount(string username, string password)
+        {
+            if(username == null || password == null)
+                throw new InvalidDataException();
+             
+            if(username.Length > 30)
+                username = username.Substring(0, 30);
+            //code to create account
+            _accountRepository.CreateAccount(username, password);
+            _emailService.SendAccountCreationEmail(username);
+        }
+    }
+    }
+     ```
+    </details>
+    <details>
+     <summary>EmailService</summary>
+    
+     ```c#
+    namespace Crud.Application.Features.Training.Services
+    {
+    public class EmailService : IEmailService
+    {
+        public void SendAccountCreationEmail(string email)
+        {
+
+        }
+    }
+    }
+     ```
+    </details>
+
+    <details>
+     <summary>IAccountRepository</summary>
+    
+     ```c#
+    namespace Crud.Application.Features.Training.Repositories
+    {
+    public interface IAccountRepository
+    {
+        public void CreateAccount(string username, string password);
+    }
+    }
+     ```
+    </details>
+5.  Unit Test Configure-69\
+    Class Name টা হবে যেই Class এর জন্য Test এর Class Name ও same হতে হবে।
+    যেগুলো Dependancy আছে সেগুলা MOCK field হিসাবে নিতে হবে। 
+    এবং সেগুলা setup এর ভিতর Asign করে দিতে হবে।
+    
+    Test Method এর নামে করনের একটা ফরম্যাট আছে। 
+    (CreateUser_LargeUsername_TruncateUsername)
+
+    * SETUP: It's Run before every Test run
+    * OneTimeSetup: Its run onetime when unit test run
+    * Teardown : It's Run after every Test run
+    * OneTimeTearDown: Its run onetime when unit test run finished
+
+
+    <details>
+     <summary>AccountServiceTests</summary>
+    
+     ```c#
+    namespace Crud.Application.Tests
+    {
+    public class AccountServiceTests
+    { 
+        private AutoMock _mock;
+        private Mock<IAccountRepository> _accountRepositoryMock;
+        private Mock<IEmailService> _emailServiceMock;
+        private AccountService _accountService;
+
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            _mock = AutoMock.GetLoose();
+        }
+        [SetUp]
+        public void SetUp()
+        {
+            _accountRepositoryMock = _mock.Mock<IAccountRepository>();
+            _emailServiceMock = _mock.Mock<IEmailService>();
+            _accountService  = _mock.Create<AccountService>();
+        }
+        [TearDown]
+        public void Teardown() 
+        {
+            _accountRepositoryMock.Reset();
+            _emailServiceMock.Reset();
+        }
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            _mock?.Dispose();
+        }
+        [Test]
+        public void CreateUser_LargeUsername_TruncateUsername()
+        {
+            //Arrange
+            const string username = @"mynameisshamimhosenmynameisshamimhosen
+                                    mynameisshamimhosenmynameisshamimhosen";
+            string expectedResult = username.Substring(0, 30);
+            const string password = "fgdhgfhgngdfjkgj";
+            _accountRepositoryMock.Setup(x => x.CreateAccount(expectedResult, password)).Verifiable();
+            //Act
+            _accountService.CreateAccount(username, password);
+            //Assert
+            _accountRepositoryMock.VerifyAll();
+        }
+    }
+    }
+     ```
+    </details>
+## Class -39 (Unit Test)
+1.  
     <details>
      <summary></summary>
     
@@ -1478,4 +1900,23 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     
      ```
     </details>
-   
+    <details>
+     <summary></summary>
+    
+     ```c#
+    
+     ```
+    </details>
+    <details>
+     <summary></summary>
+    
+     ```c#
+    
+     ```
+    </details>
+
+
+
+
+
+

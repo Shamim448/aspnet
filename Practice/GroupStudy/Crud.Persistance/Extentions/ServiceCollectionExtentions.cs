@@ -25,16 +25,7 @@ namespace Crud.Persistance.Extentions
                 .AddSignInManager<ApplicationSignInManager>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication()
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-                {
-                    options.LoginPath = new PathString("/Account/Login");
-                    options.AccessDeniedPath = new PathString("/Account/Login");
-                    options.LogoutPath = new PathString("/Account/Logout");
-                    options.Cookie.Name = "FirstDemoPortal.Identity";
-                    options.SlidingExpiration = true;
-                    options.ExpireTimeSpan = TimeSpan.FromHours(1);
-                });
+            
 
             services.Configure<IdentityOptions>(options =>
             {

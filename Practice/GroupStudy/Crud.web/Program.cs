@@ -10,7 +10,8 @@ using Crud.Persistance.Extentions;
 using Crud.web;
 using Crud.Application;
 using Crud.Infrastructure;
-
+using Autofac.Core;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 //serilog Configure
@@ -47,6 +48,17 @@ try{
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     builder.Services.AddIdentity();
     builder.Services.AddControllersWithViews();
+    //cookie setting for identity for web
+    builder.Services.AddAuthentication()
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+                {
+                    options.LoginPath = new PathString("/Account/Login");
+                    options.AccessDeniedPath = new PathString("/Account/Login");
+                    options.LogoutPath = new PathString("/Account/Logout");
+                    options.Cookie.Name = "FirstDemoPortal.Identity";
+                    options.SlidingExpiration = true;
+                    options.ExpireTimeSpan = TimeSpan.FromHours(1);
+                });
 
     var app = builder.Build();
 
