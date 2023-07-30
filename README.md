@@ -1756,7 +1756,141 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
    * Test one Click এ Run হতে হবে।
    * Test যেকোনো Machine হতে Runable হতে হবে কোন প্রকার Configuration ছাড়াই ।
    * Test খুব দ্রত Run হতে হবে।
+3. Create NUnits Test Project-41\
+    একটা Test Folder এর ভিতর NUnit Test Project Create করব।
+    Project এর Name Structure হবে, যেই Project এর জন্য Test Project Create করছি 
+    সেই Name পুরোটা দিয়ে তারপর .Test (Crud.Application.Test)
 
+4. এখানে Unit Test অনুশীলন করার জন্য Application Project এ কিছু Method Create করছি। 
+    <details>
+     <summary>AccountService</summary>
+    
+     ```c#
+    namespace Crud.Application.Features.Training.Services
+    {
+    public class AccountService
+    {
+        private readonly IAccountRepository _accountRepository;
+        private readonly IEmailService _emailService;
+        public AccountService(IAccountRepository accountRepository, IEmailService emailService)
+        {
+            _accountRepository = accountRepository;
+            _emailService = emailService;
+        }
+        public void CreateAccount(string username, string password)
+        {
+            if(username == null || password == null)
+                throw new InvalidDataException();
+             
+            if(username.Length > 30)
+                username = username.Substring(0, 30);
+            //code to create account
+            _accountRepository.CreateAccount(username, password);
+            _emailService.SendAccountCreationEmail(username);
+        }
+    }
+    }
+     ```
+    </details>
+    <details>
+     <summary>EmailService</summary>
+    
+     ```c#
+    namespace Crud.Application.Features.Training.Services
+    {
+    public class EmailService : IEmailService
+    {
+        public void SendAccountCreationEmail(string email)
+        {
+
+        }
+    }
+    }
+     ```
+    </details>
+
+    <details>
+     <summary>IAccountRepository</summary>
+    
+     ```c#
+    namespace Crud.Application.Features.Training.Repositories
+    {
+    public interface IAccountRepository
+    {
+        public void CreateAccount(string username, string password);
+    }
+    }
+     ```
+    </details>
+5.  Unit Test Configure-69\
+    Class Name টা হবে যেই Class এর জন্য Test এর Class Name ও same হতে হবে।
+    যেগুলো Dependancy আছে সেগুলা MOCK field হিসাবে নিতে হবে। 
+    এবং সেগুলা setup এর ভিতর Asign করে দিতে হবে।
+    
+    Test Method এর নামে করনের একটা ফরম্যাট আছে। 
+    (CreateUser_LargeUsername_TruncateUsername)
+
+    <details>
+     <summary>AccountServiceTests</summary>
+    
+     ```c#
+    namespace Crud.Application.Tests
+    {
+    public class AccountServiceTests
+    { 
+        private AutoMock _mock;
+        private Mock<IAccountRepository> _accountRepositoryMock;
+        private Mock<IEmailService> _emailServiceMock;
+        private AccountService _accountService;
+
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            _mock = AutoMock.GetLoose();
+        }
+        [SetUp]
+        public void SetUp()
+        {
+            _accountRepositoryMock = _mock.Mock<IAccountRepository>();
+            _emailServiceMock = _mock.Mock<IEmailService>();
+            _accountService  = _mock.Create<AccountService>();
+        }
+        [TearDown]
+        public void Teardown() 
+        {
+            _accountRepositoryMock.Reset();
+            _emailServiceMock.Reset();
+        }
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            _mock?.Dispose();
+        }
+        [Test]
+        public void CreateUser_LargeUsername_TruncateUsername()
+        {
+            //Arrange
+            const string username = @"mynameisshamimhosenmynameisshamimhosen
+                                    mynameisshamimhosenmynameisshamimhosen";
+            string expectedResult = username.Substring(0, 30);
+            const string password = "fgdhgfhgngdfjkgj";
+            _accountRepositoryMock.Setup(x => x.CreateAccount(expectedResult, password)).Verifiable();
+            //Act
+            _accountService.CreateAccount(username, password);
+            //Assert
+            _accountRepositoryMock.VerifyAll();
+        }
+    }
+    }
+     ```
+    </details>
+        <details>
+     <summary></summary>
+    
+     ```c#
+    
+     ```
+    </details>
     <details>
      <summary></summary>
     
@@ -1764,6 +1898,15 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     
      ```
     </details>
+    <details>
+     <summary></summary>
+    
+     ```c#
+    
+     ```
+    </details>
+
+
 
 
 

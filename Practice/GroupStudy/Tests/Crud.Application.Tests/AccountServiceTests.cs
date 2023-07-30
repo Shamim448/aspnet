@@ -38,12 +38,15 @@ namespace Crud.Application.Tests
         [Test]
         public void CreateUser_LargeUsername_TruncateUsername()
         {
+            //Arrange
             const string username = @"mynameisshamimhosenmynameisshamimhosen
                                     mynameisshamimhosenmynameisshamimhosen";
             string expectedResult = username.Substring(0, 30);
             const string password = "fgdhgfhgngdfjkgj";
             _accountRepositoryMock.Setup(x => x.CreateAccount(expectedResult, password)).Verifiable();
+            //Act
             _accountService.CreateAccount(username, password);
+            //Assert
             _accountRepositoryMock.VerifyAll();
         }
     }
