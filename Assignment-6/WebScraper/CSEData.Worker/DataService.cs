@@ -1,4 +1,7 @@
-﻿using HtmlAgilityPack;
+﻿using CSEData.Domain.Entities;
+using CSEData.Web.Data;
+using HtmlAgilityPack;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +14,12 @@ namespace CSEData.Worker
     {
         private readonly ILogger<DataService> _logger;
         private readonly IDataScraper _scraper;
-        public DataService(ILogger<DataService> logger, IDataScraper scraper)
+        private readonly IApplicationDbContext _dBContext;
+        public DataService(ILogger<DataService> logger, IDataScraper scraper, IApplicationDbContext dBContext)
         { 
             _logger = logger;
             _scraper = scraper;
+            _dBContext = dBContext;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -25,6 +30,8 @@ namespace CSEData.Worker
                 {
                     //Write my logic here
                     _scraper.GetTheValusOfAllColumn("https://www.cse.com.bd/market/current_price");
+                    var val = _dBContext.Prices.ToList();
+                    
                 }
                 catch(Exception ex) 
                 { 
@@ -42,7 +49,7 @@ namespace CSEData.Worker
         {
             _logger.LogInformation("Service Stoped");
             return base.StopAsync(cancellationToken); 
-        }
+        }     
         
     }
 }
