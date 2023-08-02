@@ -1,5 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using CSEData.Web;
 using CSEData.Web.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
     //Module Class Binding Here
+    containerBuilder.RegisterModule(new WebModule(connectionString));
 });
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
