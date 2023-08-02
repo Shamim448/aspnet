@@ -24,13 +24,7 @@ namespace CSEData.Worker
                 try 
                 {
                     //Write my logic here
-                    _scraper.GetLisByUrl("https://www.cse.com.bd/market/current_price");
-                    //foreach(var name in stockConeName)
-                    //{
-                    //    await Console.Out.WriteLineAsync(name);
-                    //    _logger.LogInformation($"{name}");
-                    //}
-
+                    _scraper.GetTheValusOfAllColumn("https://www.cse.com.bd/market/current_price");
                 }
                 catch(Exception ex) 
                 { 
