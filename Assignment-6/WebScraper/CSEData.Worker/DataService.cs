@@ -50,6 +50,10 @@ namespace CSEData.Worker
             _logger.LogInformation("Service Stoped");
             return base.StopAsync(cancellationToken); 
         }     
-        
+        public void Putvalue(Price obj)
+        {
+            _dBContext.Prices.Add(obj);
+           
+        }
     }
 }
