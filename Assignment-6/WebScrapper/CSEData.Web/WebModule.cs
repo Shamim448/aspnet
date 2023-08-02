@@ -8,6 +8,7 @@ internal class WebModule :  Module
     {
         base.Load(builder);
         builder.RegisterType<DataScraper>().As<IDataScraper>().InstancePerLifetimeScope();
+        //builder.RegisterType<InsertValues>().AsSelf().InstancePerLifetimeScope();
 
     }
 }
