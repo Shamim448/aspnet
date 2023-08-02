@@ -2,15 +2,15 @@
 
 namespace CSEData.Web.Models
 {
-    public class DataScraper
+    public class DataScraper : IDataScraper
     {
-        public HtmlDocument GetDocument(string url)
+        public HtmlDocument GetDocument(string? url)
         {
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = web.Load(url);
             return doc;
         }
-        public void GetLisByUrl(string url)
+        public void GetLisByUrl(string? url)
         {
             List<string> SLList = new List<string>();
             List<string> StockCodeList = new List<string>();
@@ -33,7 +33,7 @@ namespace CSEData.Web.Models
             {
                 SLList.Add(node.InnerText);
             }
-            
+
             foreach (HtmlNode node in StockCode)
             {
                 StockCodeList.Add(node.InnerText);

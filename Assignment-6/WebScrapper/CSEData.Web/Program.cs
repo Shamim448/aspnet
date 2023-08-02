@@ -1,3 +1,5 @@
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
 using CSEData.Web.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,6 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+{
+    //Module Class Binding Here
+    containerBuilder.RegisterModule(new WebModule());
+});
 //Add connectionstring or register db context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
