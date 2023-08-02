@@ -26,8 +26,7 @@ IHost host = Host.CreateDefaultBuilder(args)
     })
     .ConfigureServices(services =>
     {
-        services.AddHostedService<DataService>();
-        services.AddSingleton<IDataScraper, DataScraper>();
+        services.AddHostedService<DataService>();        
         //services.AddHostedService<Worker>();
     })
     .UseSerilog()

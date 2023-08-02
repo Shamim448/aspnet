@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using CSEData.Web.Data;
+using CSEData.Web.Models;
 
 namespace CSEData.Web
 {
@@ -10,7 +11,6 @@ namespace CSEData.Web
         {
             _connectionString = connectionString;
         }
-
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ApplicationDbContext>().AsSelf()
@@ -19,6 +19,7 @@ namespace CSEData.Web
             builder.RegisterType<ApplicationDbContext>().As<IApplicationDbContext>()
                 .WithParameter("connectionString", _connectionString)
                 .InstancePerLifetimeScope();
+            builder.RegisterType<DataScraper>().As<IDataScraper>().InstancePerLifetimeScope();
         }
     }
 }

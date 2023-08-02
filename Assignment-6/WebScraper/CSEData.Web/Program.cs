@@ -5,6 +5,8 @@ using CSEData.Web.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,7 +17,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
     //Module Class Binding Here
-    containerBuilder.RegisterModule(new WebModule(connectionString));
+    containerBuilder.RegisterModule(new WebModule(connectionString));   
 });
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

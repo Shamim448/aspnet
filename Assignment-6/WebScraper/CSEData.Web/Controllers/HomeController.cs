@@ -1,4 +1,6 @@
-﻿using CSEData.Web.Models;
+﻿using CSEData.Domain.Entities;
+using CSEData.Web.Data;
+using CSEData.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,6 +9,7 @@ namespace CSEData.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -14,10 +17,10 @@ namespace CSEData.Web.Controllers
         }
 
         public IActionResult Index()
-        {
+        {   
             return View();
         }
-
+       
         public IActionResult Privacy()
         {
             return View();

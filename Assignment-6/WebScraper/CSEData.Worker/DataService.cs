@@ -1,5 +1,6 @@
 ﻿using CSEData.Domain.Entities;
 using CSEData.Web.Data;
+using CSEData.Web.Models;
 using HtmlAgilityPack;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,13 +14,13 @@ namespace CSEData.Worker
     public class DataService : BackgroundService
     {
         private readonly ILogger<DataService> _logger;
-        private readonly IDataScraper _scraper;
         private readonly IApplicationDbContext _dBContext;
-        public DataService(ILogger<DataService> logger, IDataScraper scraper, IApplicationDbContext dBContext)
+        private readonly IDataScraper _scraper;
+        public DataService(ILogger<DataService> logger, IApplicationDbContext dBContext, IDataScraper scraper)
         { 
             _logger = logger;
-            _scraper = scraper;
             _dBContext = dBContext;
+            _scraper = scraper;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -29,9 +30,7 @@ namespace CSEData.Worker
                 try 
                 {
                     //Write my logic here
-                    _scraper.GetTheValusOfAllColumn("https://www.cse.com.bd/market/current_price");
-                    var val = _dBContext.Prices.ToList();
-                    
+                    _scraper.GetTheValusOfAllColumn("https://www.cse.com.bd/market/current_price");    
                 }
                 catch(Exception ex) 
                 { 

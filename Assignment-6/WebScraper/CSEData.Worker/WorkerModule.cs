@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using CSEData.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace CSEData.Worker
         {
             base.Load(builder);
             builder.RegisterType<DataService>().AsSelf().InstancePerLifetimeScope();
+            
         }
     }
 }
