@@ -24,12 +24,12 @@ namespace CSEData.Web.Models
         public List<Price> InsertPrice(string url)
         {
             GetLisByUrl(url);
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 30; i++)
             {
 
                 priceList.Add(new Price
                 {
-                    CompanyID = Convert.ToInt32(SLList[i]),
+                    CompanyId = Convert.ToInt32(SLList[i]),
                     LTP = Convert.ToString(LTPList[i]),
                     Open = Convert.ToString(LTPList[i]),
                     High = Convert.ToString(LTPList[i]),

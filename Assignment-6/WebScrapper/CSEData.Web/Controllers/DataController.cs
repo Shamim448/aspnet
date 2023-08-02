@@ -18,9 +18,9 @@ namespace CSEData.Web.Controllers
         }
         public IActionResult Index()
         {
-            var result = _scraper.InsertPrice("https://www.cse.com.bd/market/current_price");
-            _context.Prices.AddRange(result);
-            _context.SaveChanges();
+            //var result = _scraper.InsertPrice("https://www.cse.com.bd/market/current_price");
+            //_context.Prices.AddRange(result);
+            //_context.SaveChanges();
 
             List<Price> getAllPrice = _context.Prices.ToList();
             return View(getAllPrice);

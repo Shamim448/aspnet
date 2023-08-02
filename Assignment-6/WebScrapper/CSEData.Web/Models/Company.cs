@@ -4,5 +4,6 @@
     {
         public int Id { get; set; }
         public string StockCodeName { get; set; }
+        public ICollection<Price> Prices { get;}
     }
 }
