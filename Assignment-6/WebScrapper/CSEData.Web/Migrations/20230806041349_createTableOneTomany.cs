@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CSEData.Web.Migrations
 {
     /// <inheritdoc />
-    public partial class createBothTable : Migration
+    public partial class createTableOneTomany : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

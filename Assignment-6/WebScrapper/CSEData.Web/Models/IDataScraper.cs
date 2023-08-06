@@ -7,5 +7,6 @@ namespace CSEData.Web.Models
         HtmlDocument GetDocument(string url);
         void GetLisByUrl(string url);
         List<Price> InsertPrice(string url);
+        List<Company> InsertCompany(string url);
     }
 }

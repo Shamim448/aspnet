@@ -1,12 +1,21 @@
 ﻿using CSEData.Web.Data;
 using HtmlAgilityPack;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace CSEData.Web.Models
 {
     public class DataScraper : IDataScraper
     {
+        public ApplicationDbContext _context;
+        public DataScraper(ApplicationDbContext context)
+        {
+            _context = context;         
+        }
+       
         List<Price> priceList = new List<Price>();
+        List<Company> companyList = new List<Company>();
 
         List<string> SLList = new List<string>();
         List<string> StockCodeList = new List<string>();
@@ -21,22 +30,41 @@ namespace CSEData.Web.Models
             HtmlDocument doc = web.Load(url);
             return doc;
         }
-        public List<Price> InsertPrice(string url)
+        public List<Company> InsertCompany(string url)
         {
             GetLisByUrl(url);
             for (int i = 0; i < 30; i++)
             {
+                var st = _context.Companys.Where(company => company.StockCodeName == StockCodeList[i]).FirstOrDefault();
+                if (st == null)
+                {
+                    companyList.Add(new Company
+                    {
+                        StockCodeName = StockCodeList[i]
+                    });
+                }
+            }
+            return companyList;
+        }
+        public List<Price> InsertPrice(string url)
+        {
 
+            List<Company> getAllCompany = _context.Companys.ToList();
+            GetLisByUrl(url);
+            for (int i = 0; i < 30; i++)
+            {
+                
+                
                 priceList.Add(new Price
                 {
-                    CompanyId = Convert.ToInt32(SLList[i]),
-                    LTP = Convert.ToString(LTPList[i]),
-                    Open = Convert.ToString(LTPList[i]),
-                    High = Convert.ToString(LTPList[i]),
-                    Low = Convert.ToString(LTPList[i]),
-                    Volume = Convert.ToString(LTPList[i]),
+                    CompanyId = getAllCompany[i].Id,
+                    LTP = LTPList[i],
+                    Open = OpenList[i],
+                    High = HighList[i],
+                    Low = LowList[i],
+                    Volume = VolumeList[i],
                     Time = DateTime.Today,
-                });
+                }); 
                 
             }
             return priceList;
@@ -51,6 +79,19 @@ namespace CSEData.Web.Models
             HtmlNodeCollection High = doc.DocumentNode.SelectNodes(xpath: "//tr/td[5]");
             HtmlNodeCollection Low = doc.DocumentNode.SelectNodes(xpath: "//tr/td[6]");
             HtmlNodeCollection Volume = doc.DocumentNode.SelectNodes(xpath: "//tr/td[10]");
+            //for(int i = 0; i < StockCode.Count; i++)
+            //{
+            //    priceList.Add(new Price
+            //    {
+            //        CompanyId = getAllCompany[i].Id,
+            //        LTP = LTP[i].InnerText,
+            //        Open = Opens[i].InnerText,
+            //        High = High[i].InnerText,
+            //        Low = Low[i].InnerText,
+            //        Volume = Volume[i]I,
+            //        Time = DateTime.Today,
+            //    });
+            //}
 
             foreach (HtmlNode node in SL)
             {

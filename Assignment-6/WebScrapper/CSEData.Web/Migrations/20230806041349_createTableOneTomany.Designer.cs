@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSEData.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230805061221_createBothTable")]
-    partial class createBothTable
+    [Migration("20230806041349_createTableOneTomany")]
+    partial class createTableOneTomany
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
