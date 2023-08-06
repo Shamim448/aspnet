@@ -37,10 +37,7 @@ namespace CSEData.Web.Models
                     Volume = Convert.ToString(LTPList[i]),
                     Time = DateTime.Today,
                 });
-                // Add the Price entities to the DbContext.
-                // _context.Prices.AddRange(priceList);
-                // Save the changes to the database.
-                // _context.SaveChanges();
+                
             }
             return priceList;
         }
