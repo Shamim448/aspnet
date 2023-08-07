@@ -1,6 +1,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using CSEData.Infrastructure;
+using CSEData.Persistance;
 using CSEData.Worker;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -22,7 +23,8 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureContainer<ContainerBuilder>(builder =>
     {
         builder.RegisterModule(new WorkerModule(configuration));
-        builder.RegisterModule(new InfrastructureModule(connectionString, assemblyName));
+        builder.RegisterModule(new InfrastructureModule());
+        builder.RegisterModule(new PersistanceModule(connectionString, assemblyName));
 
         //builder.RegisterModule(new DomainModule(connectionString, assemblyName));
     })

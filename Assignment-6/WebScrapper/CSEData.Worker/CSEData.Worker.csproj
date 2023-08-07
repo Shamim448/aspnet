@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Content Remove="Data\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <None Remove="Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="7.0.1" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
@@ -23,12 +30,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CESData.Persistance\CESData.Persistance.csproj" />
     <ProjectReference Include="..\CSEData.Application\CSEData.Application.csproj" />
     <ProjectReference Include="..\CSEData.Domain\CSEData.Domain.csproj" />
     <ProjectReference Include="..\CSEData.Infrastructure\CSEData.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>
