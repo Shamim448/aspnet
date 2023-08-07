@@ -30,6 +30,7 @@ namespace CSEData.Worker.DataController
                 _companyCreate.StockCodeName = _dataGenerate.StockCode[i].InnerText;
                 _companyCreate.CreateCompany();
             }
+
             for (int i = 0; i < _dataGenerate.StockCode.Count; i++)
             {
                 _priceCreate.CompanyId = i;

@@ -22,5 +22,6 @@ namespace CSEData.Worker.Models
         {
             _companyService.InsertCompany(StockCodeName);
         }
+
     }
 }
