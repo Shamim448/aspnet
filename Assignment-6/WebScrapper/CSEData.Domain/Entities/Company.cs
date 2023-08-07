@@ -10,6 +10,6 @@ namespace CSEData.Domain
     {
         public int Id { get; set; }
         public string StockCodeName { get; set; }
-        public ICollection<Price> Prices { get; }
+        public ICollection<Price> Prices { get; set; }
     }
 }
