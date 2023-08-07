@@ -20,6 +20,7 @@ internal class WorkerModule : Module
         base.Load(builder);
         builder.RegisterType<Worker>().AsSelf().InstancePerLifetimeScope();
         builder.RegisterType<CompanyCreateModel>().AsSelf().InstancePerLifetimeScope();
+        builder.RegisterType<PriceCreateModel>().AsSelf().InstancePerLifetimeScope();
         builder.RegisterType<DataGenerateModel>().AsSelf().InstancePerLifetimeScope();
         builder.RegisterType<ValueLoadToModel>().AsSelf().InstancePerLifetimeScope();
 

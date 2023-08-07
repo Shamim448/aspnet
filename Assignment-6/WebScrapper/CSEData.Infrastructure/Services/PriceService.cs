@@ -1,5 +1,6 @@
 ﻿using CSEData.Application;
 using CSEData.Application.Services;
+using CSEData.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,13 @@ namespace CSEData.Infrastructure.Services
         public PriceService(IApplicationUnitOfWork unitOfWork) 
         { 
             _unitOfWork = unitOfWork;
+        }
+        public void InsertPrice(int companyId, string ltp, string open, string high, string low, string volumn, DateTime time)
+        {
+            Price price = new Price() { CompanyId = companyId, LTP = ltp, Open = open, High = high, Low = low, Volume = volumn, Time = time };
+            _unitOfWork.Prices.Add(price);
+            _unitOfWork.Save();
+
         }
     }
 }
