@@ -16,6 +16,12 @@ namespace CSEData.Infrastructure.Services
         {
             _unitOfWork = unitOfWork;            
         }
+
+        public IList<Company> GetAllCompany()
+        {
+           return _unitOfWork.Companys.GetAll();
+        }
+
         public void InsertCompany(string stockCodeName)
         {
             Company company = new Company() { StockCodeName = stockCodeName};

@@ -1,4 +1,5 @@
 ﻿using CSEData.Application.Services;
+using CSEData.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,9 @@ namespace CSEData.Worker.Models
         {
             _companyService.InsertCompany(StockCodeName);
         }
-
+        public IList<Company> GetCompany()
+        {
+            return _companyService.GetAllCompany();
+        }
     }
 }
