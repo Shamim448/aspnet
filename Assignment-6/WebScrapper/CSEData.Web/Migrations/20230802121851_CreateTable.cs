@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CSEData.Web.Migrations
 {
     /// <inheritdoc />
-    public partial class createTableOneTomany : Migration
+    public partial class CreateTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,7 +30,7 @@ namespace CSEData.Web.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CompanyId = table.Column<int>(type: "int", nullable: false),
+                    CompanyID = table.Column<int>(type: "int", nullable: true),
                     LTP = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Open = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     High = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -41,28 +41,27 @@ namespace CSEData.Web.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Prices", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Prices_Companys_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Companys",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Prices_CompanyId",
+            migrationBuilder.InsertData(
+                table: "Companys",
+                columns: new[] { "Id", "StockCodeName" },
+                values: new object[] { 1, "1JANATAMF" });
+
+            migrationBuilder.InsertData(
                 table: "Prices",
-                column: "CompanyId");
+                columns: new[] { "Id", "CompanyID", "High", "LTP", "Low", "Open", "Time", "Volume" },
+                values: new object[] { 1, 1, "2.5", "6.0", "2.5", "6.3", new DateTime(2023, 8, 2, 0, 0, 0, 0, DateTimeKind.Local), "6534" });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Prices");
+                name: "Companys");
 
             migrationBuilder.DropTable(
-                name: "Companys");
+                name: "Prices");
         }
     }
 }

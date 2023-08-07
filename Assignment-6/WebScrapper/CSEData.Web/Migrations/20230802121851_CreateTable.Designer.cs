@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSEData.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230806041349_createTableOneTomany")]
-    partial class createTableOneTomany
+    [Migration("20230802121851_CreateTable")]
+    partial class CreateTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,13 @@ namespace CSEData.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companys");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            StockCodeName = "1JANATAMF"
+                        });
                 });
 
             modelBuilder.Entity("CSEData.Web.Models.Price", b =>
@@ -50,7 +57,7 @@ namespace CSEData.Web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CompanyId")
+                    b.Property<int?>("CompanyID")
                         .HasColumnType("int");
 
                     b.Property<string>("High")
@@ -78,25 +85,20 @@ namespace CSEData.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
-
                     b.ToTable("Prices");
-                });
 
-            modelBuilder.Entity("CSEData.Web.Models.Price", b =>
-                {
-                    b.HasOne("CSEData.Web.Models.Company", "Company")
-                        .WithMany("Prices")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("CSEData.Web.Models.Company", b =>
-                {
-                    b.Navigation("Prices");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CompanyID = 1,
+                            High = "2.5",
+                            LTP = "6.0",
+                            Low = "2.5",
+                            Open = "6.3",
+                            Time = new DateTime(2023, 8, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            Volume = "6534"
+                        });
                 });
 #pragma warning restore 612, 618
         }
