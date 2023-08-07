@@ -1,5 +1,6 @@
 ﻿using CSEData.Application;
 using CSEData.Application.Services;
+using CSEData.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,13 @@ namespace CSEData.Infrastructure.Services
         public CompanyService(IApplicationUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;            
+        }
+        public void InsertCompany(string stockCodeName)
+        {
+            Company company = new Company() { StockCodeName = stockCodeName};
+            _unitOfWork.Companys.Add(company);
+            _unitOfWork.Save();
+
         }
     }
 }

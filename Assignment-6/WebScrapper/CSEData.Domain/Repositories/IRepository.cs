@@ -10,6 +10,7 @@ namespace CSEData.Domain.Repositories
         where TEntity : class, IEntity<TKey>
     {
         void Add(TEntity entity);
+        //void AddRang(IList<TEntity> entity);
         void Remove(TEntity entityToDelete);
         void Remove(TKey id);
         IList<TEntity> GetAll();

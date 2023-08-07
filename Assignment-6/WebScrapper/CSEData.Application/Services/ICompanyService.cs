@@ -8,5 +8,6 @@ namespace CSEData.Application.Services
 {
     public interface ICompanyService
     {
+        void InsertCompany(string stockCodeName);
     }
 }

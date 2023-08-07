@@ -24,7 +24,7 @@ namespace CSEData.Persistance
         {
             _dbSet.Add(entity);
         }
-
+        
         public IList<TEntity> GetAll()
         {
             IQueryable<TEntity> query = _dbSet;
@@ -50,5 +50,7 @@ namespace CSEData.Persistance
             var entityToDelete = _dbSet.Find(id);
             Remove(entityToDelete);
         }
+
+        
     }
 }
