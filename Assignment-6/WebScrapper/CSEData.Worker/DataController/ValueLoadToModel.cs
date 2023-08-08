@@ -1,9 +1,11 @@
 ﻿using CSEData.Domain;
 using CSEData.Worker.Models;
 using HtmlAgilityPack;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,46 +27,40 @@ namespace CSEData.Worker.DataController
         public void Load(string url)
         {
             _dataGenerate.GetNodsValue(url);
+            //get all company from db
             var companyList = _companyCreate.GetCompany();          
-            
-                for (int i = 0; i < _dataGenerate.StockCode.Count; i++)
+            int companyCount = companyList.Count;
+            int urldataCount = _dataGenerate.StockCode.Count;
+            if (urldataCount > companyCount) {
+                for (int i = 0; i < urldataCount; i++)
                 {
-                    if (companyList.Any(c => c.StockCodeName == _dataGenerate.StockCode[i].InnerText))
-                    {
+                    //if (companyList.Any(c => c.StockCodeName == _dataGenerate.StockCode[i].InnerText))
+                    //{
                         _companyCreate.StockCodeName = _dataGenerate.StockCode[i].InnerText;
                         _companyCreate.CreateCompany();
-                    }
-                   
+                    //}
                 }
-            
-            
-            
-            //for (int i = 0; i < _dataGenerate.StockCode.Count; i++)
-            //{
-            //    if (_dataGenerate.StockCode[i] != null) { }
-            //    _priceCreate.CompanyId = i;
-            //    _priceCreate.LTP = _dataGenerate.LTP[i].InnerText;
-            //    _priceCreate.Open = _dataGenerate.Opens[i].InnerText;
-            //    _priceCreate.High = _dataGenerate.High[i].InnerText;
-            //    _priceCreate.Low = _dataGenerate.Low[i].InnerText;
-            //    _priceCreate.Volumn = _dataGenerate.Volume[i].InnerText;
-            //    _priceCreate.Time = DateTime.Now;
-            //    _priceCreate.CreatePrice();
-            //}
-            //HtmlDocument doc = _dataGenerate.GetDocument(url);
-            //used when GetNodsValuereturn a list
-            // var listOfCompany = _dataGenerate.GetNodsValue(url);
+            }           
 
-            //we can used it when GetNodsValue return a list
-            //for (int i = 0; i < listOfCompany.Count; i++)
-            //{
-            //    _companyCreate.StockCodeName = listOfCompany[i].StockCodeName;
-
-            //    _companyCreate.CreateCompany();
-
-            //    _priceCreate.CompanyId = 1;
-            //    //need to add price property value
-            //}
+            //Add price table value
+            for (int i = 0; i < urldataCount; i++)
+            {
+                //check StockCodeName available or not, if found StockCodeName then insert price value
+                var st = companyList.Where(company => company.StockCodeName == _dataGenerate.StockCode[i].InnerText).FirstOrDefault();  
+                if (st != null)
+                {
+                    _priceCreate.CompanyId = st.Id;
+                    _priceCreate.LTP = _dataGenerate.LTP[i].InnerText;
+                    _priceCreate.Open = _dataGenerate.Opens[i].InnerText;
+                    _priceCreate.High = _dataGenerate.High[i].InnerText;
+                    _priceCreate.Low = _dataGenerate.Low[i].InnerText;
+                    _priceCreate.Volumn = _dataGenerate.Volume[i].InnerText;
+                    _priceCreate.Time = DateTime.Now;
+                    _priceCreate.CreatePrice();
+                }
+               
+            }
+           
         }
 
     }
