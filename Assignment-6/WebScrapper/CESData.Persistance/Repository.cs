@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 
 namespace CSEData.Persistance
 {
@@ -24,7 +25,12 @@ namespace CSEData.Persistance
         {
             _dbSet.Add(entity);
         }
-        
+
+        public void AddRange(IList<TEntity> entity)
+        {
+            _dbSet.AddRange((TEntity)entity); ;
+        }
+
         public IList<TEntity> GetAll()
         {
             IQueryable<TEntity> query = _dbSet;

@@ -25,7 +25,7 @@ namespace CSEData.Worker.Models
             //GetNodsValue(doc);
             return doc;
         }
-        public void /*List<Company>*/ GetNodsValue(string? url)
+        public async Task /*List<Company>*/ GetNodsValue(string? url)
         {
             var val = new List<Company>();
             HtmlDocument doc = GetDocument(url);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace CSEData.Domain.Repositories
         where TEntity : class, IEntity<TKey>
     {
         void Add(TEntity entity);
-        //void AddRang(IList<TEntity> entity);
+        void AddRange(IList<TEntity> entity);
         void Remove(TEntity entityToDelete);
         void Remove(TKey id);
         IList<TEntity> GetAll();

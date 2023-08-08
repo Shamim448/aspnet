@@ -1,4 +1,5 @@
 ﻿using CSEData.Application.Services;
+using CSEData.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace CSEData.Worker.Models
         public string Low { get; set; }
         public string Volumn { get; set; }
         public DateTime Time { get; set; }
+         
+        public IList<Price> GetPrices { get; set; }
 
         private IPriceService _priceService;
         //public CompanyCreateModel()
@@ -27,6 +30,10 @@ namespace CSEData.Worker.Models
         public void CreatePrice()
         {
             _priceService.InsertPrice(CompanyId, LTP, Open, High, Low, Volumn, Time );
+        }
+        public void CreatePriceList()
+        {
+            _priceService.InsertPriceList(GetPrices);
         }
     }
 }

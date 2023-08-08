@@ -24,9 +24,9 @@ namespace CSEData.Worker.DataController
             _priceCreate = priceCreate;
 
         }
-        public void Load(string url)
+        public async void Load(string url)
         {
-            _dataGenerate.GetNodsValue(url);
+            await _dataGenerate.GetNodsValue(url);
             //get all company from db
             var companyList = _companyCreate.GetCompany();          
             int companyCount = companyList.Count;
@@ -34,12 +34,11 @@ namespace CSEData.Worker.DataController
             if (urldataCount > companyCount) {
                 for (int i = 0; i < urldataCount; i++)
                 {
-                    //if (companyList.Any(c => c.StockCodeName == _dataGenerate.StockCode[i].InnerText))
-                    //{
-                        _companyCreate.StockCodeName = _dataGenerate.StockCode[i].InnerText;
-                        _companyCreate.CreateCompany();
-                    //}
+                    _companyCreate.StockCodeName = _dataGenerate.StockCode[i].InnerText;
+                    _companyCreate.CreateCompany();
+                    await Console.Out.WriteLineAsync(i + " " + _dataGenerate.StockCode[i].InnerText);
                 }
+                
             }           
 
             //Add price table value
@@ -57,10 +56,11 @@ namespace CSEData.Worker.DataController
                     _priceCreate.Volumn = _dataGenerate.Volume[i].InnerText;
                     _priceCreate.Time = DateTime.Now;
                     _priceCreate.CreatePrice();
+                    await Console.Out.WriteLineAsync(i + " " + "Price Added");
                 }
                
             }
-           
+            
         }
 
     }
