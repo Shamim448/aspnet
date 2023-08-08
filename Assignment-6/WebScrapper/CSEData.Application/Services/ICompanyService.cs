@@ -9,7 +9,7 @@ namespace CSEData.Application.Services
 {
     public interface ICompanyService
     {
-        public IList<Company> GetAllCompany();
-        void InsertCompany(string stockCodeName);
+        public Task<IList<Company>> GetAllCompany();
+        Task InsertCompany(string stockCodeName);
     }
 }

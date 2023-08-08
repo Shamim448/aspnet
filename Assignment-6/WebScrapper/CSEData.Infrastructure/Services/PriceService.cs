@@ -16,11 +16,11 @@ namespace CSEData.Infrastructure.Services
         { 
             _unitOfWork = unitOfWork;
         }
-        public void InsertPrice(int companyId, string ltp, string open, string high, string low, string volumn, DateTime time)
+        public async Task InsertPrice(int companyId, string ltp, string open, string high, string low, string volumn, DateTime time)
         {
             Price price = new Price() { CompanyId = companyId, LTP = ltp, Open = open, High = high, Low = low, Volume = volumn, Time = time };
-            _unitOfWork.Prices.Add(price);
-            
+            // _unitOfWork.Prices.Add(price);
+            await _unitOfWork.Prices.AddAsync(price);
             _unitOfWork.Save();
 
         }      

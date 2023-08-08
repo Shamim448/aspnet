@@ -27,11 +27,11 @@ namespace CSEData.Worker.Models
         {
             _priceService = priceService;
         }
-        public void CreatePrice()
+        public async Task CreatePrice()
         {
-            _priceService.InsertPrice(CompanyId, LTP, Open, High, Low, Volumn, Time );
+           await _priceService.InsertPrice(CompanyId, LTP, Open, High, Low, Volumn, Time );
         }
-        public void CreatePriceList()
+        public async void CreatePriceList()
         {
             _priceService.InsertPriceList(GetPrices);
         }

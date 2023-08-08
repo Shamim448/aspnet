@@ -28,24 +28,29 @@ namespace CSEData.Worker.DataController
         {
             await _dataGenerate.GetNodsValue(url);
             //get all company from db
-            var companyList = _companyCreate.GetCompany();          
+            var companyList = await _companyCreate.GetCompany();          
             int companyCount = companyList.Count;
             int urldataCount = _dataGenerate.StockCode.Count;
             if (urldataCount > companyCount) {
                 for (int i = 0; i < urldataCount; i++)
                 {
-                    _companyCreate.StockCodeName = _dataGenerate.StockCode[i].InnerText;
-                    _companyCreate.CreateCompany();
-                    await Console.Out.WriteLineAsync(i + " " + _dataGenerate.StockCode[i].InnerText);
-                }
-                
-            }           
-
+                    var st = companyList.Where(company => company.StockCodeName == _dataGenerate.StockCode[i].InnerText).FirstOrDefault();
+                    //First Time st was null so insert all company
+                    //After that check StockCodeName available or not, if not found StockCodeName then insert StockCodeName
+                    if (st == null)
+                    {
+                        _companyCreate.StockCodeName = _dataGenerate.StockCode[i].InnerText;
+                        _companyCreate.CreateCompany();
+                         //await Console.Out.WriteLineAsync(i + " " + _dataGenerate.StockCode[i].InnerText);
+                    }
+                }             
+            }
+            var companyListafterLoad = await _companyCreate.GetCompany();
             //Add price table value
             for (int i = 0; i < urldataCount; i++)
             {
                 //check StockCodeName available or not, if found StockCodeName then insert price value
-                var st = companyList.Where(company => company.StockCodeName == _dataGenerate.StockCode[i].InnerText).FirstOrDefault();  
+                var st = companyListafterLoad.Where(company => company.StockCodeName == _dataGenerate.StockCode[i].InnerText).FirstOrDefault();  
                 if (st != null)
                 {
                     _priceCreate.CompanyId = st.Id;
@@ -56,12 +61,10 @@ namespace CSEData.Worker.DataController
                     _priceCreate.Volumn = _dataGenerate.Volume[i].InnerText;
                     _priceCreate.Time = DateTime.Now;
                     _priceCreate.CreatePrice();
-                    await Console.Out.WriteLineAsync(i + " " + "Price Added");
-                }
-               
+                    //await Console.Out.WriteLineAsync(i + " " + "Price Added");
+                }             
             }
             
         }
-
     }
 }

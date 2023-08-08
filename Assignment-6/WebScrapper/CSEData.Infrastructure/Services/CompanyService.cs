@@ -17,15 +17,16 @@ namespace CSEData.Infrastructure.Services
             _unitOfWork = unitOfWork;            
         }
 
-        public IList<Company> GetAllCompany()
+        public async Task<IList<Company>> GetAllCompany()
         {
-           return _unitOfWork.Companys.GetAll();
+           return await _unitOfWork.Companys.GetAllAsync();
         }
 
-        public void InsertCompany(string stockCodeName)
+        public async Task InsertCompany(string stockCodeName)
         {
             Company company = new Company() { StockCodeName = stockCodeName};
-            _unitOfWork.Companys.Add(company);
+           // _unitOfWork.Companys.Add(company);
+            await _unitOfWork.Companys.AddAsync(company);
             _unitOfWork.Save();
 
         }

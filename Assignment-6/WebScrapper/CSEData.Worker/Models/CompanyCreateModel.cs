@@ -19,13 +19,13 @@ namespace CSEData.Worker.Models
         {
             _companyService = companyService;
         }
-        public void CreateCompany()
+        public async Task CreateCompany()
         {
-            _companyService.InsertCompany(StockCodeName);
+           await _companyService.InsertCompany(StockCodeName);
         }
-        public IList<Company> GetCompany()
+        public async Task <IList<Company>> GetCompany()
         {
-            return _companyService.GetAllCompany();
+            return await _companyService.GetAllCompany();
         }
     }
 }

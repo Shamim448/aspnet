@@ -11,10 +11,12 @@ namespace CSEData.Domain.Repositories
         where TEntity : class, IEntity<TKey>
     {
         void Add(TEntity entity);
+        Task AddAsync(TEntity entity);
         void AddRange(IList<TEntity> entity);
         void Remove(TEntity entityToDelete);
         void Remove(TKey id);
         IList<TEntity> GetAll();
+        Task<IList<TEntity>> GetAllAsync();
         TEntity GetById(TKey id);
     }
 }

@@ -25,7 +25,10 @@ namespace CSEData.Persistance
         {
             _dbSet.Add(entity);
         }
-
+        public virtual async Task AddAsync(TEntity entity)
+        {
+            await _dbSet.AddAsync(entity);
+        }
         public void AddRange(IList<TEntity> entity)
         {
             _dbSet.AddRange((TEntity)entity); ;
@@ -36,7 +39,11 @@ namespace CSEData.Persistance
             IQueryable<TEntity> query = _dbSet;
             return query.ToList();
         }
-
+        public virtual async Task<IList<TEntity>> GetAllAsync()
+        {
+            IQueryable<TEntity> query = _dbSet;
+            return await query.ToListAsync();
+        }
         public TEntity GetById(TKey id)
         {
             return _dbSet.Find(id);
