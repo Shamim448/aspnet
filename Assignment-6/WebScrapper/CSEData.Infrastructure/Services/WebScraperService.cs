@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CSEData.Infrastructure.Services
 {
-    public class WebScraperService
+    public class WebScraperService : IWebScraperService
     {
         public string StockCodeName { get; set; }
 
@@ -30,29 +30,21 @@ namespace CSEData.Infrastructure.Services
             _nodes = nodes;
         }
 
-
         public async Task LoadAsunc(string url)
         {
             await _nodes.GetNodsValue(url);
             //get all company from db
             var companyList = await GetAllCompanysAsync();
             int companyCount = companyList.Count;
+            //Count of founded nods
             int urldataCount = _nodes.StockCode.Count;
             //insert company 1st time
             if (companyCount <= 0)
             {
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < urldataCount; i++)
                 {
                     StockCodeName = _nodes.StockCode[i].InnerText;
-                    //CreateCompany();
-                    InsertCompanyAsync(StockCodeName);
-                    var st = companyList.Where(company => company.StockCodeName == _nodes.StockCode[i].InnerText).FirstOrDefault();
-                    //First Time st was null so insert all company
-                    //After that check StockCodeName available or not, if not found StockCodeName then insert StockCodeName
-                    if (st == null)
-                    {
-                        await Console.Out.WriteLineAsync(i + " " + _nodes.StockCode[i].InnerText);
-                    }
+                    InsertCompanyAsync(StockCodeName);                   
                 }
                 await AddPriceAsync();
             }
@@ -65,9 +57,8 @@ namespace CSEData.Infrastructure.Services
                     //check StockCodeName available or not, if not found StockCodeName then insert StockCodeName
                     if (st == null)
                     {
-                        StockCodeName = _nodes.StockCode[i].InnerText;
-                        //CreateCompany();
-                        InsertCompanyAsync(StockCodeName);
+                        StockCodeName = _nodes.StockCode[i].InnerText;                      
+                       InsertCompanyAsync(StockCodeName);
                         await Console.Out.WriteLineAsync(i + " " + _nodes.StockCode[i].InnerText);
                     }
                 }
@@ -78,10 +69,6 @@ namespace CSEData.Infrastructure.Services
                 await AddPriceAsync();
             }
         }
-
-
-
-
 
         //Price Add to db
         private async Task AddPriceAsync()
@@ -109,11 +96,7 @@ namespace CSEData.Infrastructure.Services
                 }
             }
         }
-
-        //public async Task<IList<Company>> GetAllCompany()
-        //{
-        //    return await _unitOfWork.Companys.GetAllAsync();
-        //}
+       
         private async Task<IList<Company>> GetAllCompanysAsync()
         {
             return await _unitOfWork.Companys.GetAllAsync();
@@ -122,28 +105,28 @@ namespace CSEData.Infrastructure.Services
         //Company Handle
         private async Task InsertCompanyAsync(string stockCodeName)
         {
-            Company company = new Company() { StockCodeName = stockCodeName };
-            // _unitOfWork.Companys.Add(company);
+            Company company = new Company() { StockCodeName = stockCodeName };           
             await _unitOfWork.Companys.AddAsync(company);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
 
-        }
-        //public async Task CreateCompany()
-        //{
-        //    await InsertCompany(StockCodeName);
-        //}
+        }     
         
         //Price handel
         private async Task InsertPriceAsync(int companyId, string ltp, string open, string high, string low, string volumn, DateTime time)
         {
-            Price price = new Price() { CompanyId = companyId, LTP = ltp, Open = open, High = high, Low = low, Volume = volumn, Time = time };       
+            Price price = new Price() { 
+                CompanyId = companyId, 
+                LTP = ltp, 
+                Open = open, 
+                High = high,
+                Low = low, 
+                Volume = volumn, 
+                Time = time 
+            };       
             await _unitOfWork.Prices.AddAsync(price);
             //await _unitOfWork.SaveAsync();
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
         }
-        //public async Task CreatePrice()
-        //{
-        //    await InsertPrice(CompanyId, LTP, Open, High, Low, Volumn, Time);
-        //}
+        
     }
 }

@@ -26,7 +26,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         builder.RegisterModule(new InfrastructureModule());
         builder.RegisterModule(new PersistanceModule(connectionString, assemblyName));
 
-        //builder.RegisterModule(new DomainModule(connectionString, assemblyName));
+
     })
     .ConfigureServices(services =>
     {

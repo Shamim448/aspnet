@@ -7,7 +7,11 @@ namespace CSEData.Infrastructure
     public class InfrastructureModule: Module
     {
 
-        public InfrastructureModule() {     }
+       
+        public InfrastructureModule()
+        {
+            
+        }
         protected override void Load(ContainerBuilder builder)
         {
             //builder.RegisterType<CompanyService>().As<ICompanyService>()
@@ -16,7 +20,7 @@ namespace CSEData.Infrastructure
             //builder.RegisterType<PriceService>().As<IPriceService>()
             //    .InstancePerLifetimeScope();
             builder.RegisterType<NodeGenaratorService>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<WebScraperService>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<WebScraperService>().As<IWebScraperService>().InstancePerLifetimeScope();
         }
     }
 }
