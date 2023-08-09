@@ -31,6 +31,7 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddHostedService<Worker>();
+        
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString, m => m.MigrationsAssembly(assemblyName)));
     })

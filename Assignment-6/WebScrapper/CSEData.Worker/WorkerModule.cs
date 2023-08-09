@@ -3,7 +3,7 @@ using CSEData.Application;
 using CSEData.Application.Features.Scrapping.Repositories;
 using CSEData.Infrastructure;
 using CSEData.Worker;
-using CSEData.Worker.Models;
+
 
 internal class WorkerModule : Module
 {
@@ -18,8 +18,8 @@ internal class WorkerModule : Module
     {
         base.Load(builder);
         builder.RegisterType<Worker>().AsSelf().InstancePerLifetimeScope();
-        builder.RegisterType<CompanyCreateModel>().AsSelf().InstancePerLifetimeScope();
-        builder.RegisterType<PriceCreateModel>().AsSelf().InstancePerLifetimeScope();     
-        builder.RegisterType<WebScraperModel>().AsSelf().InstancePerLifetimeScope();     
+        //builder.RegisterType<CompanyCreateModel>().AsSelf().InstancePerLifetimeScope();
+        //builder.RegisterType<PriceCreateModel>().AsSelf().InstancePerLifetimeScope();     
+        //builder.RegisterType<WebScraperModel>().AsSelf().InstancePerLifetimeScope();     
     }
 }
