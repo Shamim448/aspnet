@@ -1,4 +1,3 @@
-using CSEData.Worker.DataController;
 using CSEData.Worker.Models;
 
 namespace CSEData.Worker
@@ -6,8 +5,8 @@ namespace CSEData.Worker
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private readonly ValueLoadToModel _load;
-        public Worker(ILogger<Worker> logger, ValueLoadToModel load)
+        private readonly WebScraperModel _load;
+        public Worker(ILogger<Worker> logger, WebScraperModel load)
         {
             _logger = logger;
             _load = load;

@@ -2,7 +2,6 @@
 using CSEData.Application.Services;
 using CSEData.Infrastructure.Services;
 
-
 namespace CSEData.Infrastructure
 {
     public class InfrastructureModule: Module
@@ -15,7 +14,9 @@ namespace CSEData.Infrastructure
                 .InstancePerLifetimeScope();
            
             builder.RegisterType<PriceService>().As<IPriceService>()
-                .InstancePerLifetimeScope();                   
+                .InstancePerLifetimeScope();
+            builder.RegisterType<NodeGenaratorService>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<WebScraperService>().AsSelf().InstancePerLifetimeScope();
         }
     }
 }

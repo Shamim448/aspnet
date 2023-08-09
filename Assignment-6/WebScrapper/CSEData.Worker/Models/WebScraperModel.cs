@@ -1,5 +1,5 @@
 ﻿using CSEData.Domain;
-using CSEData.Worker.Models;
+using CSEData.Infrastructure.Services;
 using HtmlAgilityPack;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,15 +9,15 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSEData.Worker.DataController
+namespace CSEData.Worker.Models
 {
 
-    public class ValueLoadToModel
+    public class WebScraperModel
     {
-        private readonly DataGenerateModel _dataGenerate;
+        private readonly NodeGenaratorService _dataGenerate;
         private readonly CompanyCreateModel _companyCreate;
         private readonly PriceCreateModel _priceCreate;
-        public ValueLoadToModel(DataGenerateModel dataGenerate, CompanyCreateModel companyCreate, PriceCreateModel priceCreate)
+        public WebScraperModel(NodeGenaratorService dataGenerate, CompanyCreateModel companyCreate, PriceCreateModel priceCreate)
         {
             _dataGenerate = dataGenerate;
             _companyCreate = companyCreate;
@@ -32,7 +32,8 @@ namespace CSEData.Worker.DataController
             int companyCount = companyList.Count;
             int urldataCount = _dataGenerate.StockCode.Count;
             //insert company 1st time
-            if (companyCount <= 0 ) {
+            if (companyCount <= 0)
+            {
                 for (int i = 0; i < 5; i++)
                 {
                     _companyCreate.StockCodeName = _dataGenerate.StockCode[i].InnerText;
@@ -41,14 +42,14 @@ namespace CSEData.Worker.DataController
                     //First Time st was null so insert all company
                     //After that check StockCodeName available or not, if not found StockCodeName then insert StockCodeName
                     if (st == null)
-                    {   
+                    {
                         await Console.Out.WriteLineAsync(i + " " + _dataGenerate.StockCode[i].InnerText);
                     }
                 }
                 await AddPriceAsync();
             }
             //if new company found insert
-            else if (urldataCount > companyCount) 
+            else if (urldataCount > companyCount)
             {
                 for (int i = 0; i < urldataCount; i++)
                 {
@@ -66,7 +67,7 @@ namespace CSEData.Worker.DataController
             else
             {
                 await AddPriceAsync();
-            }       
+            }
         }
 
         //Price Add to db

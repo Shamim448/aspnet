@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DataController\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>
