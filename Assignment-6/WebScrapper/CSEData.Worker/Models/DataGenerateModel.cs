@@ -35,28 +35,7 @@ namespace CSEData.Worker.Models
              High = doc.DocumentNode.SelectNodes(xpath: "//tr/td[5]");
              Low = doc.DocumentNode.SelectNodes(xpath: "//tr/td[6]");
              Volume = doc.DocumentNode.SelectNodes(xpath: "//tr/td[10]");
-            //if(StockCode != null)
-            //{
-            //    for(int i = 0;  i < StockCode.Count; i++)
-            //    {
-            //        var company = new Company()
-            //        {
-            //            StockCodeName = StockCode[i].InnerText,
-            //            Prices = new List<Price>()
-            //            {
-            //                new Price()
-            //                {   
-            //                    LTP = LTP[i].InnerText,
-            //                    Open = Opens[i].InnerText,
-            //                    High = High[i].InnerText,
-            //                    Low = Low[i].InnerText,
-            //                    Volume = Volume[i].InnerText,
-            //                }
-            //            }
-            //        };
-            //        val.Add(company);
-            //    }
-           // }
+            
         }
     }
 }
