@@ -20,12 +20,12 @@ namespace CSEData.Infrastructure.Services
         public HtmlDocument GetDocument(string? url)
         {
             HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load(url);
+            HtmlDocument doc =  web.Load(url);
             return doc;
         }
         public async Task GetNodsValue(string? url)
         {
-            HtmlDocument doc = GetDocument(url);
+            HtmlDocument doc =  GetDocument(url);
             SL = doc.DocumentNode.SelectNodes(xpath: "//tr/td[1]");
             StockCode = doc.DocumentNode.SelectNodes(xpath: "//tr/td[2]");
             LTP = doc.DocumentNode.SelectNodes(xpath: "//tr/td[3]");
@@ -34,5 +34,6 @@ namespace CSEData.Infrastructure.Services
             Low = doc.DocumentNode.SelectNodes(xpath: "//tr/td[6]");
             Volume = doc.DocumentNode.SelectNodes(xpath: "//tr/td[10]");
         }
+        
     }
 }

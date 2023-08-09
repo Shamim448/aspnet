@@ -1,9 +1,12 @@
 ﻿using CSEData.Application;
 using CSEData.Application.Services;
 using CSEData.Domain;
+using CSEData.Infrastructure.Extentions;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +15,6 @@ namespace CSEData.Infrastructure.Services
     public class WebScraperService : IWebScraperService
     {
         public string StockCodeName { get; set; }
-
         public int CompanyId { get; set; }
         public string LTP { get; set; }
         public string Open { get; set; }
@@ -29,10 +31,15 @@ namespace CSEData.Infrastructure.Services
             _unitOfWork = unitOfWork;
             _nodes = nodes;
         }
-
-        public async Task LoadAsunc(string url)
+       
+        public async Task LoadAsunc(string? url)
         {
-            await _nodes.GetNodsValue(url);
+            var htmlDoc = _nodes.GetDocument(url);
+            if (!GetMarketStatus(htmlDoc))
+            {
+                throw new MarketClosedExceptions("Market Closed Now");
+            }
+            _nodes.GetNodsValue(url);
             //get all company from db
             var companyList = await GetAllCompanysAsync();
             int companyCount = companyList.Count;
@@ -41,10 +48,11 @@ namespace CSEData.Infrastructure.Services
             //insert company 1st time
             if (companyCount <= 0)
             {
-                for (int i = 0; i < urldataCount; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     StockCodeName = _nodes.StockCode[i].InnerText;
-                    InsertCompanyAsync(StockCodeName);                   
+                    InsertCompanyAsync(StockCodeName);
+                    await Console.Out.WriteLineAsync(i + " " + _nodes.StockCode[i].InnerText);
                 }
                 await AddPriceAsync();
             }
@@ -68,6 +76,14 @@ namespace CSEData.Infrastructure.Services
             {
                 await AddPriceAsync();
             }
+        }
+
+        public bool GetMarketStatus(HtmlDocument doc)
+        {
+            string marketStatus = doc.DocumentNode.SelectSingleNode(xpath: "//div[@class='market_status']/div/span").InnerText;
+            if (marketStatus == "Closed")
+                return false;
+            return true;
         }
 
         //Price Add to db
@@ -107,7 +123,7 @@ namespace CSEData.Infrastructure.Services
         {
             Company company = new Company() { StockCodeName = stockCodeName };           
             await _unitOfWork.Companys.AddAsync(company);
-            await _unitOfWork.SaveAsync();
+             _unitOfWork.Save();
 
         }     
         
@@ -125,7 +141,7 @@ namespace CSEData.Infrastructure.Services
             };       
             await _unitOfWork.Prices.AddAsync(price);
             //await _unitOfWork.SaveAsync();
-            await _unitOfWork.SaveAsync();
+             _unitOfWork.Save();
         }
         
     }
