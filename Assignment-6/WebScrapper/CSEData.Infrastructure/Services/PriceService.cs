@@ -21,18 +21,10 @@ namespace CSEData.Infrastructure.Services
             Price price = new Price() { CompanyId = companyId, LTP = ltp, Open = open, High = high, Low = low, Volume = volumn, Time = time };
             // _unitOfWork.Prices.Add(price);
             await _unitOfWork.Prices.AddAsync(price);
+            //await _unitOfWork.SaveAsync();
             _unitOfWork.Save();
 
         }      
-        public void InsertPriceList(IList<Price> getPrices)
-        {
-            List<Price> priceList = new List<Price>();
-            foreach (Price price in getPrices)
-            {
-                priceList.Add(price);
-            }
-            _unitOfWork.Prices.AddRange(priceList);
-            _unitOfWork.Save();
-        }
+        
     }
 }

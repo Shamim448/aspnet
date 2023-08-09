@@ -24,5 +24,10 @@ namespace CSEData.Persistance
         {
             _dbContext?.SaveChanges();
         }
+
+         public async Task SaveAsync()
+        {
+            _dbContext?.SaveChangesAsync();
+        }
     }
 }

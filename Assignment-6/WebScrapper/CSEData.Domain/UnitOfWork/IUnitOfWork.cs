@@ -9,5 +9,6 @@ namespace CSEData.Domain.UnitOfWork
     public interface IUnitOfWork : IDisposable
     {
         void Save();
+        Task SaveAsync();
     }
 }

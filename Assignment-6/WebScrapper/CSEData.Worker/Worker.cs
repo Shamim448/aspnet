@@ -7,13 +7,10 @@ namespace CSEData.Worker
     {
         private readonly ILogger<Worker> _logger;
         private readonly ValueLoadToModel _load;
-       // private readonly CompanyCreateModel _companyCreate;
-
         public Worker(ILogger<Worker> logger, ValueLoadToModel load)
         {
             _logger = logger;
             _load = load;
-            //_companyCreate = companyCreate;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {

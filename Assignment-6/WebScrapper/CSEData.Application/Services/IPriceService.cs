@@ -9,7 +9,6 @@ namespace CSEData.Application.Services
 {
     public interface IPriceService
     {
-        Task InsertPrice(int companyId, string ltp, string open, string high, string low, string volumn, DateTime time);
-        void InsertPriceList(IList<Price> getPrices);
+        Task InsertPrice(int companyId, string ltp, string open, string high, string low, string volumn, DateTime time);  
     }
 }

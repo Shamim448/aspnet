@@ -21,8 +21,6 @@ namespace CSEData.Worker.Models
         public IList<Price> GetPrices { get; set; }
 
         private IPriceService _priceService;
-        //public CompanyCreateModel()
-        //{ }
         public PriceCreateModel(IPriceService priceService)
         {
             _priceService = priceService;
@@ -31,9 +29,6 @@ namespace CSEData.Worker.Models
         {
            await _priceService.InsertPrice(CompanyId, LTP, Open, High, Low, Volumn, Time );
         }
-        public async void CreatePriceList()
-        {
-            _priceService.InsertPriceList(GetPrices);
-        }
+       
     }
 }
