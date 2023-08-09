@@ -9,13 +9,13 @@ namespace CSEData.Infrastructure.Services
 {
     public class NodeGenaratorService
     {
-        public HtmlNodeCollection SL { get; set; }
-        public HtmlNodeCollection StockCode { get; set; }
-        public HtmlNodeCollection LTP { get; set; }
-        public HtmlNodeCollection Opens { get; set; }
-        public HtmlNodeCollection High { get; set; }
-        public HtmlNodeCollection Low { get; set; }
-        public HtmlNodeCollection Volume { get; set; }
+        public HtmlNodeCollection? SL { get; set; }
+        public HtmlNodeCollection? StockCode { get; set; }
+        public HtmlNodeCollection? LTP { get; set; }
+        public HtmlNodeCollection? Opens { get; set; }
+        public HtmlNodeCollection? High { get; set; }
+        public HtmlNodeCollection? Low { get; set; }
+        public HtmlNodeCollection? Volume { get; set; }
 
         public HtmlDocument GetDocument(string? url)
         {

@@ -6,6 +6,7 @@ using CSEData.Worker;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
+
 //Load Appsetting
 var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", false)
                 .AddEnvironmentVariables()
@@ -31,7 +32,7 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddHostedService<Worker>();
-        
+
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString, m => m.MigrationsAssembly(assemblyName)));
     })
