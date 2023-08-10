@@ -23,6 +23,7 @@ Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
     .Enrich.FromLogContext()
+    //.WriteTo.File("")
     .ReadFrom.Configuration(configuration)
     .CreateLogger();
 try {
@@ -33,7 +34,7 @@ try {
     .UseSerilog()
     .ConfigureContainer<ContainerBuilder>(builder =>
     {
-        builder.RegisterModule(new WorkerModule(/*configuration*/));
+        builder.RegisterModule(new WorkerModule(configuration));
         builder.RegisterModule(new InfrastructureModule());
         builder.RegisterModule(new PersistanceModule(connectionString, assemblyName));
 
@@ -46,6 +47,7 @@ try {
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString, m => m.MigrationsAssembly(assemblyName)));
     })
+
     .Build();
 
     await host.RunAsync();

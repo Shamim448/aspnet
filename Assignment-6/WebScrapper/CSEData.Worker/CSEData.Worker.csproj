@@ -9,9 +9,13 @@
 
   <ItemGroup>
     <Compile Remove="Data\**" />
+    <Compile Remove="Logs\**" />
     <Content Remove="Data\**" />
+    <Content Remove="Logs\**" />
     <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Logs\**" />
     <None Remove="Data\**" />
+    <None Remove="Logs\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,7 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Logs\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>

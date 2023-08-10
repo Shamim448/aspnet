@@ -16,9 +16,18 @@ namespace CSEData.Worker
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                 _load.LoadAsunc("https://www.cse.com.bd/market/current_price");                              
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000 * 60, stoppingToken);
+                try 
+                {
+                    _load.LoadAsunc("https://www.cse.com.bd/market/current_price");
+                    
+                }
+                catch(Exception ex)
+                {
+                    _logger.LogError(ex, ex.Message);
+                }
+                                              
+                _logger.LogInformation("Worker running at");
+                await Task.Delay(1000 , stoppingToken);
             }
         }
     }

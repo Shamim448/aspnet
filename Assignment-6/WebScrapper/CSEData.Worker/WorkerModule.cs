@@ -5,11 +5,11 @@ using CSEData.Worker;
 internal class WorkerModule : Module
 {
 
-    //private readonly IConfiguration _configuration;
-    //public WorkerModule( IConfiguration configuration)
-    //{     
-    //    _configuration = configuration;
-    //}
+    private readonly IConfiguration _configuration;
+    public WorkerModule(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
     protected override void Load(ContainerBuilder builder)
     {
         base.Load(builder);

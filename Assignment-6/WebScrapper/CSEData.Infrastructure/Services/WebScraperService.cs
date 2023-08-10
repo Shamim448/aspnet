@@ -27,11 +27,10 @@ namespace CSEData.Infrastructure.Services
 
         private readonly IApplicationUnitOfWork _unitOfWork;
         private readonly NodeGenaratorService _nodes;
-        private readonly ILogger<WebScraperService> _logger;
-        public WebScraperService(IApplicationUnitOfWork unitOfWork, NodeGenaratorService nodes, ILogger<WebScraperService> logger )
+
+        public WebScraperService(IApplicationUnitOfWork unitOfWork, NodeGenaratorService nodes)
         {
-            _unitOfWork = unitOfWork;
-            _logger = logger;
+            _unitOfWork = unitOfWork;           
             _nodes = nodes;
         }
        
