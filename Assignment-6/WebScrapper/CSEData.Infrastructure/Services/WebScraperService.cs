@@ -39,9 +39,10 @@ namespace CSEData.Infrastructure.Services
             var htmlDoc = _nodes.GetDocument(url);
 
             if (!GetMarketStatus(htmlDoc))
+            
             {
                 _logger.LogInformation("Market Closed Now");
-                //throw Exception("Market Closed Now");
+                throw new Exception("Market Closed Now");
             }
 
             _nodes.GetNodsValue(url);

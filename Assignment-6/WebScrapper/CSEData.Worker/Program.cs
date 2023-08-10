@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Serilog.Events;
 using Serilog;
 using CSEData.Application.Services;
+using CSEData.Infrastructure.Services;
+using System.Reflection;
 
 
 
@@ -17,8 +19,8 @@ var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", f
 
 //Get ConnectionString
 var connectionString = configuration.GetConnectionString("DefaultConnection");
-var assemblyName = typeof(Worker).Assembly.FullName;
-//var assemblyName = Assembly.GetExecutingAssembly().FullName;
+//var assemblyName = typeof(Worker).Assembly.FullName;
+var assemblyName = Assembly.GetExecutingAssembly().FullName;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
@@ -26,6 +28,7 @@ Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .ReadFrom.Configuration(configuration)
     .CreateLogger();
+
 try {
     Log.Information("Application Starting up");
     IHost host = Host.CreateDefaultBuilder(args)
@@ -43,7 +46,7 @@ try {
     .ConfigureServices(services =>
     {
         services.AddHostedService<Worker>();
-        services.AddSingleton<IWebScraperService>();
+        services.AddSingleton<IWebScraperService, WebScraperService>();
 
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString, m => m.MigrationsAssembly(assemblyName)));

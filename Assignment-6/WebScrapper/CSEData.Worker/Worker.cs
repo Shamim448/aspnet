@@ -27,7 +27,7 @@ namespace CSEData.Worker
                    // _logger.LogWarning("{message}", e.Message);
                     _logger.LogError(e, e.Message);
                 }              
-                await Task.Delay(1000, stoppingToken);
+                await Task.Delay(1000 * 60, stoppingToken);
             }
         }
     }
