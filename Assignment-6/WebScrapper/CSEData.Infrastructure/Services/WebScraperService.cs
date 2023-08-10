@@ -3,6 +3,7 @@ using CSEData.Application.Services;
 using CSEData.Domain;
 using CSEData.Infrastructure.Extentions;
 using HtmlAgilityPack;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,11 @@ namespace CSEData.Infrastructure.Services
 
         private readonly IApplicationUnitOfWork _unitOfWork;
         private readonly NodeGenaratorService _nodes;
-        public WebScraperService(IApplicationUnitOfWork unitOfWork, NodeGenaratorService nodes)
+        private readonly ILogger<WebScraperService> _logger;
+        public WebScraperService(IApplicationUnitOfWork unitOfWork, NodeGenaratorService nodes, ILogger<WebScraperService> logger )
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
             _nodes = nodes;
         }
        
