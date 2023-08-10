@@ -19,14 +19,15 @@ namespace CSEData.Worker
             {
                 try
                 {
-                    var result = _load.LoadAsunc("https://www.cse.com.bd/market/current_price");                    
+                    var result = _load.LoadAsunc("https://www.cse.com.bd/market/current_price");
                 }
-                
+
                 catch (Exception e)
                 {
+                   // _logger.LogWarning("{message}", e.Message);
                     _logger.LogError(e, e.Message);
                 }              
-                await Task.Delay(1000 * 60, stoppingToken);
+                await Task.Delay(1000, stoppingToken);
             }
         }
     }

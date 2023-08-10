@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSEData.Worker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230810035750_createtable")]
+    [Migration("20230810055703_createtable")]
     partial class createtable
     {
         /// <inheritdoc />

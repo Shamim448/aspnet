@@ -23,7 +23,6 @@ Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
     .Enrich.FromLogContext()
-    //.WriteTo.File("")
     .ReadFrom.Configuration(configuration)
     .CreateLogger();
 try {
