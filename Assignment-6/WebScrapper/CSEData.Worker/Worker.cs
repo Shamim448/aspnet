@@ -1,6 +1,7 @@
 
 using CSEData.Application.Services;
 
+
 namespace CSEData.Worker
 {
     public class Worker : BackgroundService
@@ -16,18 +17,16 @@ namespace CSEData.Worker
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                try 
+                try
                 {
-                    _load.LoadAsunc("https://www.cse.com.bd/market/current_price");
-                    
+                    var result = _load.LoadAsunc("https://www.cse.com.bd/market/current_price");                    
                 }
-                catch(Exception ex)
+                
+                catch (Exception e)
                 {
-                    _logger.LogError(ex, ex.Message);
-                }
-                                              
-                _logger.LogInformation("Worker running at");
-                await Task.Delay(1000 , stoppingToken);
+                    _logger.LogError(e, e.Message);
+                }              
+                await Task.Delay(1000 * 60, stoppingToken);
             }
         }
     }

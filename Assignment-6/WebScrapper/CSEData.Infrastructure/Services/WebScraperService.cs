@@ -1,7 +1,6 @@
 ﻿using CSEData.Application;
 using CSEData.Application.Services;
 using CSEData.Domain;
-using CSEData.Infrastructure.Extentions;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using System;
@@ -27,20 +26,24 @@ namespace CSEData.Infrastructure.Services
 
         private readonly IApplicationUnitOfWork _unitOfWork;
         private readonly NodeGenaratorService _nodes;
-
-        public WebScraperService(IApplicationUnitOfWork unitOfWork, NodeGenaratorService nodes)
+        private readonly ILogger<IWebScraperService> _logger;
+        public WebScraperService(IApplicationUnitOfWork unitOfWork, NodeGenaratorService nodes, ILogger<IWebScraperService> logger)
         {
-            _unitOfWork = unitOfWork;           
+            _unitOfWork = unitOfWork;  
+            _logger = logger;
             _nodes = nodes;
         }
        
         public async Task LoadAsunc(string? url)
         {
             var htmlDoc = _nodes.GetDocument(url);
+
             if (!GetMarketStatus(htmlDoc))
             {
-                throw new MarketClosedExceptions("Market Closed Now");
+                _logger.LogInformation("Market Closed Now");
+                throw new Exception("Market Closed Now");
             }
+
             _nodes.GetNodsValue(url);
             //get all company from db
             var companyList = await GetAllCompanysAsync();
@@ -50,11 +53,11 @@ namespace CSEData.Infrastructure.Services
             //insert company 1st time
             if (companyCount <= 0)
             {
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < urldataCount; i++)
                 {
                     StockCodeName = _nodes.StockCode[i].InnerText;
                     InsertCompanyAsync(StockCodeName);
-                    await Console.Out.WriteLineAsync(i + " " + _nodes.StockCode[i].InnerText);
+                    //await Console.Out.WriteLineAsync(i + " " + _nodes.StockCode[i].InnerText);
                 }
                 await AddPriceAsync();
             }
@@ -69,7 +72,7 @@ namespace CSEData.Infrastructure.Services
                     {
                         StockCodeName = _nodes.StockCode[i].InnerText;                      
                        InsertCompanyAsync(StockCodeName);
-                        await Console.Out.WriteLineAsync(i + " " + _nodes.StockCode[i].InnerText);
+                       // await Console.Out.WriteLineAsync(i + " " + _nodes.StockCode[i].InnerText);
                     }
                 }
                 await AddPriceAsync();
@@ -78,6 +81,7 @@ namespace CSEData.Infrastructure.Services
             {
                 await AddPriceAsync();
             }
+            _logger.LogInformation("Market Price Updated");
         }
 
         public bool GetMarketStatus(HtmlDocument doc)
