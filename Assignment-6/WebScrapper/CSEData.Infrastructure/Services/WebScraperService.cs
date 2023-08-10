@@ -37,52 +37,62 @@ namespace CSEData.Infrastructure.Services
         public async Task LoadAsunc(string? url)
         {
             var htmlDoc = _nodes.GetDocument(url);
-
-            if (!GetMarketStatus(htmlDoc))
-            
+            try 
             {
-                _logger.LogInformation("Market Closed Now");
-                throw new Exception("Market Closed Now");
-            }
+                if (!GetMarketStatus(htmlDoc))
 
-            _nodes.GetNodsValue(url);
-            //get all company from db
-            var companyList = await GetAllCompanysAsync();
-            int companyCount = companyList.Count;
-            //Count of founded nods
-            int urldataCount = _nodes.StockCode.Count;
-            //insert company 1st time
-            if (companyCount <= 0)
-            {
-                for (int i = 0; i < urldataCount; i++)
                 {
-                    StockCodeName = _nodes.StockCode[i].InnerText;
-                    InsertCompanyAsync(StockCodeName);
-                    //await Console.Out.WriteLineAsync(i + " " + _nodes.StockCode[i].InnerText);
+                   // _logger.LogInformation("Market Closed Now");
+                    throw new Exception("Market Closed Now");
                 }
-                await AddPriceAsync();
-            }
-            //if new company found insert
-            else if (urldataCount > companyCount)
-            {
-                for (int i = 0; i < urldataCount; i++)
+
+                _nodes.GetNodsValue(url);
+                //get all company from db
+                var companyList = await GetAllCompanysAsync();
+                int companyCount = companyList.Count;
+                //Count of founded nods
+                int urldataCount = _nodes.StockCode.Count;
+                //insert company 1st time
+                if (companyCount <= 0)
                 {
-                    var st = companyList.Where(company => company.StockCodeName == _nodes.StockCode[i].InnerText).FirstOrDefault();
-                    //check StockCodeName available or not, if not found StockCodeName then insert StockCodeName
-                    if (st == null)
+                    for (int i = 0; i < urldataCount; i++)
                     {
-                        StockCodeName = _nodes.StockCode[i].InnerText;                      
-                       InsertCompanyAsync(StockCodeName);
-                       // await Console.Out.WriteLineAsync(i + " " + _nodes.StockCode[i].InnerText);
+                        StockCodeName = _nodes.StockCode[i].InnerText;
+                        InsertCompanyAsync(StockCodeName);
+                        //await Console.Out.WriteLineAsync(i + " " + _nodes.StockCode[i].InnerText);
                     }
+                    await AddPriceAsync();
                 }
-                await AddPriceAsync();
+                //if new company found insert
+                else if (urldataCount > companyCount)
+                {
+                    for (int i = 0; i < urldataCount; i++)
+                    {
+                        var st = companyList.Where(company => company.StockCodeName == _nodes.StockCode[i].InnerText).FirstOrDefault();
+                        //check StockCodeName available or not, if not found StockCodeName then insert StockCodeName
+                        if (st == null)
+                        {
+                            StockCodeName = _nodes.StockCode[i].InnerText;
+                            InsertCompanyAsync(StockCodeName);
+                            // await Console.Out.WriteLineAsync(i + " " + _nodes.StockCode[i].InnerText);
+                        }
+                    }
+                    await AddPriceAsync();
+                }
+                else
+                {
+                    await AddPriceAsync();
+                }
+                _logger.LogInformation("Market Price Updated");
+
             }
-            else
-            {
-                await AddPriceAsync();
+
+            catch (Exception ex) 
+            { 
+                _logger.LogError(ex, ex.Message);
             }
-            _logger.LogInformation("Market Price Updated");
+
+
         }
 
         public bool GetMarketStatus(HtmlDocument doc)
