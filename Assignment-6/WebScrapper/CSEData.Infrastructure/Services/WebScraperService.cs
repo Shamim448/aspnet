@@ -37,12 +37,12 @@ namespace CSEData.Infrastructure.Services
         public async Task LoadAsunc(string? url)
         {
             var htmlDoc = _nodes.GetDocument(url);
-            try 
+            try
             {
                 if (!GetMarketStatus(htmlDoc))
 
                 {
-                   // _logger.LogInformation("Market Closed Now");
+                    //_logger.LogInformation("Market Closed Now");
                     throw new Exception("Market Closed Now");
                 }
 
@@ -62,6 +62,7 @@ namespace CSEData.Infrastructure.Services
                         //await Console.Out.WriteLineAsync(i + " " + _nodes.StockCode[i].InnerText);
                     }
                     await AddPriceAsync();
+                    _logger.LogInformation(" Company & Price Insert");
                 }
                 //if new company found insert
                 else if (urldataCount > companyCount)
@@ -78,14 +79,16 @@ namespace CSEData.Infrastructure.Services
                         }
                     }
                     await AddPriceAsync();
+                    _logger.LogInformation(" New Company & Price Insert");
                 }
                 else
                 {
                     await AddPriceAsync();
+                    _logger.LogInformation("Market Price Updated");
                 }
-                _logger.LogInformation("Market Price Updated");
+                
 
-            }
+        }
 
             catch (Exception ex) 
             { 
@@ -93,7 +96,7 @@ namespace CSEData.Infrastructure.Services
             }
 
 
-        }
+}
 
         public bool GetMarketStatus(HtmlDocument doc)
         {
