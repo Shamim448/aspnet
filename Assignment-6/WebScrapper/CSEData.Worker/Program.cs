@@ -6,6 +6,7 @@ using CSEData.Worker;
 using Microsoft.EntityFrameworkCore;
 using Serilog.Events;
 using Serilog;
+using CSEData.Application.Services;
 
 
 
@@ -42,6 +43,7 @@ try {
     .ConfigureServices(services =>
     {
         services.AddHostedService<Worker>();
+        services.AddSingleton<IWebScraperService>();
 
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString, m => m.MigrationsAssembly(assemblyName)));
