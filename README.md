@@ -1900,6 +1900,24 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     
      ```
     </details>
+## Class -40 (Docker)
+    Proces of Docker image installation
+    1. Create Dockerfile
+    2. docker build -t image name -f Dockerfile path . (dot should be used in last)
+    3. If any problem to face install Remove image : docker rmi -f imagename
+    4. docker run -it imagename/ docker run
+    5. apt-get (if need any application install)
+    6. docker ps (Show running process)
+    7.in need remove container: docker rm -f container id
+    8. port change : docker run -p 8000:80 image name
+
+    <details>
+     <summary></summary>
+    
+     ```c#
+    
+     ```
+    </details>
     <details>
      <summary></summary>
     
