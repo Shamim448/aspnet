@@ -1939,6 +1939,40 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 6.  docker ps (Show running process)
 7.  in need remove container: docker rm -f container id
 8.  port change : docker run -p 8000:80 image name
+## Class -41 (Dockerfile)
+    ডকার ইউজ করার ক্ষেত্রে একটা ঝামেলা কর কাজ হচ্ছে ডাটাবেজ যেহেতু সাইটটা ডকার ইমেজে থাকবে এবং ডাটাবেজটা কোন সার্ভারে বা PC থাকবে তাদের মধ্যে কমিউনিকেশন করাটা একটা ঝামেলার কাজ 
+    তবে এটা করা যাবে রিয়েল IP মাধ্যমে এজন্য আমাদের পিসির কিছু কমপ্লিফিকেশন ঠিক করে নিতে হবে .
+    Mainten docker image run process we used (Docker compose) tools
+1. Open SQL Server manager management in administrator mode 
+
+2. Need some configuration from this link
+    https://drive.google.com/file/d/1oGZF0SGXwUne9xyySlUTPsE3hv1M0i-u/view?usp=sharing
+
+#### Create Docker File -69
+    একটা প্রজেক্টের সব ফাইলের জন্য ঢকার ইমেজ তৈরি করা প্রয়োজন নেই শুধু সেই সমস্ত প্রজেক্ট এর জন্য ধোকার ইমেজ তৈরি করব যেগুলো রান করা যায় যেমন প্রজেক্ট এ পি আই প্রজেক্ট ওয়ার্কার সার্ভিস প্রোজেক্ট কোন প্রজেক্ট 
+    অন্যান্য লাইব্রেরী প্রজেক্টগুলো সাপোর্ট ফাইল হিসাবে অ্যাড করে দিলেই হবে .
+    যেই প্রজেক্টের জন্য ডকার ইমেজ তৈরি করব,  ডকার ফাইল তৈরি করতে হবে সেই প্রজেক্ট এর ভিতরেই .
+
+* FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+* WORKDIR /src
+* RUN apt-get update && apt-get install -y nodejs
+* COPY ["FirstDemo.Web/*.csproj", "FirstDemo.Web/"]
+* COPY ["FirstDemo.Infrastructure/*.csproj", "FirstDemo.Infrastructure/"]
+* RUN dotnet restore "FirstDemo.Web/FirstDemo.Web.csproj"
+* COPY . .
+* WORKDIR "/src/FirstDemo.Web"
+* RUN dotnet build "FirstDemo.Web.csproj" -c Release -o /app
+
+* FROM build AS publish
+* RUN dotnet publish "FirstDemo.Web.csproj" -c Release -o /app
+
+* FROM build AS final
+* WORKDIR /app
+* COPY --from=publish /app .
+* ENTRYPOINT ["dotnet", "FirstDemo.Web.dll"]
+
+
+
 
     <details>
      <summary></summary>
