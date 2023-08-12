@@ -1911,6 +1911,25 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
   Docker Command\
   ![image](https://github.com/Shamim448/aspnet/assets/43339514/e0fb05da-e1cb-49db-b329-8d7d394cd1e0)
 
+  #### Dockerfile Detailes-54\
+  * Form: এই কমান্ড একটা বেজ ইমেজের নাম দিতে হয় যেমন আমরা যদি ডকারে গিয়ে ডকারের অফিসিয়াল ইমেজে যাই তাহলে  বিভিন্ন সিস্টেমের জন্য ইমেজ পাব  যা দরকার তৈরি করে রেখেছে . সেটাই হবে বেজ name.
+  * Maintainer : যে এটা মেন্টেন করবে যেমন আমি নিজে 
+  * Run shdo apt-get install apache2-y
+  * এপাচি ইন্সটল করার সময় একটা প্রম আসে জিওগ্রাফিক লোকেশন ,তখন কমান্ড ফ্রন্ট হ্যাং হয়ে যায় এটা দূর করার জন্য নিচের কনফিগারেশন দিতে হবে 
+  * ARG DEBIAN FRONTEND=noninteractive
+    এই  এপাচি ইন্সটল করার পূর্বে এই কমান্ড দিলে তাহলে আর কমান্ডক্রমে জিওগ্রাফিক লোকেশন এর কথা জিজ্ঞেস করবে না
+  * WORKDIR /var: workdir এর কাজ হচ্ছে আপনি ঢোকার ওপেন করার সাথে সাথে কোন ফোল্ডারে ঢুকতে চান সেটা 
+  * EXPOSE 80: এই কমান্ড দ্বারা 80 port ওপেন করা হয় 
+  * CMD apachect1 -D FOREGROUND: এই কোড দ্বারা মূলত এপাচি কে ফর রাউন্ডে নিয়ে আসা হয় অর্থাৎ এটা চালু অবস্থায় নিয়ে আসা হয় এটা না হলে ব্যাকগ্রাউন্ডে থাকবে এবং স্টপ হয়ে যেতে পারে 
+    CMD কমান্ড মূলত প্রোগ্রাম এক্সিকিউশনের জন্য ব্যবহার করা হয় 
+
+  62:  Docker Build -t ptoject name -f docker file path .
+    ডকারে বিল্ড করার জন্য উপরের কমান্ডটা দিতে হবে এখানে মাইনাস টি -t এরপরে প্রজেক্ট nameদিতে হবে এবং মাইনাস এফ এরপরে আমার ডকা ফাইনের path টা দিতে হবে  তারপর ডট দিতে হবে তবে যদি আমরা কমান্ড promt যেখান থেকে রান করেছে সেখানেই যদি ঢোকার ফাইল থাকে তাহলে মাইনাস এফ এর পর path দেওয়ার প্রয়োজন নাই শুধু ডট দিয়েই কাজ চালিয়ে নিতে পারব 
+  85: Docker Image Remove:- docker rmi -f imagename
+  এখানে মাইনাস এফ মানে ফোর্টফুলি ডিলিট করবে আর কি. 
+
+  107: Port change : docker run -p 8000:80 projectname
+
 ### Proces of Docker image installation\
 1.  Create Dockerfile
 2.  docker build -t image name -f Dockerfile path . (dot should be used in last)
