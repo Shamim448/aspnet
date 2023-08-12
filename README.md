@@ -1901,10 +1901,15 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
      ```
     </details>
 ## Class -40 (Docker)
+
     ডকার এ কাজ করতে হলে প্রথমে একটা Dockerfile নিতে হবে যেই ফাইলের কোন এক্সটেনশন থাকবে না.
     ডকারের কমান্ড এবং Dockerfile  এর কমান্ড আলাদা. 
     * Docker Hub: ডকার ভাব হচ্ছে ডকার ইমেজ স্টোর করার একটা জায়গা. এখানে একটা অ্যাকাউন্ট ক্রিয়েট করে নিতে হয়
     
+
+  ![image](https://github.com/Shamim448/aspnet/assets/43339514/1f9c8a08-0710-479f-a85e-ab2173e403f6)
+  Docker Command\
+  ![image](https://github.com/Shamim448/aspnet/assets/43339514/e0fb05da-e1cb-49db-b329-8d7d394cd1e0)
 
 ### Proces of Docker image installation\
 1.  Create Dockerfile
