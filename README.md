@@ -1906,7 +1906,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
      ```
     </details>
     
-## Class -39 (Unit Test-2)
+## Class-39 (Unit Test-2)
 
 1.  
     <details>
@@ -1917,7 +1917,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
      ```
     </details>
     
-## Class -40 (Docker)
+## Class-40 (Docker)
 
     ডকার এ কাজ করতে হলে প্রথমে একটা Dockerfile নিতে হবে যেই ফাইলের কোন এক্সটেনশন থাকবে না.
     ডকারের কমান্ড এবং Dockerfile  এর কমান্ড আলাদা. 
@@ -1957,7 +1957,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 7.  in need remove container: docker rm -f container id
 8.  port change : docker run -p 8000:80 image name
    
-## Class -41 (Dockerfile)
+## Class-41 (Dockerfile)
     ডকার ইউজ করার ক্ষেত্রে একটা ঝামেলা কর কাজ হচ্ছে ডাটাবেজ যেহেতু সাইটটা ডকার ইমেজে থাকবে এবং ডাটাবেজটা কোন সার্ভারে বা PC থাকবে তাদের মধ্যে কমিউনিকেশন করাটা একটা ঝামেলার কাজ 
     তবে এটা করা যাবে রিয়েল IP মাধ্যমে এজন্য আমাদের পিসির কিছু কমপ্লিফিকেশন ঠিক করে নিতে হবে .
     Mainten docker image run process we used (Docker compose) tools
