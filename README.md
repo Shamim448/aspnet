@@ -10,6 +10,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 - [Class-34 (Web API)](#Class-34-Web-API)
 - [Class-35 (Web Api-JWT Token)](#Class-35-Web-Api-JWT-Token)
 - [Class-36 (Generate Migration in Console App)](#Class-36-Generate-Migration-in-Console-App)
+- [Class-37 (Worker Service)](#Class-37-Worker-Service)
 - [Class -38 (Unit Test)](#Class-38-Unit-Test)
 - [Class -39 (Unit Test-2)](#Class-39-Unit-Test-2)
 - [Class -40 (Docker)](#Class-40-Docker)
