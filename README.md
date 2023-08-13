@@ -12,9 +12,6 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 - [Class-36 (Generate Migration in Console App)](#Class-36-Generate-Migration-in-Console-App)
 - [Class-37 (Worker Service)](#Class-37-Worker-Service)
 - [Class -38 (Unit Test)](#Class-38-Unit-Test)
-- [Class -39 (Unit Test-2)](#Class-39-Unit-Test-2)
-- [Class -40 (Docker)](#Class-40-Docker)
-- [Class -41 (Dockerfile)](#Class-41-Dockerfile)
 
 
 ## [Class-10 (New Syllabus & SASS)](https://docs.google.com/document/d/1A9cbTsqpL61j4-cdMniQUc9Eqo92qgTaHyxadCoJ4oU/edit) 
@@ -1745,6 +1742,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 
 
 ## Class -38 (Unit Test)
+
 1. Type of Testing(18-26)\
     i) Unit Test
     ii) Intregration Test
@@ -1907,7 +1905,9 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     }
      ```
     </details>
+    
 ## Class -39 (Unit Test-2)
+
 1.  
     <details>
      <summary></summary>
@@ -1916,6 +1916,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     
      ```
     </details>
+    
 ## Class -40 (Docker)
 
     ডকার এ কাজ করতে হলে প্রথমে একটা Dockerfile নিতে হবে যেই ফাইলের কোন এক্সটেনশন থাকবে না.
@@ -1955,6 +1956,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 6.  docker ps (Show running process)
 7.  in need remove container: docker rm -f container id
 8.  port change : docker run -p 8000:80 image name
+   
 ## Class -41 (Dockerfile)
     ডকার ইউজ করার ক্ষেত্রে একটা ঝামেলা কর কাজ হচ্ছে ডাটাবেজ যেহেতু সাইটটা ডকার ইমেজে থাকবে এবং ডাটাবেজটা কোন সার্ভারে বা PC থাকবে তাদের মধ্যে কমিউনিকেশন করাটা একটা ঝামেলার কাজ 
     তবে এটা করা যাবে রিয়েল IP মাধ্যমে এজন্য আমাদের পিসির কিছু কমপ্লিফিকেশন ঠিক করে নিতে হবে .
