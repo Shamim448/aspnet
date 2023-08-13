@@ -11,7 +11,10 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 - [Class-35 (Web Api-JWT Token)](#Class-35-Web-Api-JWT-Token)
 - [Class-36 (Generate Migration in Console App)](#Class-36-Generate-Migration-in-Console-App)
 - [Class-37 (Worker Service)](#Class-37-Worker-Service)
+- [Class-38 (Unit Test)](#Class-38-Unit-Test)
+- [Class-39 (Unit Test-2)](#Class-39-Unit-Test-2)
 - [Class-40 (Docker)](#Class-40-Docker)
+- [Class-41 (Dockerfile)](#Class-41-Dockerfile)
 
 
 ## [Class-10 (New Syllabus & SASS)](https://docs.google.com/document/d/1A9cbTsqpL61j4-cdMniQUc9Eqo92qgTaHyxadCoJ4oU/edit) 
@@ -1741,7 +1744,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     Note: appsetting ar log folder path pc এর drivar path দিতে হবে।
 
 
-## Class -38 (Unit Test)
+## Class-38 (Unit Test)
 
 1. Type of Testing(18-26)\
     i) Unit Test
