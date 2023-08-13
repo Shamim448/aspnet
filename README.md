@@ -15,8 +15,6 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 - [Class-39 (Unit Test-2)](#Class-39-Unit-Test-2)
 - [Class-40 (Docker)](#Class-40-Docker)
 - [Class-41 (Dockerfile)](#Class-41-Dockerfile)
-
-
 ## [Class-10 (New Syllabus & SASS)](https://docs.google.com/document/d/1A9cbTsqpL61j4-cdMniQUc9Eqo92qgTaHyxadCoJ4oU/edit) 
 * New Syllabus (30)
 * Injection Type(61)--Constractor, Property, Methode Dependency Injection--Constractor most populler
