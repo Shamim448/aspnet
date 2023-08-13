@@ -2,6 +2,9 @@
 Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, Project)
 
 
+### সুচিপত্র
+- [Class-30 Identity Framwork](#Class-30-Identity-Framwork)
+
 ## [Class-10 (New Syllabus & SASS)](https://docs.google.com/document/d/1A9cbTsqpL61j4-cdMniQUc9Eqo92qgTaHyxadCoJ4oU/edit) 
 * New Syllabus (30)
 * Injection Type(61)--Constractor, Property, Methode Dependency Injection--Constractor most populler
