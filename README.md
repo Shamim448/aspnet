@@ -4,6 +4,17 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 
 ### সুচিপত্র
 - [Class-30 Identity Framwork](#Class-30-Identity-Framwork)
+- [Class-31 Register Page Convert](#Class-31-Register-Page-Convert)
+- [Class-32 Login-Logout Page](#Class-32-Login-Logout-Page)
+- [Class-33 (Role-Management)](#Class-33-Role-Management)
+- [Class-34 (Web API)](#Class-34-Web-API)
+- [Class-35 (Web Api-JWT Token)](#Class-35-Web-Api-JWT-Token)
+- [Class-36 (Generate Migration in Console App)](#Class-36-Generate-Migration-in-Console-App)
+- [Class -38 (Unit Test))](#Class-38-Unit-Test)
+- [Class -39 (Unit Test-2)](#Class-39-Unit-Test-2)
+- [Class -40 (Docker)](#Class-40-Docker)
+- [Class -41 (Dockerfile)](#Class-41-Dockerfile)
+
 
 ## [Class-10 (New Syllabus & SASS)](https://docs.google.com/document/d/1A9cbTsqpL61j4-cdMniQUc9Eqo92qgTaHyxadCoJ4oU/edit) 
 * New Syllabus (30)
@@ -13,6 +24,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 * Split/Import File:(97)
 * Mixin:(100)
 * OMR(115) -- ado.net, entity framework, dapper, inhybernet
+
 ## Class-30 Identity Framwork
 1. Add IdentityDbContext(30) & paramiter(55)
    <details>
@@ -1894,7 +1906,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     }
      ```
     </details>
-## Class -39 (Unit Test)
+## Class -39 (Unit Test-2)
 1.  
     <details>
      <summary></summary>
