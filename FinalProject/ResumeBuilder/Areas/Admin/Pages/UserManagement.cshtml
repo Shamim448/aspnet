@@ -1,0 +1,264 @@
+﻿@page
+@model ResumeBuilder.Areas.Admin.Pages.UserManagementModel
+@* <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" /> *@
+@section Styles{
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/Theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/Theme/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Theme/dist/css/adminlte.min.css">
+}
+
+ <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>150</h3>
+
+                <p>New Orders</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-bag"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                <p>Bounce Rate</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>44</h3>
+
+                <p>User Registrations</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>65</h3>
+
+                <p>Unique Visitors</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+        </div>
+
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">List Of All Users</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>SL No</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Shamim</td>
+                            <td>shamim@gmail.com</td>
+                            <td class="text-primary">Approved</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Kakon</td>
+                            <td>kakon@gmail.com</td>
+                            <td class="text-warning">Pending</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Monir</td>
+                            <td>monir@gmail.com</td>
+                            <td class="text-danger">Delete</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Sopna</td>
+                            <td>sopna@gmail.com</td>
+                            <td class="text-primary">Approved</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Shamim</td>
+                            <td>shamim@gmail.com</td>
+                            <td class="text-primary">Approved</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Kakon</td>
+                            <td>kakon@gmail.com</td>
+                            <td class="text-warning">Pending</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Monir</td>
+                            <td>monir@gmail.com</td>
+                            <td>Delete</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>Sopna</td>
+                            <td>sopna@gmail.com</td>
+                            <td>Approved</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>Shamim</td>
+                            <td>shamim@gmail.com</td>
+                            <td>Approved</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>Kakon</td>
+                            <td>kakon@gmail.com</td>
+                            <td>Pending</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>Monir</td>
+                            <td>monir@gmail.com</td>
+                            <td>Delete</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>Sopna</td>
+                            <td>sopna@gmail.com</td>
+                            <td>Approved</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>Shamim</td>
+                            <td>shamim@gmail.com</td>
+                            <td>Approved</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>Kakon</td>
+                            <td>kakon@gmail.com</td>
+                            <td class="bg-warning">Pending</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>15</td>
+                            <td>Monir</td>
+                            <td>monir@gmail.com</td>
+                            <td>Delete</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>16</td>
+                            <td>Sopna</td>
+                            <td>sopna@gmail.com</td>
+                            <td>Approved</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+              
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>SL No</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
+</section>
+@section Scripts{
+    
+    <!-- DataTables  & Plugins -->
+    <script src="~/Theme/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/Theme/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Theme/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/Theme/plugins/jszip/jszip.min.js"></script>
+    <script src="~/Theme/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/Theme/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/Theme/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+    <script src="~/Theme/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    @* <script src="~/Theme/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>  *@
+    <!-- AdminLTE App -->
+    <script src="~/Theme/dist/js/adminlte.min.js"></script>
+
+    @* <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> *@
+    <!-- Page specific script -->
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": [ "pdf", "print"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+}
