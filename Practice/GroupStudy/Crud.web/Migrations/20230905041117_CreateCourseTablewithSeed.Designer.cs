@@ -4,6 +4,7 @@ using Crud.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Crud.web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230905041117_CreateCourseTablewithSeed")]
+    partial class CreateCourseTablewithSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,27 +88,6 @@ namespace Crud.web.Migrations
                             Name = "Saba",
                             Phone = "01746902499"
                         });
-                });
-
-            modelBuilder.Entity("Crud.Domain.Entities.UserCourse", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CourseId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("EnrollDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("UserId", "CourseId");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("UserCourse");
                 });
 
             modelBuilder.Entity("Crud.Persistance.Features.Membership.ApplicationRole", b =>
@@ -311,25 +293,6 @@ namespace Crud.web.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Crud.Domain.Entities.UserCourse", b =>
-                {
-                    b.HasOne("Crud.Domain.Entities.Course", "Course")
-                        .WithMany("Users")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Crud.Domain.Entities.User", "User")
-                        .WithMany("Courses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Crud.Persistance.Features.Membership.ApplicationRoleClaim", b =>
                 {
                     b.HasOne("Crud.Persistance.Features.Membership.ApplicationRole", null)
@@ -379,16 +342,6 @@ namespace Crud.web.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Crud.Domain.Entities.Course", b =>
-                {
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("Crud.Domain.Entities.User", b =>
-                {
-                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }
