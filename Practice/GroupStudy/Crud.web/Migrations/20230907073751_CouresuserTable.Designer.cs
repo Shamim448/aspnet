@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Crud.web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230905065356_userandcoursemanytomany")]
-    partial class userandcoursemanytomany
+    [Migration("20230907073751_CouresuserTable")]
+    partial class CouresuserTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.9")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

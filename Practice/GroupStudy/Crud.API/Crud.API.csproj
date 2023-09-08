@@ -9,8 +9,8 @@
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
     <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
@@ -19,6 +19,7 @@
     <ProjectReference Include="..\Crud.Application\Crud.Application.csproj" />
     <ProjectReference Include="..\Crud.Domain\Crud.Domain.csproj" />
     <ProjectReference Include="..\Crud.Infrastructure\Crud.Infrastructure.csproj" />
+    <ProjectReference Include="..\Crud.Persistance\Crud.Persistance.csproj" />
     <ProjectReference Include="..\Crud.web\Crud.web.csproj" />
   </ItemGroup>
 
