@@ -1,3 +1,6 @@
+USE [Aspnetb8]
+GO
+/****** Object:  StoredProcedure [dbo].[GetCourseEnrollments]    Script Date: 9/11/2023 8:53:25 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -31,7 +34,7 @@ BEGIN
 	SET @countsql = @countsql + ' AND c.Name LIKE ''%'' + @xCourseName + ''%''' 
 
 	IF @UserName IS NOT NULL
-	SET @countsql = @countsql + ' AND u.Name LIKE ''%'' + @xStudentName + ''%''' 
+	SET @countsql = @countsql + ' AND u.Name LIKE ''%'' + @xUserName + ''%''' 
 
 	IF @EnrollmentDateFrom IS NOT NULL
 	SET @countsql = @countsql + ' AND EnrollDate >= @xEnrollmentDateFrom'
@@ -48,7 +51,7 @@ BEGIN
 	SET @sql = @sql + ' AND c.Name LIKE ''%'' + @xCourseName + ''%''' 
 
 	IF @UserName IS NOT NULL
-	SET @sql = @sql + ' AND u.Name LIKE ''%'' + @xStudentName + ''%''' 
+	SET @sql = @sql + ' AND u.Name LIKE ''%'' + @xUserName + ''%''' 
 
 	IF @EnrollmentDateFrom IS NOT NULL
 	SET @sql = @sql + ' AND EnrollDate >= @xEnrollmentDateFrom'
