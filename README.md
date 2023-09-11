@@ -2016,7 +2016,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     এন্ট্রি পয়েন্ট CMD মতোই একটা কমান্ড, এন্ট্রি পয়েন্ট কন্টেনার যখন চালু হয় তখন এক্সিকিউট হয় এই কমান্ডের পরে আর কোন ধরনের কমান্ড দেওয়া যাবে না
      এর প্রথম প্যারামিটার হচ্ছে কোন tools কাজ করবে সেটা যেমন ডটনেট এবং দ্বিতীয় প্যারামিটার হচ্ছে কোন DDL রান করবে সেটা 
 
-## Class-45 (Dynamic SQL)
+## Class-44 (Dynamic SQL)
 * Advance search using Stored Procedure
     <details>
      <summary>Stored Procedure GetCourseEnrollments</summary>
