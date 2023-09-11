@@ -16,6 +16,8 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 - [Class-40 (Docker)](#Class-40-Docker)
 - [Class-41 (Dockerfile)](#Class-41-Dockerfile)
 - [Class-44 (Dynamic SQL)](#Class-44-Dynamic-SQL)
+- [Class-45 (Advance Search)](#Class-45-Advance-Search)
+
 
 
 ## [Class-10 (New Syllabus & SASS)](https://docs.google.com/document/d/1A9cbTsqpL61j4-cdMniQUc9Eqo92qgTaHyxadCoJ4oU/edit) 
@@ -2460,11 +2462,15 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     }
      ```
     </details>
+3. Binding in Persistance Layer-24\
+
     <details>
-     <summary>AdoNetUtility in Persistance Layer</summary>
+     <summary>Binding in PersistanceModule</summary>
     
      ```c#
-    
+    //use this for Adonetutility (Collect db context from other object)
+    builder.Register(x => new AdoNetUtility(x.Resolve<ApplicationDbContext>().Database.GetDbConnection(), 300))
+    .As<IAdoNetUtility>().InstancePerLifetimeScope();
      ```
     </details>
 
