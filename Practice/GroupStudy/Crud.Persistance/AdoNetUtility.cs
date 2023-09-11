@@ -21,8 +21,6 @@ namespace Crud.Persistance
             _timeout = timeout;
         }
 
-
-
         public virtual IDictionary<string, object> ExecuteStoredProcedure(string storedProcedureName,
             IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null)
         {
