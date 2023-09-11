@@ -18,12 +18,6 @@ namespace Crud.API.Controllers
         {
             _scope = scope;
             _logger = logger;
-        }
-
-        
-        
-       
-
-       
+        }      
     }
 }

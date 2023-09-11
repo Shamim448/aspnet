@@ -15,8 +15,9 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 - [Class-39 (Unit Test-2)](#Class-39-Unit-Test-2)
 - [Class-40 (Docker)](#Class-40-Docker)
 - [Class-41 (Dockerfile)](#Class-41-Dockerfile)
+- [Class-44 (Dynamic SQL)](#Class-44-Dynamic-SQL)
 
-  
+
 ## [Class-10 (New Syllabus & SASS)](https://docs.google.com/document/d/1A9cbTsqpL61j4-cdMniQUc9Eqo92qgTaHyxadCoJ4oU/edit) 
 * New Syllabus (30)
 * Injection Type(61)--Constractor, Property, Methode Dependency Injection--Constractor most populler
@@ -2013,26 +2014,454 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     এন্ট্রি পয়েন্ট CMD মতোই একটা কমান্ড, এন্ট্রি পয়েন্ট কন্টেনার যখন চালু হয় তখন এক্সিকিউট হয় এই কমান্ডের পরে আর কোন ধরনের কমান্ড দেওয়া যাবে না
      এর প্রথম প্যারামিটার হচ্ছে কোন tools কাজ করবে সেটা যেমন ডটনেট এবং দ্বিতীয় প্যারামিটার হচ্ছে কোন DDL রান করবে সেটা 
 
-
-
-
-
+## Class-45 (Dynamic SQL)
+* Advance search using Stored Procedure
     <details>
-     <summary></summary>
+     <summary>Stored Procedure GetCourseEnrollments</summary>
     
      ```c#
+    USE [Aspnetb8]
+    GO
+    /****** Object:  StoredProcedure [dbo].[GetCourseEnrollments]    Script Date: 9/11/2023 8:53:25 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+    CREATE   PROCEDURE [dbo].[GetCourseEnrollments]
+    @PageIndex int,
+    @PageSize int , 
+    @OrderBy nvarchar(50),
+    @CourseName nvarchar(250) = '%',
+    @UserName nvarchar(250) = '%',
+    @EnrollmentDateFrom datetime = null,
+    @EnrollmentDateTo datetime = null,
+    @Total int output,
+    @TotalDisplay int output
+
+    AS
+    BEGIN
+	Declare @sql nvarchar(2000);
+	Declare @countsql nvarchar(2000);
+	Declare @paramList nvarchar(MAX); 
+	Declare @countparamList nvarchar(MAX);
+	
+	SET NOCOUNT ON;
+
+	Select @Total = count(*) from UserCourse;
+	SET @countsql = 'select @TotalDisplay = count(*) from UserCourse us inner join 
+					Courses c on us.CourseId = c.Id inner join
+					Users u on us.UserId = u.Id  where 1 = 1 ';
+	
+	IF @CourseName IS NOT NULL
+	SET @countsql = @countsql + ' AND c.Name LIKE ''%'' + @xCourseName + ''%''' 
+
+	IF @UserName IS NOT NULL
+	SET @countsql = @countsql + ' AND u.Name LIKE ''%'' + @xUserName + ''%''' 
+
+	IF @EnrollmentDateFrom IS NOT NULL
+	SET @countsql = @countsql + ' AND EnrollDate >= @xEnrollmentDateFrom'
+
+	IF @EnrollmentDateTo IS NOT NULL
+	SET @countsql = @countsql + ' AND EnrollDate <= @xEnrollmentDateTo' 
+
+
+	SET @sql = 'select c.Name as CourseName, u.Name as UserName, EnrollDate from UserCourse us inner join 
+				Courses c on us.CourseId = c.Id inner join
+				Users u on us.UserId = u.Id where 1 = 1 '; 
+
+	IF @CourseName IS NOT NULL
+	SET @sql = @sql + ' AND c.Name LIKE ''%'' + @xCourseName + ''%''' 
+
+	IF @UserName IS NOT NULL
+	SET @sql = @sql + ' AND u.Name LIKE ''%'' + @xUserName + ''%''' 
+
+	IF @EnrollmentDateFrom IS NOT NULL
+	SET @sql = @sql + ' AND EnrollDate >= @xEnrollmentDateFrom'
+
+	IF @EnrollmentDateTo IS NOT NULL
+	SET @sql = @sql + ' AND EnrollDate <= @xEnrollmentDateTo' 
+
+	SET @sql = @sql + ' Order by '+@OrderBy+' OFFSET @PageSize * (@PageIndex - 1) 
+	ROWS FETCH NEXT @PageSize ROWS ONLY';
+
+	SELECT @countparamlist = '@xCourseName nvarchar(250),
+		@xUserName nvarchar(250),
+		@xEnrollmentDateFrom datetime,
+		@xEnrollmentDateTo datetime,
+		@TotalDisplay int output' ;
+
+	exec sp_executesql @countsql , @countparamlist ,
+		@CourseName,
+		@UserName,
+		@EnrollmentDateFrom,
+		@EnrollmentDateTo,
+		@TotalDisplay = @TotalDisplay output;
+
+	SELECT @paramlist = '@xCourseName nvarchar(250),
+		@xUserName nvarchar(250),
+		@xEnrollmentDateFrom datetime,
+		@xEnrollmentDateTo datetime,
+		@PageIndex int,
+		@PageSize int';
+
+	exec sp_executesql @sql , @paramlist ,
+		@CourseName,
+		@UserName,
+		@EnrollmentDateFrom,
+		@EnrollmentDateTo,
+		@PageIndex,
+		@PageSize;
+
+	print @countsql;
+	print @sql;
+	
+    END
+     ```
+    </details>
+## Class-45 (Advance Search)
+1. Create EnrollmentController in API-3
+
+    <details>
+     <summary>EnrollmentController</summary>
     
+     ```c#
+    namespace Crud.API.Controllers
+    {
+    [Route("v3/[controller]")]
+    [ApiController]
+    public class EnrollmentController : ControllerBase
+    {
+        private readonly ILifetimeScope _scope;
+        private readonly ILogger<UsersController> _logger;
+
+        public EnrollmentController(ILifetimeScope scope, ILogger<UsersController> logger)
+        {
+            _scope = scope;
+            _logger = logger;
+        }      
+    }
+    }
+     ```
+    </details>
+2. Create IAdoNetUtility Interface  and Implementation-12\
+    ডোমেইন লেয়ার এর ভিতরে একটা Utilities ফোল্ডার তৈরি করব এবং তার ভিতরে IAdonetUtility ইন্টারফেস তৈরি করব এবং এটার ইমপ্লিমেন্টেশন হবে পারসিসটেন্স Layer এর ভিতর\
+    ইমপ্লিমেন্টেশন  এর ভিতর রিপোজিটরি থেকে কিছু মেথড করে নিয়ে চলে আসব যেগুলো মূলত অ্যাডভান্স search জন্য প্রয়োজন হবে. এবং এর সিগনেচারগুলো ইন্টারফেস এর মধ্যে রাখবো 
+
+    <details>
+     <summary>IAdoNetUtility (Utilities folder in domain Layer)</summary>
+    
+     ```c#
+    namespace Crud.Domain.Utilities
+    {
+    public interface IAdoNetUtility
+    {
+         IDictionary<string, object> ExecuteStoredProcedure(string storedProcedureName,
+        IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null);
+        Task<IDictionary<string, object>> ExecuteStoredProcedureAsync(string storedProcedureName,
+            IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null);
+        Task<(IList<TReturn> result, IDictionary<string, object> outValues)>
+            QueryWithStoredProcedureAsync<TReturn>(string storedProcedureName,
+            IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null)
+            where TReturn : class, new();
+        Task<TReturn> ExecuteScalarAsync<TReturn>(string storedProcedureName,
+            IDictionary<string, object> parameters = null);
+    }
+    }
+     ```
+    </details>
+
+    <details>
+     <summary>AdoNetUtility in Persistance Layer</summary>
+    
+     ```c#
+    namespace Crud.Persistance
+    {
+    public class AdoNetUtility : IAdoNetUtility
+    {
+        private readonly DbConnection _connection;
+        private readonly int _timeout;
+        public AdoNetUtility(DbConnection connection, int timeout) {
+            _connection = connection;
+            _timeout = timeout;
+        }
+
+        public virtual IDictionary<string, object> ExecuteStoredProcedure(string storedProcedureName,
+            IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null)
+        {
+            var command = CreateCommand(storedProcedureName, parameters, outParameters);
+            command = ConvertNullToDbNull(command);
+
+            var connectionOpened = false;
+            if (command.Connection.State == ConnectionState.Closed)
+            {
+                command.Connection.Open();
+                connectionOpened = true;
+            }
+
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            finally
+            {
+                if (connectionOpened)
+                    command.Connection.Close();
+            }
+
+            return CopyOutParams(command, outParameters);
+        }
+
+        public virtual async Task<IDictionary<string, object>> ExecuteStoredProcedureAsync(string storedProcedureName,
+            IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null)
+        {
+            var command = CreateCommand(storedProcedureName, parameters, outParameters);
+            command = ConvertNullToDbNull(command);
+
+            var connectionOpened = false;
+            if (command.Connection.State == ConnectionState.Closed)
+            {
+                await command.Connection.OpenAsync();
+                connectionOpened = true;
+            }
+
+            try
+            {
+                await command.ExecuteNonQueryAsync();
+            }
+            finally
+            {
+                if (connectionOpened)
+                    await command.Connection.CloseAsync();
+            }
+
+            return CopyOutParams(command, outParameters);
+        }
+
+        public virtual async Task<(IList<TReturn> result, IDictionary<string, object> outValues)>
+            QueryWithStoredProcedureAsync<TReturn>(string storedProcedureName,
+            IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null)
+            where TReturn : class, new()
+        {
+            var command = CreateCommand(storedProcedureName, parameters, outParameters);
+
+            var connectionOpened = false;
+            if (command.Connection.State == ConnectionState.Closed)
+            {
+                await command.Connection.OpenAsync();
+                connectionOpened = true;
+            }
+
+            IList<TReturn> result = null;
+            try
+            {
+                result = await ExecuteQueryAsync<TReturn>(command);
+            }
+            finally
+            {
+                if (connectionOpened)
+                    await command.Connection.CloseAsync();
+            }
+
+            var outValues = CopyOutParams(command, outParameters);
+
+            return (result, outValues);
+        }
+
+        public virtual async Task<TReturn> ExecuteScalarAsync<TReturn>(string storedProcedureName,
+            IDictionary<string, object> parameters = null)
+        {
+            var command = CreateCommand(storedProcedureName, parameters);
+
+            var connectionOpened = false;
+            if (command.Connection.State == ConnectionState.Closed)
+            {
+                await command.Connection.OpenAsync();
+                connectionOpened = true;
+            }
+
+            TReturn result;
+
+            try
+            {
+                result = await ExecuteScalarAsync<TReturn>(command);
+            }
+            finally
+            {
+                if (connectionOpened)
+                    await command.Connection.CloseAsync();
+            }
+
+            return result;
+        }
+
+        private DbCommand CreateCommand(string storedProcedureName,
+            IDictionary<string, object> parameters = null,
+            IDictionary<string, Type> outParameters = null)
+        {
+           
+            var command = _connection.CreateCommand();
+            command.CommandText = storedProcedureName;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandTimeout = _timeout;
+
+            if (parameters != null)
+            {
+                foreach (var item in parameters)
+                {
+                    command.Parameters.Add(CreateParameter(item.Key, item.Value));
+                }
+            }
+
+            if (outParameters != null)
+            {
+                foreach (var item in outParameters)
+                {
+                    command.Parameters.Add(CreateOutputParameter(item.Key,
+                        item.Value));
+                }
+            }
+
+            return command;
+        }
+        private DbParameter CreateParameter(string name, object value)
+        {
+            return new SqlParameter(name, CorrectSqlDateTime(value));
+        }
+
+        private DbParameter CreateOutputParameter(string name, DbType dbType)
+        {
+            var outParam = new SqlParameter(name, CorrectSqlDateTime(dbType));
+            outParam.Direction = ParameterDirection.Output;
+            return outParam;
+        }
+
+        private DbParameter CreateOutputParameter(string name, Type type)
+        {
+            var outParam = new SqlParameter(name, GetDbTypeFromType(type));
+            outParam.Direction = ParameterDirection.Output;
+            return outParam;
+        }
+
+        private SqlDbType GetDbTypeFromType(Type type)
+        {
+            if (type == typeof(int) ||
+                type == typeof(uint) ||
+                type == typeof(short) ||
+                type == typeof(ushort))
+                return SqlDbType.Int;
+            else if (type == typeof(long) || type == typeof(ulong))
+                return SqlDbType.BigInt;
+            else if (type == typeof(double) || type == typeof(decimal))
+                return SqlDbType.Decimal;
+            else if (type == typeof(string))
+                return SqlDbType.NVarChar;
+            else if (type == typeof(DateTime))
+                return SqlDbType.DateTime;
+            else if (type == typeof(bool))
+                return SqlDbType.Bit;
+            else if (type == typeof(Guid))
+                return SqlDbType.UniqueIdentifier;
+            else if (type == typeof(char))
+                return SqlDbType.NVarChar;
+            else
+                return SqlDbType.NVarChar;
+        }
+
+        private object ChangeType(Type propertyType, object itemValue)
+        {
+            if (itemValue is DBNull)
+                return null;
+
+            return itemValue is decimal && propertyType == typeof(double) ?
+                Convert.ToDouble(itemValue) : itemValue;
+        }
+
+        private object CorrectSqlDateTime(object parameterValue)
+        {
+            if (parameterValue != null && parameterValue.GetType().Name == "DateTime")
+            {
+                if (Convert.ToDateTime(parameterValue) < SqlDateTime.MinValue.Value)
+                    return SqlDateTime.MinValue.Value;
+                else
+                    return parameterValue;
+            }
+            else
+                return parameterValue;
+        }
+
+        private async Task<IList<TReturn>> ExecuteQueryAsync<TReturn>(DbCommand command)
+        {
+            var reader = await command.ExecuteReaderAsync();
+            var result = new List<TReturn>();
+
+            while (await reader.ReadAsync())
+            {
+                var type = typeof(TReturn);
+                var constructor = type.GetConstructor(new Type[] { });
+                if (constructor == null)
+                    throw new InvalidOperationException("An empty contructor is required for the return type");
+
+                var instance = constructor.Invoke(new object[] { });
+
+                for (var i = 0; i < reader.FieldCount; i++)
+                {
+                    var property = type.GetProperty(reader.GetName(i));
+                    property?.SetValue(instance, ChangeType(property.PropertyType, reader.GetValue(i)));
+                }
+
+                result.Add((TReturn)instance);
+            }
+
+            return result;
+        }
+
+        private async Task<TReturn> ExecuteScalarAsync<TReturn>(DbCommand command)
+        {
+            command = ConvertNullToDbNull(command);
+
+            if (command.Connection.State != ConnectionState.Open)
+                command.Connection.Open();
+
+            var result = await command.ExecuteScalarAsync();
+
+            if (result == DBNull.Value)
+                return default;
+            else
+                return (TReturn)result;
+        }
+
+        private DbCommand ConvertNullToDbNull(DbCommand command)
+        {
+            for (int i = 0; i < command.Parameters.Count; i++)
+            {
+                if (command.Parameters[i].Value == null)
+                    command.Parameters[i].Value = DBNull.Value;
+            }
+
+            return command;
+        }
+
+        private IDictionary<string, object> CopyOutParams(DbCommand command,
+            IDictionary<string, Type> outParameters)
+        {
+            Dictionary<string, object> result = null;
+            if (outParameters != null)
+            {
+                result = new Dictionary<string, object>();
+                foreach (var item in outParameters)
+                {
+                    result.Add(item.Key, command.Parameters[item.Key].Value);
+                }
+            }
+
+            return result;
+        }
+    }
+    }
      ```
     </details>
     <details>
-     <summary></summary>
-    
-     ```c#
-    
-     ```
-    </details>
-    <details>
-     <summary></summary>
+     <summary>AdoNetUtility in Persistance Layer</summary>
     
      ```c#
     
