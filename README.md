@@ -15,8 +15,11 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 - [Class-39 (Unit Test-2)](#Class-39-Unit-Test-2)
 - [Class-40 (Docker)](#Class-40-Docker)
 - [Class-41 (Dockerfile)](#Class-41-Dockerfile)
+- [Class-44 (Dynamic SQL)](#Class-44-Dynamic-SQL)
+- [Class-45 (Advance Search)](#Class-45-Advance-Search)
 
-  
+
+
 ## [Class-10 (New Syllabus & SASS)](https://docs.google.com/document/d/1A9cbTsqpL61j4-cdMniQUc9Eqo92qgTaHyxadCoJ4oU/edit) 
 * New Syllabus (30)
 * Injection Type(61)--Constractor, Property, Methode Dependency Injection--Constractor most populler
@@ -2013,34 +2016,529 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     এন্ট্রি পয়েন্ট CMD মতোই একটা কমান্ড, এন্ট্রি পয়েন্ট কন্টেনার যখন চালু হয় তখন এক্সিকিউট হয় এই কমান্ডের পরে আর কোন ধরনের কমান্ড দেওয়া যাবে না
      এর প্রথম প্যারামিটার হচ্ছে কোন tools কাজ করবে সেটা যেমন ডটনেট এবং দ্বিতীয় প্যারামিটার হচ্ছে কোন DDL রান করবে সেটা 
 
-## Class-41 (Dockerfile)
 
-
-
+## Class-44 (Dynamic SQL)
+* Advance search using Stored Procedure
     <details>
-     <summary></summary>
+     <summary>Stored Procedure GetCourseEnrollments</summary>
     
      ```c#
-    
+    USE [Aspnetb8]
+    GO
+    /****** Object:  StoredProcedure [dbo].[GetCourseEnrollments]    Script Date: 9/11/2023 8:53:25 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+    CREATE   PROCEDURE [dbo].[GetCourseEnrollments]
+    @PageIndex int,
+    @PageSize int , 
+    @OrderBy nvarchar(50),
+    @CourseName nvarchar(250) = '%',
+    @UserName nvarchar(250) = '%',
+    @EnrollmentDateFrom datetime = null,
+    @EnrollmentDateTo datetime = null,
+    @Total int output,
+    @TotalDisplay int output
+
+    AS
+    BEGIN
+	Declare @sql nvarchar(2000);
+	Declare @countsql nvarchar(2000);
+	Declare @paramList nvarchar(MAX); 
+	Declare @countparamList nvarchar(MAX);
+	
+	SET NOCOUNT ON;
+
+	Select @Total = count(*) from UserCourse;
+	SET @countsql = 'select @TotalDisplay = count(*) from UserCourse us inner join 
+					Courses c on us.CourseId = c.Id inner join
+					Users u on us.UserId = u.Id  where 1 = 1 ';
+	
+	IF @CourseName IS NOT NULL
+	SET @countsql = @countsql + ' AND c.Name LIKE ''%'' + @xCourseName + ''%''' 
+
+	IF @UserName IS NOT NULL
+	SET @countsql = @countsql + ' AND u.Name LIKE ''%'' + @xUserName + ''%''' 
+
+	IF @EnrollmentDateFrom IS NOT NULL
+	SET @countsql = @countsql + ' AND EnrollDate >= @xEnrollmentDateFrom'
+
+	IF @EnrollmentDateTo IS NOT NULL
+	SET @countsql = @countsql + ' AND EnrollDate <= @xEnrollmentDateTo' 
+
+
+	SET @sql = 'select c.Name as CourseName, u.Name as UserName, EnrollDate from UserCourse us inner join 
+				Courses c on us.CourseId = c.Id inner join
+				Users u on us.UserId = u.Id where 1 = 1 '; 
+
+	IF @CourseName IS NOT NULL
+	SET @sql = @sql + ' AND c.Name LIKE ''%'' + @xCourseName + ''%''' 
+
+	IF @UserName IS NOT NULL
+	SET @sql = @sql + ' AND u.Name LIKE ''%'' + @xUserName + ''%''' 
+
+	IF @EnrollmentDateFrom IS NOT NULL
+	SET @sql = @sql + ' AND EnrollDate >= @xEnrollmentDateFrom'
+
+	IF @EnrollmentDateTo IS NOT NULL
+	SET @sql = @sql + ' AND EnrollDate <= @xEnrollmentDateTo' 
+
+	SET @sql = @sql + ' Order by '+@OrderBy+' OFFSET @PageSize * (@PageIndex - 1) 
+	ROWS FETCH NEXT @PageSize ROWS ONLY';
+
+	SELECT @countparamlist = '@xCourseName nvarchar(250),
+		@xUserName nvarchar(250),
+		@xEnrollmentDateFrom datetime,
+		@xEnrollmentDateTo datetime,
+		@TotalDisplay int output' ;
+
+	exec sp_executesql @countsql , @countparamlist ,
+		@CourseName,
+		@UserName,
+		@EnrollmentDateFrom,
+		@EnrollmentDateTo,
+		@TotalDisplay = @TotalDisplay output;
+
+	SELECT @paramlist = '@xCourseName nvarchar(250),
+		@xUserName nvarchar(250),
+		@xEnrollmentDateFrom datetime,
+		@xEnrollmentDateTo datetime,
+		@PageIndex int,
+		@PageSize int';
+
+	exec sp_executesql @sql , @paramlist ,
+		@CourseName,
+		@UserName,
+		@EnrollmentDateFrom,
+		@EnrollmentDateTo,
+		@PageIndex,
+		@PageSize;
+
+	print @countsql;
+	print @sql;
+	
+    END
      ```
     </details>
+## Class-45 (Advance Search)
+* Note : রিপোজিটেরি হয় সাধারণত ইনটি নির্ভর প্রতিটা Entity জন্য একটা করে Repository থাকে
+
+1. Create EnrollmentController in API-3
+
     <details>
-     <summary></summary>
+     <summary>EnrollmentController</summary>
     
      ```c#
-    
+    namespace Crud.API.Controllers
+    {
+    [Route("v3/[controller]")]
+    [ApiController]
+    public class EnrollmentController : ControllerBase
+    {
+        private readonly ILifetimeScope _scope;
+        private readonly ILogger<UsersController> _logger;
+
+        public EnrollmentController(ILifetimeScope scope, ILogger<UsersController> logger)
+        {
+            _scope = scope;
+            _logger = logger;
+        }      
+    }
+    }
      ```
     </details>
+2. Create IAdoNetUtility Interface  and Implementation-12\
+    ডোমেইন লেয়ার এর ভিতরে একটা Utilities ফোল্ডার তৈরি করব এবং তার ভিতরে IAdonetUtility ইন্টারফেস তৈরি করব এবং এটার ইমপ্লিমেন্টেশন হবে পারসিসটেন্স Layer এর ভিতর\
+    ইমপ্লিমেন্টেশন  এর ভিতর রিপোজিটরি থেকে কিছু মেথড করে নিয়ে চলে আসব যেগুলো মূলত অ্যাডভান্স search জন্য প্রয়োজন হবে. এবং এর সিগনেচারগুলো ইন্টারফেস এর মধ্যে রাখবো 
+
     <details>
-     <summary></summary>
+     <summary>IAdoNetUtility (Utilities folder in domain Layer)</summary>
     
      ```c#
+    namespace Crud.Domain.Utilities
+    {
+    public interface IAdoNetUtility
+    {
+         IDictionary<string, object> ExecuteStoredProcedure(string storedProcedureName,
+        IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null);
+        Task<IDictionary<string, object>> ExecuteStoredProcedureAsync(string storedProcedureName,
+            IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null);
+        Task<(IList<TReturn> result, IDictionary<string, object> outValues)>
+            QueryWithStoredProcedureAsync<TReturn>(string storedProcedureName,
+            IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null)
+            where TReturn : class, new();
+        Task<TReturn> ExecuteScalarAsync<TReturn>(string storedProcedureName,
+            IDictionary<string, object> parameters = null);
+    }
+    }
+     ```
+    </details>
+
+    <details>
+     <summary>AdoNetUtility in Persistance Layer</summary>
     
+     ```c#
+    namespace Crud.Persistance
+    {
+    public class AdoNetUtility : IAdoNetUtility
+    {
+        private readonly DbConnection _connection;
+        private readonly int _timeout;
+        public AdoNetUtility(DbConnection connection, int timeout) {
+            _connection = connection;
+            _timeout = timeout;
+        }
+
+        public virtual IDictionary<string, object> ExecuteStoredProcedure(string storedProcedureName,
+            IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null)
+        {
+            var command = CreateCommand(storedProcedureName, parameters, outParameters);
+            command = ConvertNullToDbNull(command);
+
+            var connectionOpened = false;
+            if (command.Connection.State == ConnectionState.Closed)
+            {
+                command.Connection.Open();
+                connectionOpened = true;
+            }
+
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            finally
+            {
+                if (connectionOpened)
+                    command.Connection.Close();
+            }
+
+            return CopyOutParams(command, outParameters);
+        }
+
+        public virtual async Task<IDictionary<string, object>> ExecuteStoredProcedureAsync(string storedProcedureName,
+            IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null)
+        {
+            var command = CreateCommand(storedProcedureName, parameters, outParameters);
+            command = ConvertNullToDbNull(command);
+
+            var connectionOpened = false;
+            if (command.Connection.State == ConnectionState.Closed)
+            {
+                await command.Connection.OpenAsync();
+                connectionOpened = true;
+            }
+
+            try
+            {
+                await command.ExecuteNonQueryAsync();
+            }
+            finally
+            {
+                if (connectionOpened)
+                    await command.Connection.CloseAsync();
+            }
+
+            return CopyOutParams(command, outParameters);
+        }
+
+        public virtual async Task<(IList<TReturn> result, IDictionary<string, object> outValues)>
+            QueryWithStoredProcedureAsync<TReturn>(string storedProcedureName,
+            IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null)
+            where TReturn : class, new()
+        {
+            var command = CreateCommand(storedProcedureName, parameters, outParameters);
+
+            var connectionOpened = false;
+            if (command.Connection.State == ConnectionState.Closed)
+            {
+                await command.Connection.OpenAsync();
+                connectionOpened = true;
+            }
+
+            IList<TReturn> result = null;
+            try
+            {
+                result = await ExecuteQueryAsync<TReturn>(command);
+            }
+            finally
+            {
+                if (connectionOpened)
+                    await command.Connection.CloseAsync();
+            }
+
+            var outValues = CopyOutParams(command, outParameters);
+
+            return (result, outValues);
+        }
+
+        public virtual async Task<TReturn> ExecuteScalarAsync<TReturn>(string storedProcedureName,
+            IDictionary<string, object> parameters = null)
+        {
+            var command = CreateCommand(storedProcedureName, parameters);
+
+            var connectionOpened = false;
+            if (command.Connection.State == ConnectionState.Closed)
+            {
+                await command.Connection.OpenAsync();
+                connectionOpened = true;
+            }
+
+            TReturn result;
+
+            try
+            {
+                result = await ExecuteScalarAsync<TReturn>(command);
+            }
+            finally
+            {
+                if (connectionOpened)
+                    await command.Connection.CloseAsync();
+            }
+
+            return result;
+        }
+
+        private DbCommand CreateCommand(string storedProcedureName,
+            IDictionary<string, object> parameters = null,
+            IDictionary<string, Type> outParameters = null)
+        {
+           
+            var command = _connection.CreateCommand();
+            command.CommandText = storedProcedureName;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandTimeout = _timeout;
+
+            if (parameters != null)
+            {
+                foreach (var item in parameters)
+                {
+                    command.Parameters.Add(CreateParameter(item.Key, item.Value));
+                }
+            }
+
+            if (outParameters != null)
+            {
+                foreach (var item in outParameters)
+                {
+                    command.Parameters.Add(CreateOutputParameter(item.Key,
+                        item.Value));
+                }
+            }
+
+            return command;
+        }
+        private DbParameter CreateParameter(string name, object value)
+        {
+            return new SqlParameter(name, CorrectSqlDateTime(value));
+        }
+
+        private DbParameter CreateOutputParameter(string name, DbType dbType)
+        {
+            var outParam = new SqlParameter(name, CorrectSqlDateTime(dbType));
+            outParam.Direction = ParameterDirection.Output;
+            return outParam;
+        }
+
+        private DbParameter CreateOutputParameter(string name, Type type)
+        {
+            var outParam = new SqlParameter(name, GetDbTypeFromType(type));
+            outParam.Direction = ParameterDirection.Output;
+            return outParam;
+        }
+
+        private SqlDbType GetDbTypeFromType(Type type)
+        {
+            if (type == typeof(int) ||
+                type == typeof(uint) ||
+                type == typeof(short) ||
+                type == typeof(ushort))
+                return SqlDbType.Int;
+            else if (type == typeof(long) || type == typeof(ulong))
+                return SqlDbType.BigInt;
+            else if (type == typeof(double) || type == typeof(decimal))
+                return SqlDbType.Decimal;
+            else if (type == typeof(string))
+                return SqlDbType.NVarChar;
+            else if (type == typeof(DateTime))
+                return SqlDbType.DateTime;
+            else if (type == typeof(bool))
+                return SqlDbType.Bit;
+            else if (type == typeof(Guid))
+                return SqlDbType.UniqueIdentifier;
+            else if (type == typeof(char))
+                return SqlDbType.NVarChar;
+            else
+                return SqlDbType.NVarChar;
+        }
+
+        private object ChangeType(Type propertyType, object itemValue)
+        {
+            if (itemValue is DBNull)
+                return null;
+
+            return itemValue is decimal && propertyType == typeof(double) ?
+                Convert.ToDouble(itemValue) : itemValue;
+        }
+
+        private object CorrectSqlDateTime(object parameterValue)
+        {
+            if (parameterValue != null && parameterValue.GetType().Name == "DateTime")
+            {
+                if (Convert.ToDateTime(parameterValue) < SqlDateTime.MinValue.Value)
+                    return SqlDateTime.MinValue.Value;
+                else
+                    return parameterValue;
+            }
+            else
+                return parameterValue;
+        }
+
+        private async Task<IList<TReturn>> ExecuteQueryAsync<TReturn>(DbCommand command)
+        {
+            var reader = await command.ExecuteReaderAsync();
+            var result = new List<TReturn>();
+
+            while (await reader.ReadAsync())
+            {
+                var type = typeof(TReturn);
+                var constructor = type.GetConstructor(new Type[] { });
+                if (constructor == null)
+                    throw new InvalidOperationException("An empty contructor is required for the return type");
+
+                var instance = constructor.Invoke(new object[] { });
+
+                for (var i = 0; i < reader.FieldCount; i++)
+                {
+                    var property = type.GetProperty(reader.GetName(i));
+                    property?.SetValue(instance, ChangeType(property.PropertyType, reader.GetValue(i)));
+                }
+
+                result.Add((TReturn)instance);
+            }
+
+            return result;
+        }
+
+        private async Task<TReturn> ExecuteScalarAsync<TReturn>(DbCommand command)
+        {
+            command = ConvertNullToDbNull(command);
+
+            if (command.Connection.State != ConnectionState.Open)
+                command.Connection.Open();
+
+            var result = await command.ExecuteScalarAsync();
+
+            if (result == DBNull.Value)
+                return default;
+            else
+                return (TReturn)result;
+        }
+
+        private DbCommand ConvertNullToDbNull(DbCommand command)
+        {
+            for (int i = 0; i < command.Parameters.Count; i++)
+            {
+                if (command.Parameters[i].Value == null)
+                    command.Parameters[i].Value = DBNull.Value;
+            }
+
+            return command;
+        }
+
+        private IDictionary<string, object> CopyOutParams(DbCommand command,
+            IDictionary<string, Type> outParameters)
+        {
+            Dictionary<string, object> result = null;
+            if (outParameters != null)
+            {
+                result = new Dictionary<string, object>();
+                foreach (var item in outParameters)
+                {
+                    result.Add(item.Key, command.Parameters[item.Key].Value);
+                }
+            }
+
+            return result;
+        }
+    }
+    }
+     ```
+    </details>
+3. Binding in Persistance Layer-24\
+
+    <details>
+     <summary>Binding in PersistanceModule</summary>
+    
+     ```c#
+    //use this for Adonetutility (Collect db context from other object)
+    builder.Register(x => new AdoNetUtility(x.Resolve<ApplicationDbContext>().Database.GetDbConnection(), 300))
+    .As<IAdoNetUtility>().InstancePerLifetimeScope();
      ```
     </details>
 
 
 
+## Class-48 (AWS Instance Create-Windows)
+1. Login Link : https://signin.aws.amazon.com/
+2. Instance-30\
+    AWS এ জে পি সি টা আমরা কনফিগার করি বা পাই সেটাকে ইনস্ট্যান্ট বলা হয় আর আজুরে বলা হয় ভার্চুয়াল মেশিন .
+3. Scalability-65:\
+    একটা সফটওয়্যারকে ক্লাউডের জন্য বানাতে গেলে সবচেয়ে গুরুত্বপূর্ণ ফিচার হচ্ছে স্কেলেবিলিটি অর্থাৎ সফটওয়্যারটা যেন ইজিলি  scalable  হয় বা করা যায় সেদিকে লক্ষ্য রাখতে হবে.
+    2nd security
+### Server Create-70:
+* কম্পিউটার ক্লিক করে ইজি টু তে ক্লিক করতে হবে ইন্সটেন্স ক্রিয়েট করার জন্য
+![image](https://github.com/Shamim448/aspnet/assets/43339514/f75008e6-8b3d-4be5-bf51-e75bba6f87ef)
 
+* কোন রিজিয়ন এ সার্ভার তৈরি করতে চাই সেটা সিলেক্ট করতে হবে, আমরা নথ ভার্জিনিয়া ব্যবহার করব.  তবে প্রোডাকশনের ক্ষেত্রে আমার ইউজার বা ভিউয়ার যেই লোকেশনের থাকবে সেই লোকেশনের কাছাকাছি রিজিওন সিলেক্ট করতে হবে যেমন বাংলাদেশ হলে মুম্বাই অথবা সিঙ্গাপুর এখানে উল্লেখ্য যে বিভিন্ন রিজিয়ন ভেদে প্রাইস এবং ফিচার এর তারতম্য থাকতে পারে. সুতরাং আমাদেরকে বুঝে নিতে হবে আসলে কোন রিজিয়ন সিলেক্ট করলে আমরা বেনিফিটেড হব 
+![image](https://github.com/Shamim448/aspnet/assets/43339514/8e8d9aad-8633-4fbb-ba78-48e9b8725796)
 
+* click instance. then click Launch Instance
+![image](https://github.com/Shamim448/aspnet/assets/43339514/88668618-356b-43c5-98e0-e044dc188140)
+
+* এখানে আমাদের একটা ইন্সটেন্সের নাম দিতে হবে এবং কয়টা ইন্সটেন্স ক্রিয়েট করব সে নাম্বারটা দিয়ে দিতে হবে এখানে খেয়াল রাখতে হবে যে আমরা এখানে যেই নাম্বারটা দিব ততগুলি ইন্সটেন্স আমার ক্রিয়েট হবে সুতরাং এখানে যদি বেশি নাম্বার দিই তাহলে অনেকগুলো ইন্সটেন্স ক্রিয়েট হওয়ার কারণে বিল অনেক বেশি আসতে পারে এই বিষয়টা লক্ষ্য রাখতে হবে এবং নিচে কোন ইমেজ ইন্সটল করব সেটা সিলেক্ট করে দিতে হবে
+![image](https://github.com/Shamim448/aspnet/assets/43339514/7286c4a4-f0b0-4a77-ac7c-7010c1b71166)
+
+* আমরা এখানে উইন্ডোজ সিলেক্ট করেছি এবং একটা সার্ভার ভার্সন সিলেক্ট করেছি যেটা ফ্রি টাওয়ারে এভেলেবল এখানে অনেক ধরনের ভেরিয়েশন আছে আমি চাইলে একই সাথে সার্ভার এবং ডাটাবেজ সার্ভারও ব্যবহার করতে পারি একই মেশিনে সেক্ষেত্রে  আমার পারফরমেন্স একটু খারাপ হবে একই মেশিনে ডাক্তার এবং সার্ভার থাকার কারণে আবার যদি আমরা ডাটাবেজের জন্য আলাদা সার্ভার নেই  সে ক্ষেত্রে বিল বেশি আসবে
+![image](https://github.com/Shamim448/aspnet/assets/43339514/59e13e37-2d0d-4fdb-8b44-d7c593e6966f)
+
+* আমাদেরকে ইনাস্টেন্স টাইম টি টু select করতে হবে কারণ এটা ফ্রি, ড্রপ ডাউন এ ক্লিক করলে আমরা নেক টাইপ দেখতে পারব যেখানে আমার প্রসেসর র‍্যাম এগুলো কি হতে পারে সেগুলো দেওয়া থাকবে এই ইন্সটেন্স টাইপের মধ্যে
+![image](https://github.com/Shamim448/aspnet/assets/43339514/a4f7679a-c44f-46b5-8b50-8358735c60c7)
+
+* এখানে আমার পিসিতে বা ইনস্টেন্সে লগইন করার জন্য একটা কি জেনারেট করতে হবে গিটের এসএসএস কি এর মতই এজন্য ক্রিয়েট এ নিউ পিয়ারে ক্লিক করতে হবে
+![image](https://github.com/Shamim448/aspnet/assets/43339514/7efe4841-462e-48a0-8677-a25f6ef76ad1)
+
+* এখানে আমরা আমার গির একটা নাম দিব তারপর এখানে আরএসএস সিলেক্ট থাকবে এবং নিচে প্রাইভেট এবং পাবলিক পিপিকে এবং পিইএম তো আমরা অন্য দেশের জন্য পিএম সিলেক্ট করে ফাইলটা ডাউনলোড করে রাখবো
+![image](https://github.com/Shamim448/aspnet/assets/43339514/7f1c3fd0-39d1-4517-8a1c-e4c5a27704b8)
+
+* এখানে আমরা নেটওয়ার্ক সেটিং করতে পারব. এই এখানে আমরা ক্রেট সিকিউরিটি গ্রুপে ক্লিক করে নতুন সিকিউরিটি কোড তৈরি করতে পারি অথবা একজাস্টিং কোন একটা থাকলে সেটাও ব্যবহার করতে পারি ঠিক আগে আমরা যেমন কি generate করেছি সেখানেও যদি আমার   এক existing কি থাকে সেটাও ব্যবহার করতে পারি এখানে অ্যালাউ এইচডি টিভি এইচটিটিপিএস এবং আরডিপিতে ক্লিক করতে হবে এবং উপরে নেটওয়ার্কের এডিটে ক্লিক করলে আমরা আর অনেক কিছু ম্যানুয়াল কনফিগারেশন করতে পারবো
+  ![image](https://github.com/Shamim448/aspnet/assets/43339514/d7292b13-f405-43cc-a9ee-d0cec23dd470)
+  ![image](https://github.com/Shamim448/aspnet/assets/43339514/ce0888ad-af61-4116-a85b-8d0827b5fe58)
+
+![image](https://github.com/Shamim448/aspnet/assets/43339514/e90772fb-65b9-45b3-a0ae-e5a27f8e3614)
+* নেটওয়ার্কের এদিকে ক্লিক করে আমরা সিকিউরিটি গ্রুপ নামে নিজেদের নাম দিয়ে দিব এবং নিচে আমাদের সাবমিট মার্কস সিলেক্ট করার অপশন আছে এখান থেকে আমরা চাইলে যে রিজিয়নে তার থেকে ভিন্ন কোন রিজিয়নের সিলেক্ট করতে পারি এবং মাল্টিপল সাবমিট টু সিলেট করতে পারে এটা করলে একটা সুবিধা আছে যদি কোন কারনে কোন একটা রিজন ডাউন থাকে তাহলে অন্য রিজন থেকে সেটা চলবে  এই মাল্টিপল subnetথাকার কারণে
+![image](https://github.com/Shamim448/aspnet/assets/43339514/5356c0ef-77fc-438e-9720-6bc6117e2d24)
+![image](https://github.com/Shamim448/aspnet/assets/43339514/bc443d4e-fb89-4f19-88ce-b5c87fc5c32d)
+* এখানে সোর্স টাইপ এনিহওয়ার দেওয়া আছে যাতে করে আমরা যে কোন জায়গা থেকে যেকোনো আইপি থেকে এক্সেস করতে পারি আমরা ইচ্ছে করলে এখানে কোন একটা আইপি এড্রেস সাইন করে দিতে পারি তাহলে সেই আইপি বাদে অন্য কোথাও থেকে লগইন করা যাবে না,  এবং এখানে আমরা কাস্টম উল্টো সেট করে দিতে পারি আমরা সার্ভারকে ফোন থেকে এক্সেস করব
+![image](https://github.com/Shamim448/aspnet/assets/43339514/588a8110-0e0b-4997-9bf4-0f27a28b9180)
+
+* এখানে স্টোরেজ খুবই গুরুত্বপূর্ণ একটা বিষয় এখানে জিপি টু ব্যবহার করেছি ফ্রি ব্যবহার করার জন্য কোন অবস্থাতেই অন্যটা সিলেক্ট করা যাবে না আমরা এখানে এড নিউ ভলিউম করতে পারি নিউ ভলিউমটা হচ্ছে হার্ডডিস্ক এর মত এটা কোন স্পেস না অর্থাৎ আমরা নতুন হার্ডডিস্ক লাগলে যেমন স্পেস পাই এবং সেটাকে পার্টিশন করতে পারি ভলিউমটা ও হার্ডডিক্স এর মতই ব্যবহার করতে পারি পটেশন ক্রিয়েট করে
+![image](https://github.com/Shamim448/aspnet/assets/43339514/79bd9079-5311-4a29-8c18-9d1437a7d890)
+
+* এরপর আমরা লঞ্চ বাটনে ক্লিক করলে আমাদের সার্ভার ক্রিয়েট হয়ে যাবে
+![image](https://github.com/Shamim448/aspnet/assets/43339514/954a2423-4418-4113-b73e-0c3374cd71f0)
+* কিছু অপারেশন হওয়ার পরে সার্ভার রেডি হলে এই অপশনটা চলে আসবে এখানে ভিউ অল ইন্সটেন্স এ ক্লিক করলে আমরা আমাদের কোন ফিগার করা ইন্সটেন্স দেখতে হবে
+![image](https://github.com/Shamim448/aspnet/assets/43339514/251b2093-e90c-4a77-94ca-e4373ec0f9c8)
+* আমাদের সার্ভার কে কানেক্ট করার জন্য ইন্সটেন্স সিলেক্ট করে কানেক্ট a ক্লিক করতে হবে তারপর আরডিপি ক্লাইন্ট সিলেক্ট করে  নিচে গিয়ে গেট পাসওয়ার্ড ক্লিক করতে হবে
+  ![image](https://github.com/Shamim448/aspnet/assets/43339514/bd38ecfb-720e-4b53-a381-5a7f51591c3f)
+![image](https://github.com/Shamim448/aspnet/assets/43339514/c1037293-c5dd-4525-8259-0c2af407a096)
+![image](https://github.com/Shamim448/aspnet/assets/43339514/69431652-cbc7-4e7d-a0ed-4f4775559fa2)
+* এখানে আমাদের সিক্রেট যে ফাইলটা sshkey কি যেটা আমরা ডাউনলোড করেছিলাম সেটা আপলোড করতে হবে এবং ডিক্রিপ্ট বাটনে চাপ দিতে হবে.
+![image](https://github.com/Shamim448/aspnet/assets/43339514/0a00f6ba-7c23-43fa-a4f8-8c160aeed25c)
+* আমরা যে ফাইলটা আপলোড করেছি সেটা ডিক্রিপ্ট করলে নিচে এই পাসওয়ার্ডটা শো করবে যেটা দিয়ে আমরা রিমুট ডেক্সটপ এর মাধ্যমে instance  লগইন করতে পারবো
+![image](https://github.com/Shamim448/aspnet/assets/43339514/c64b8f81-31da-4290-9625-eebaccbde6b8)
+* ইনস্টেন্স Terminate করার জন্য ক্লিক করে আমার যে মেশিনটা আছে সেই মেশিনটা select করতে হবে তারপর উপর থেকে ইন্সটেন্সটেটে গিয়ে টার্গেট ইন্সটেন্স ক্লিক করতে হবে তাহলে আমারটা ডিলিট হয়ে যাবে, তার আগে অবশ্যই রিমোট ডেস্কটপ দিয়ে যে আমার লগইন করেছি সেখানে পিসি তাকে ডিসকানেক্ট করে দিয়ে আসতে হবে 
+![image](https://github.com/Shamim448/aspnet/assets/43339514/60a04a93-74b3-46d4-89e1-fb1e93a19c36)
+* Instance Terminate করার পরও ভলিউম এগিয়ে চেক করে দেখতে হবে যে আমার ভলিউম ডিলিট হয়েছে কিনা কারণ অনেক সময় ইনস্ট্যান্ট টা মিনিট করার পরও ভলিউম থেকে যায় সে ক্ষেত্রে চার্জ কাটতে পারে 
+![image](https://github.com/Shamim448/aspnet/assets/43339514/3dcc36cc-4608-4ceb-ba2c-6eed1c2373f5)
 
