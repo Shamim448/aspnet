@@ -2,24 +2,36 @@
 Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, Project)
 
 
-### সুচিপত্র
-- [Class-30 Identity Framwork](#Class-30-Identity-Framwork)
-- [Class-31 Register Page Convert](#Class-31-Register-Page-Convert)
-- [Class-32 Login-Logout Page](#Class-32-Login-Logout-Page)
-- [Class-33 (Role-Management)](#Class-33-Role-Management)
-- [Class-34 (Web API)](#Class-34-Web-API)
-- [Class-35 (Web Api-JWT Token)](#Class-35-Web-Api-JWT-Token)
-- [Class-36 (Generate Migration in Console App)](#Class-36-Generate-Migration-in-Console-App)
-- [Class-37 (Worker Service)](#Class-37-Worker-Service)
-- [Class-38 (Unit Test)](#Class-38-Unit-Test)
-- [Class-39 (Unit Test-2)](#Class-39-Unit-Test-2)
-- [Class-40 (Docker)](#Class-40-Docker)
-- [Class-41 (Dockerfile)](#Class-41-Dockerfile)
-- [Class-44 (Dynamic SQL)](#Class-44-Dynamic-SQL)
-- [Class-45 (Advance Search)](#Class-45-Advance-Search)
-- [Class-48 (AWS Instance Create-Windows)](#Class-48-AWS-Instance-Create-Windows)
-- [Class-49 Load Balancer and Auto Scaling](#Class-49-Load-Balancer-and-Auto-Scaling)
+- [aspnet-b8-shamimhosen](#aspnet-b8-shamimhosen)
+- [সুচিপত্র](#সুচিপত্র)
+  - [Class-10 (New Syllabus \& SASS)](#class-10-new-syllabus--sass)
+  - [Class-30 Identity Framwork](#class-30-identity-framwork)
+    - [Add IdentityDbContext(30) \& paramiter(55)](#add-identitydbcontext30--paramiter55)
+  - [Class-31 Register Page Convert](#class-31-register-page-convert)
+  - [Class-32 Login-Logout Page](#class-32-login-logout-page)
+  - [Class-33 (Role-Management)](#class-33-role-management)
+  - [Class-34 (Web API)](#class-34-web-api)
+  - [Class-35 (Web Api-JWT Token)](#class-35-web-api-jwt-token)
+  - [Class-36 (Generate Migration in Console App)](#class-36-generate-migration-in-console-app)
+  - [Class-37 (Worker Service)](#class-37-worker-service)
+  - [Class-38 (Unit Test)](#class-38-unit-test)
+  - [Class-39 (Unit Test-2)](#class-39-unit-test-2)
+  - [Class-40 (Docker)](#class-40-docker)
+      - [Dockerfile Detailes-54\\](#dockerfile-detailes-54)
+    - [Proces of Docker image installation\\](#proces-of-docker-image-installation)
+  - [Class-41 (Dockerfile)](#class-41-dockerfile)
+      - [Create Docker File -69](#create-docker-file--69)
+      - [DockerFile-72](#dockerfile-72)
+  - [Class-44 (Dynamic SQL)](#class-44-dynamic-sql)
+  - [Class-45 (Advance Search)](#class-45-advance-search)
+  - [Class-48 (AWS Instance Create-Windows)](#class-48-aws-instance-create-windows)
+    - [Server Create-70:](#server-create-70)
+  - [Class-49 Load Balancer and Auto Scaling](#class-49-load-balancer-and-auto-scaling)
 
+
+# সুচিপত্র
+- [aspnet-b8-shamimhosen](#aspnet-b8-shamimhosen)
+   
 
 
 
@@ -33,7 +45,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 * OMR(115) -- ado.net, entity framework, dapper, inhybernet
 
 ## Class-30 Identity Framwork
-1. Add IdentityDbContext(30) & paramiter(55)
+### Add IdentityDbContext(30) & paramiter(55)
    <details>
     <summary>ApplicationDbContext</summary>
     
