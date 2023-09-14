@@ -2620,3 +2620,9 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 * Instance Terminate করার পরও ভলিউম এগিয়ে চেক করে দেখতে হবে যে আমার ভলিউম ডিলিট হয়েছে কিনা কারণ অনেক সময় ইনস্ট্যান্ট টা মিনিট করার পরও ভলিউম থেকে যায় সে ক্ষেত্রে চার্জ কাটতে পারে 
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/3dcc36cc-4608-4ceb-ba2c-6eed1c2373f5)
 
+## Class-49 Load Balancer & Auto Scaling
+1. Create Linux Instance:\
+    Click Lunch Instance >> Put a name >> Put number of instance (1) >> Select Image Type ubuntu >> Select Instance Type (t2) >> Create Key pair Name private for ubuntu >> create security group (allow https, http ssh) click edit button and put name own name>> select storage (8gb, gp2) 
+2. Connect Instance-15\
+    click connect >> select ssh client >>
+
