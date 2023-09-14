@@ -2619,8 +2619,10 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 * আমরা যে ফাইলটা আপলোড করেছি সেটা ডিক্রিপ্ট করলে নিচে এই পাসওয়ার্ডটা শো করবে যেটা দিয়ে আমরা রিমুট ডেক্সটপ এর মাধ্যমে instance  লগইন করতে পারবো
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/c64b8f81-31da-4290-9625-eebaccbde6b8)
 * ইনস্টেন্স Terminate করার জন্য ক্লিক করে আমার যে মেশিনটা আছে সেই মেশিনটা select করতে হবে তারপর উপর থেকে ইন্সটেন্সটেটে গিয়ে টার্গেট ইন্সটেন্স ক্লিক করতে হবে তাহলে আমারটা ডিলিট হয়ে যাবে, তার আগে অবশ্যই রিমোট ডেস্কটপ দিয়ে যে আমার লগইন করেছি সেখানে পিসি তাকে ডিসকানেক্ট করে দিয়ে আসতে হবে 
+
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/60a04a93-74b3-46d4-89e1-fb1e93a19c36)
 * Instance Terminate করার পরও ভলিউম এগিয়ে চেক করে দেখতে হবে যে আমার ভলিউম ডিলিট হয়েছে কিনা কারণ অনেক সময় ইনস্ট্যান্ট টা মিনিট করার পরও ভলিউম থেকে যায় সে ক্ষেত্রে চার্জ কাটতে পারে 
+
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/3dcc36cc-4608-4ceb-ba2c-6eed1c2373f5)
 
 ## Class-49 Load Balancer & Auto Scaling
@@ -2628,7 +2630,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     Click Lunch Instance >> Put a name >> Put number of instance (1) >> Select Image Type ubuntu >> Select Instance Type (t2) >> Create Key pair Name private for ubuntu >> create security group (allow https, http ssh) click edit button and put name own name>> select storage (8gb, gp2) 
 2. Connect Instance-15\
   click connect >> select ssh client >>
-  
+
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/e3886eb5-7568-4a88-8cab-174fed045db8)
 * এখন আমাদেরকে putty ওপেন করতে হবে. এখানে আমরা ইন্সটেন্স ক্রিয়েট করার সময় যেখানে key pair অপশন ছিল তখন আমরা ssh কি জেনারেট করেছিলাম সেটা এখানে আপলোড করে দিতে হবে অবশ্যই এখানে 
   প্রাইভেট টা দিতে হবে তবে আমাদের যদি পাবলিক কি থাকে তাহলে আমরা puttygen এর মাধ্যমে প্রাইভেট কি তৈরি করতে পারি ইমপোর্ট করে অর্থাৎ পাবলিক ফাইলটা ইমপোর্ট করে সেটাকে প্রাইভেট কিতে সেভ করব
@@ -2637,6 +2639,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 * ppk ফাইলটা আপলোড করলেই এইরকম একটা টার্মিনাল ওপেন হবে একসেপ্ট ক্লিক করলেই আমাদের instance সাথে কানেক্ট হয়ে যাবে
 
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/1a264ad6-3b43-46a0-9747-a1f549207a2b)
+
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/e9fdd6cf-30e7-420f-baa6-3b235fdc15d9)
 * check install apache (cd var/ www/html/) ls তাহলে দেখতে পারবো এখানে ইনডেক্স ডট html নামে একটা ফাইল তৈরি হয়ে গেছে 
    এবার আমরা আমাদের instance এর ড্যাশবোর্ডে গেলে একটা পাবলিক আইডি দেখতে পাবো সেই পাবলিক আইপিটা যদি আমি ব্রাউজারে লিখে দেই তাহলে আমাদের ইনডেক্সটা শো হবে
@@ -2689,10 +2692,12 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     লোড ব্যালেন্সার তৈরি করার জন্য ক্রিয়েট নোট ব্যালেন্সারে ক্লিক করবেন তবে এর আগে আমরা টার্গেট গ্রুপ তৈরি করে নিতে পারি.
 
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/1bea47e7-238a-4c0f-8aab-8871acc82ef5)
+
 * There are 3 type of load banalcer. এখানে আমরা তিন ধরনের লুটব্যালেন্সার দেখতে পাচ্ছি একটা আমাদের ওয়েবসাইট ম্যানেজ করার জন্য অর্থাৎ ওয়েব ট্রাফিক ম্যানেজ করার জন্য আর যদি নেটওয়ার্ক 
   লোড     balance একটা ব্যবহার করা হয় যদি আমাদের কানেকশনগুলো TCP, UDP হয় তাহলে যেমন antiভাইরাস server
 
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/a0536111-7dcc-40b7-a0a9-ee40cef0d0ba)
+
 * এখানে আমরা আমাদের আমাদের লোড balance এর একটা নাম দিব এবং লোন ব্যালেন্সটা কি টাইপের হবে সেটা কি ইন্টারনেট facingহবে নাকি ইন্টার্নাল হবে সেটা ঠিক করে দিব এখানে আমাদের যেহেতু ওয়েবসাইটের ট্রাফিক ম্যানেজ করব সুতরাং আমাদের টা হবে ইন্টারনেট facing ইন্টারনাল কখন ইউজ করব যখন আমাদের সার্ভার টু সার্ভার কমিউনিকেশন হবে তখন যেমন একটা কাজের জন্যই একাধিক সার্ভার প্রয়োজন হচ্ছে ধরতে পারে সেটা ওয়ার্কার সার্ভিসের মত তখন ওয়ার্কার সার্ভিসের একটা কাজই যদি অনেকগুলো মিলে করে তখন যেই কমিউনিকেশন হবে
    সেটা ম্যানেজ করার জন্য ইন্টারনাল নোট ব্যালেন্সের ব্যবহার করব এবং আই পি ভি ফোর সিলেক্ট করব
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/dcc84900-c092-4015-9215-e7275d2414db)
@@ -2721,13 +2726,17 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
      Application Load Balancer: একটা লোড ব্যালেন্স স্যারের সাথে আর একটা লোড balancer তৈরি করার জন্য অ্যাপ্লিকেশন নোট ব্যালেন্স এর ব্যবহার করব 
 
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/f5655b3b-7ae2-4c71-86f2-017bb81b2ba1)
+
 *  সিলেক্ট করার পর আমরা আমাদের টার্গেট গ্রুপের একটা নাম দিব এখানে প্রটোকল হিসাবে HTTPদিব কারণ এটা আমার লোড ব্যালেন্স এর সঙ্গে কমিউনিকেট করবে এখানে HTTPSএর প্রয়োজন নাই কারণ HTTPঅনেক ফাস্ট  HTTPS এর থেকে
 
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/3f6201da-ccfc-4ed5-a196-09e8f15cd9f8)
+
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/88a4fb55-03ae-40a3-a428-59b94dac054e)
+
 * এখানে আমরা হেলথ চেক এর জন্য রুট না রেখে আমাদের একটা নির্দিষ্ট পেজ সেট করে দিছি লোড ব্যালেন্সারে করলেই যাতে এই পেজে হেড আসে বা ping আসে
 
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/c0604aad-7614-41da-97c3-b9821ca8fa22)
+
 13. Auto Scaling: 117\
     অটো স্কেলিং খুব গুরুত্বপূর্ণ একটি ফিচার এটার দ্বারা আমার সার্ভারের কখন কি অবস্থা সেটা মেইল আকারে জানতে পারি ধরি আমার সার্ভারটি ডাউন হয়ে গেছে তাহলে সঙ্গে সঙ্গে আমার কাছে মেইল চলে আসবে.
 *  Create Teamplate\
@@ -2738,20 +2747,28 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     একটা নাম দিতে হবে। তারপর টেমপ্লেট এর একটা নাম দিতে হবে। তারপর নেক্সট বাটন এ ক্লিক করতে হবে। 
 
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/a8c26725-7aa7-420c-9e6c-cdd0e24916b2)
+
 * এখানে ভিপিছি Default select করে যে কইটা সাবনেট পাওয়া যাবে সব সিলেক্ট করে দিব। 
+
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/e934d21f-0eb7-496c-a259-b1960cfa8cc9)
+
 * এখানে লোড বালাঞ্চের সিলেক্ট করে দিতে হবে। যদি তৈরি করা না থাকে তাহলে তৈরি করতে হবে, আমাদের তৈরি করা আছে টাই এক্সিস্তিং সিলেক্ট করেছি এবং তারগেত গ্রুপ ও সিলেক্ট করে দিব 
 
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/16b8c5b7-1555-4f7a-9a52-f7327d804a97)
+
 * এখানে বলে দিসসি আমার কি অবস্থাই কইটা পিসি লাগবে
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/f1e1c994-1034-4227-a8d7-cb996ee54ee7)
+
 * এখানে পলিছি দেখিয়ে দিতে হবে। কোন অবস্থাই আমার পিসি ব্রিধি পাবে। এখানে আমি ছিপিইউ আর ওপর ভিত্তি করে বারবে যদি ছিপিইউ  ৮০% ব্যবহার হয় তাহলে পিসি অ্যাড হবে
 
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/4c28ada0-95e5-4c34-8f83-1db5a6587f00)
+
 * যদি আমি নোটিফিকেশান চাই তাহলে
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/180e9896-a5df-4bdd-a279-5f69f55283f5)
+
 * টার্গেট গ্রুপ তৈরি করা হলে আমরা আমাদের available instance গুলো দেখতে পাবো সেগুলো যদি টার্গেট গ্রুপের আন্ডারে এড করতে চাই তাহলে সিলেক্ট করে ইনক্লুডে ক্লিক করতে হবে
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/aa3be035-b17b-4163-a837-8f3a96d8da28)
+
 * ক্লিক করার পর  আমরা দেখতে পাবো পেন্ডিং দেখাচ্ছে ইনস্ট্যান্ট গুলো এখন ক্রিয়েট টার্গেট গ্রুপে ক্লিক করলে আমাদের instance টার্গেট গ্রুপের আন্ডারে অ্যাড হয়ে যাবে
 
 ![image](https://github.com/Shamim448/aspnet/assets/43339514/0e8b336a-77b1-45e0-a7e6-125e6d088821)
