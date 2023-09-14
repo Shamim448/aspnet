@@ -48,7 +48,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 
 ## Class-30 Identity Framwork
 ### Add IdentityDbContext(30) & paramiter(55)
-* 
+  
    <details>
         <summary>ApplicationDbContext</summary>
         
