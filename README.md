@@ -7,6 +7,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
   - [Class-10 (New Syllabus \& SASS)](#class-10-new-syllabus--sass)
   - [Class-30 Identity Framwork](#class-30-identity-framwork)
     - [Add IdentityDbContext(30) \& paramiter(55)](#add-identitydbcontext30--paramiter55)
+    - [Add Membership class-31\\](#add-membership-class-31)
   - [Class-31 Register Page Convert](#class-31-register-page-convert)
   - [Class-32 Login-Logout Page](#class-32-login-logout-page)
   - [Class-33 (Role-Management)](#class-33-role-management)
@@ -46,8 +47,8 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 
 ## Class-30 Identity Framwork
 ### Add IdentityDbContext(30) & paramiter(55)
-   <details>
-    <summary>ApplicationDbContext</summary>
+    <details>
+     <summary>ApplicationDbContext</summary>
     
     ```c#
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser,
@@ -57,8 +58,8 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
         ApplicationUserToken>, IApplicationDbContext
     {     }
     ```
-   </details>
-2. Add Membership class-31\
+    </details>
+### Add Membership class-31\
    ![image](https://github.com/Shamim448/aspnet-b8-shamimhosen/assets/43339514/37cd35f6-003c-4892-8174-2388a90cb733)
   
 
