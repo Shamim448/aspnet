@@ -2198,7 +2198,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     </details>
 
     <details>
-     <summary>AdoNetUtility in Persistance Layer</summary>
+    <summary>AdoNetUtility in Persistance Layer</summary>
     
      ```c#
     namespace Crud.Persistance
@@ -2487,6 +2487,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     }
      ```
     </details>
+
 ### Binding in Persistance Layer-24\
 * AdoNetUtility binding in Persistance moudle
     <details>
