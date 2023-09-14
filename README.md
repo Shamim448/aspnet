@@ -2169,7 +2169,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
  *  ডোমেইন লেয়ার এর ভিতরে একটা Utilities ফোল্ডার তৈরি করব এবং তার ভিতরে IAdonetUtility ইন্টারফেস তৈরি করব এবং এটার ইমপ্লিমেন্টেশন হবে পারসিসটেন্স Layer এর ভিতর\
     ইমপ্লিমেন্টেশন  এর ভিতর রিপোজিটরি থেকে কিছু মেথড করে নিয়ে চলে আসব যেগুলো মূলত অ্যাডভান্স search জন্য প্রয়োজন হবে. এবং এর সিগনেচারগুলো ইন্টারফেস এর মধ্যে রাখবো 
     <details>
-        <summary>EnrollmentController</summary>
+        <summary>IAdoNetUtility Interface</summary>
 
         ```c#
         namespace Crud.Domain.Utilities
@@ -2495,7 +2495,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     </details>
 
 4. Create Enrollment DTO-44\
- *   এখন আমাদের একটা এন্টিটি প্রয়োজন যেহেতু আমাদের যেসব  প্রপার্টি দরকার সেগুলো নিয়ে কোন এন্টিটি নাই তাই একটা DTO তৈরী করলাম Application Layer >> Feature >> Training >> DTOs
+    এখন আমাদের একটা এন্টিটি প্রয়োজন যেহেতু আমাদের যেসব  প্রপার্টি দরকার সেগুলো নিয়ে কোন এন্টিটি নাই তাই একটা DTO তৈরী করলাম Application Layer >> Feature >> Training >> DTOs
   
     <details>
      <summary>EnrollmentDTO</summary>
@@ -2503,16 +2503,16 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
      ```c#
     namespace Crud.Application.Features.Training.DTOs
     {
-    public class EnrollmentDTO
-    {
-        public string CourseName { get; set; }
-        public string UserName { get; set; }
-        public DateTime EnrollDate { get; set; }
-    }
+        public class EnrollmentDTO
+        {
+            public string CourseName { get; set; }
+            public string UserName { get; set; }
+            public DateTime EnrollDate { get; set; }
+        }
     }
      ```
     </details>
-    
+
 5. EnrollmentService:34\
 * Create a EnrollmentService class in infrastructure >> Feature >> Service and binding it InfrastructureModule
     <details>
