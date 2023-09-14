@@ -2166,32 +2166,10 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     </details>
 
 2. Create IAdoNetUtility Interface  and Implementation-12\
- *   ডোমেইন লেয়ার এর ভিতরে একটা Utilities ফোল্ডার তৈরি করব এবং তার ভিতরে IAdonetUtility ইন্টারফেস তৈরি করব এবং এটার ইমপ্লিমেন্টেশন হবে পারসিসটেন্স Layer এর ভিতর\
+ *  ডোমেইন লেয়ার এর ভিতরে একটা Utilities ফোল্ডার তৈরি করব এবং তার ভিতরে IAdonetUtility ইন্টারফেস তৈরি করব এবং এটার ইমপ্লিমেন্টেশন হবে পারসিসটেন্স Layer এর ভিতর\
     ইমপ্লিমেন্টেশন  এর ভিতর রিপোজিটরি থেকে কিছু মেথড করে নিয়ে চলে আসব যেগুলো মূলত অ্যাডভান্স search জন্য প্রয়োজন হবে. এবং এর সিগনেচারগুলো ইন্টারফেস এর মধ্যে রাখবো 
 
-    <details>
-     <summary>IAdoNetUtility (Utilities folder in domain Layer)</summary>
-    
-     ```c#
-    namespace Crud.Domain.Utilities
-    {
-    public interface IAdoNetUtility
-    {
-         IDictionary<string, object> ExecuteStoredProcedure(string storedProcedureName,
-        IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null);
-        Task<IDictionary<string, object>> ExecuteStoredProcedureAsync(string storedProcedureName,
-            IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null);
-        Task<(IList<TReturn> result, IDictionary<string, object> outValues)>
-            QueryWithStoredProcedureAsync<TReturn>(string storedProcedureName,
-            IDictionary<string, object> parameters = null, IDictionary<string, Type> outParameters = null)
-            where TReturn : class, new();
-        Task<TReturn> ExecuteScalarAsync<TReturn>(string storedProcedureName,
-            IDictionary<string, object> parameters = null);
-    }
-    }
-     ```
-    </details>
-* 
+  
     <details>
     <summary>AdoNetUtility in Persistance Layer</summary>
     
@@ -2484,7 +2462,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     </details>
 
 3. Binding in Persistance Layer-24\
-* AdoNetUtility binding in Persistance moudle
+   AdoNetUtility binding in Persistance moudle
     <details>
      <summary>Binding in PersistanceModule</summary>
     
