@@ -2476,7 +2476,85 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
      ```
     </details>
 
+4. Create Enrollment DTO-44\
+    এখন আমাদের একটা এন্টিটি প্রয়োজন যেহেতু আমাদের যেসব  প্রপার্টি দরকার সেগুলো নিয়ে কোন এন্টিটি নাই তাই একটা DTO তৈরী করলাম Application Layer >> Feature >> Training >> DTOs
+    <details>
+     <summary>EnrollmentDTO</summary>
+    
+     ```c#
+    namespace Crud.Application.Features.Training.DTOs
+    {
+    public class EnrollmentDTO
+    {
+        public string CourseName { get; set; }
+        public string UserName { get; set; }
+        public DateTime EnrollDate { get; set; }
+    }
+    }
+     ```
+    </details>
+5. EnrollmentService:34\
+* Create a EnrollmentService class in infrastructure >> Feature >> Service and binding it InfrastructureModule
+    <details>
+     <summary>IEnrollmentDTO Interface</summary>
+    
+     ```c#
+    namespace Crud.Application.Features.Training.Services
+    {
+        public interface IEnrollmentService
+    {
+        Task<(IList<EnrollmentDTO> records, int total, int totalDisplay)>
+        GetPagedEnrollmentsAsync(int pageIndex, int pageSize, string? courseName, string? userName,
+        DateTime? enrollmentDateFrom, DateTime? enrollmentDateTo, string orderBy);
+    }
+    }
+     ```
+    </details>
+* Create IEnrollmentService interface in Applicition >> Feature >> Training >> Service
 
+    <details>
+     <summary>IEnrollmentDTO Class</summary>
+    
+     ```c#
+    namespace Crud.Infrastructure.Features.Services
+    {
+    public class EnrollmentService : IEnrollmentService
+    {
+        private readonly IAdoNetUtility _adoNetUtility; 
+        public EnrollmentService(IAdoNetUtility adoNetUtility) 
+        { 
+            _adoNetUtility = adoNetUtility;
+        }
+        public async Task<(IList<EnrollmentDTO> records, int total, int totalDisplay)>
+            GetPagedEnrollmentsAsync(int pageIndex, int pageSize, string? courseName, string? userName, 
+            DateTime? enrollmentDateFrom, DateTime? enrollmentDateTo, string orderBy)
+        {
+            var outParameters = new Dictionary<string, Type>()
+            {
+                { "Total", typeof(int) },
+                { "TotalDisplay", typeof(int) }
+            };
+            var resut = await _adoNetUtility.QueryWithStoredProcedureAsync<EnrollmentDTO>
+                ("GetCourseEnrollments",
+                    new Dictionary<string, object>
+                    {
+                        {"PageIndex", pageIndex },
+                        {"PageSize", pageSize},
+                        {"CourseName", courseName },
+                        {"UserName", userName },
+                        {"EnrollmentDateFrom", enrollmentDateFrom },
+                        {"EnrollmentDateTo", enrollmentDateTo },
+                        {"OrderBy", orderBy }
+
+                    },
+                    outParameters);
+            return (resut.result, int.Parse(resut.outValues.ElementAt(0).Value.ToString()),
+                int.Parse(resut.outValues.ElementAt(1).Value.ToString()));
+        }
+    }
+    }
+     ```
+    </details>
 
 ## Class-48 (AWS Instance Create-Windows)
 1. Login Link : https://signin.aws.amazon.com/
