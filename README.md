@@ -1,5 +1,5 @@
   # aspnet-b8-shamimhosen
-Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, Project)
+Asp.Net Batch-8 Main Repository which is used for Class Tasks (Assignments, Exams, Projects)
 
 
 ### সুচিপত্র
@@ -17,12 +17,14 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 - [Class-41 (Dockerfile)](#Class-41-Dockerfile)
 - [Class-44 (Dynamic SQL)](#Class-44-Dynamic-SQL)
 - [Class-45 (Advance Search)](#Class-45-Advance-Search)
+- [Class-48 (AWS Instance Create-Windows)](#Class-48-AWS-Instance-Create-Windows)
+- [Class-49 Load Balancer & Auto Scaling](#Class-49-Load-Balancer-and-Auto-Scaling)
 
 
 
 ## [Class-10 (New Syllabus & SASS)](https://docs.google.com/document/d/1A9cbTsqpL61j4-cdMniQUc9Eqo92qgTaHyxadCoJ4oU/edit) 
 * New Syllabus (30)
-* Injection Type(61)--Constractor, Property, Methode Dependency Injection--Constractor most populler
+* Injection Type(61)--Contractor, Property, Methode Dependency Injection--Constructor most popular
 * SCSS File Complie(82) 
 * We can nest style:(95)
 * Split/Import File:(97)
@@ -30,12 +32,12 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 * OMR(115) -- ado.net, entity framework, dapper, inhybernet
 
 ## Class-30 Identity Framwork
-1. Add IdentityDbContext(30) & paramiter(55)
+1. Add IdentityDbContext(30) & parameter(55)
    <details>
     <summary>ApplicationDbContext</summary>
     
     ```c#
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser,
+    public class ApplicationDbContext: IdentityDbContext<ApplicationUser,
         ApplicationRole, Guid,
         ApplicationUserClaim, ApplicationUserRole,
         ApplicationUserLogin, ApplicationRoleClaim,
