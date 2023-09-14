@@ -23,11 +23,6 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
       - [DockerFile-72](#dockerfile-72)
   - [Class-44 (Dynamic SQL)](#class-44-dynamic-sql)
   - [Class-45 (Advance Search)](#class-45-advance-search)
-    - [Create EnrollmentController in API-3](#create-enrollmentcontroller-in-api-3)
-    - [Create IAdoNetUtility Interface  and Implementation-12\\](#create-iadonetutility-interface--and-implementation-12)
-    - [Binding in Persistance Layer-24\\](#binding-in-persistance-layer-24)
-    - [Create Enrollment DTO-44\\](#create-enrollment-dto-44)
-    - [EnrollmentService:34\\](#enrollmentservice34)
   - [Class-48 (AWS Instance Create-Windows)](#class-48-aws-instance-create-windows)
     - [Server Create-70:](#server-create-70)
   - [Class-49 Load Balancer and Auto Scaling](#class-49-load-balancer-and-auto-scaling)
@@ -2145,32 +2140,32 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 ## Class-45 (Advance Search)
 * Note : রিপোজিটেরি হয় সাধারণত ইনটি নির্ভর প্রতিটা Entity জন্য একটা করে Repository থাকে
 
-### Create EnrollmentController in API-3
+1. Create EnrollmentController in API-3
 
-<details>
-    <summary>EnrollmentController</summary>
+    <details>
+        <summary>EnrollmentController</summary>
 
-    ```c#
-    namespace Crud.API.Controllers
-    {
-    [Route("v3/[controller]")]
-    [ApiController]
-    public class EnrollmentController : ControllerBase
-    {
-        private readonly ILifetimeScope _scope;
-        private readonly ILogger<UsersController> _logger;
-
-        public EnrollmentController(ILifetimeScope scope, ILogger<UsersController> logger)
+        ```c#
+        namespace Crud.API.Controllers
         {
-            _scope = scope;
-            _logger = logger;
-        }      
-    }
-    }
-    ```
-</details>
+        [Route("v3/[controller]")]
+        [ApiController]
+        public class EnrollmentController : ControllerBase
+        {
+            private readonly ILifetimeScope _scope;
+            private readonly ILogger<UsersController> _logger;
 
-### Create IAdoNetUtility Interface  and Implementation-12\
+            public EnrollmentController(ILifetimeScope scope, ILogger<UsersController> logger)
+            {
+                _scope = scope;
+                _logger = logger;
+            }      
+        }
+        }
+        ```
+    </details>
+
+2. Create IAdoNetUtility Interface  and Implementation-12\
  *   ডোমেইন লেয়ার এর ভিতরে একটা Utilities ফোল্ডার তৈরি করব এবং তার ভিতরে IAdonetUtility ইন্টারফেস তৈরি করব এবং এটার ইমপ্লিমেন্টেশন হবে পারসিসটেন্স Layer এর ভিতর\
     ইমপ্লিমেন্টেশন  এর ভিতর রিপোজিটরি থেকে কিছু মেথড করে নিয়ে চলে আসব যেগুলো মূলত অ্যাডভান্স search জন্য প্রয়োজন হবে. এবং এর সিগনেচারগুলো ইন্টারফেস এর মধ্যে রাখবো 
 
@@ -2488,7 +2483,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
      ```
     </details>
 
-### Binding in Persistance Layer-24\
+3. Binding in Persistance Layer-24\
 * AdoNetUtility binding in Persistance moudle
     <details>
      <summary>Binding in PersistanceModule</summary>
@@ -2500,7 +2495,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
      ```
     </details>
 
-### Create Enrollment DTO-44\
+4. Create Enrollment DTO-44\
  *   এখন আমাদের একটা এন্টিটি প্রয়োজন যেহেতু আমাদের যেসব  প্রপার্টি দরকার সেগুলো নিয়ে কোন এন্টিটি নাই তাই একটা DTO তৈরী করলাম Application Layer >> Feature >> Training >> DTOs
     <details>
      <summary>EnrollmentDTO</summary>
@@ -2517,7 +2512,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     }
      ```
     </details>
-### EnrollmentService:34\
+5. EnrollmentService:34\
 * Create a EnrollmentService class in infrastructure >> Feature >> Service and binding it InfrastructureModule
     <details>
      <summary>IEnrollmentDTO Interface</summary>
