@@ -8,6 +8,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
   - [Class-30 Identity Framwork](#class-30-identity-framwork)
     - [Add IdentityDbContext(30) \& paramiter(55)](#add-identitydbcontext30--paramiter55)
     - [Add Membership class-31\\](#add-membership-class-31)
+    - [Modify ServiceCollectionExtention\> AddIdentity-37\\](#modify-servicecollectionextention-addidentity-37)
   - [Class-31 Register Page Convert](#class-31-register-page-convert)
   - [Class-32 Login-Logout Page](#class-32-login-logout-page)
   - [Class-33 (Role-Management)](#class-33-role-management)
@@ -47,26 +48,28 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 
 ## Class-30 Identity Framwork
 ### Add IdentityDbContext(30) & paramiter(55)
-    <details>
-     <summary>ApplicationDbContext</summary>
-    
-    ```c#
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser,
-        ApplicationRole, Guid,
-        ApplicationUserClaim, ApplicationUserRole,
-        ApplicationUserLogin, ApplicationRoleClaim,
-        ApplicationUserToken>, IApplicationDbContext
-    {     }
-    ```
-    </details>
+* 
+   <details>
+        <summary>ApplicationDbContext</summary>
+        
+        ```c#
+        public class ApplicationDbContext : IdentityDbContext<ApplicationUser,
+            ApplicationRole, Guid,
+            ApplicationUserClaim, ApplicationUserRole,
+            ApplicationUserLogin, ApplicationRoleClaim,
+            ApplicationUserToken>, IApplicationDbContext
+        {     }
+        ```
+   </details>
+
 ### Add Membership class-31\
    ![image](https://github.com/Shamim448/aspnet-b8-shamimhosen/assets/43339514/37cd35f6-003c-4892-8174-2388a90cb733)
   
 
-4. Modify ServiceCollectionExtention> AddIdentity-37\
-   আমরা প্রোগ্রাম ডট সিএস থেকে যে আইডেন্টিটি ডিফল্ট যে মেথডটা নিয়ে এসে একটা একটা সার্ভিস কালেকশন তৈরি করেছি সেখানে যে ম্যাপটা তৈরি করেছি staticদিয়ে তার ভিতরে কিছু কনফিগারেশন 
-   আমাদের দিয়ে দিতে হবে. যার ভিতরে বিভিন্ন ধরনের লগইন logout এই পাথরগুলো থাকবে এবং কুকি থাকবে তারপরে গিয়ে পাসওয়ার্ড সেটিং থাকবে লক আউট সেটিং থাকবে এই টাইপের কোড 
-   এবং নিচে সার্ভিস ডট রেজাল্ট পেজ এটা দিয়ে দিতে হবে services.AddRazorPages();
+### Modify ServiceCollectionExtention> AddIdentity-37\
+    আমরা প্রোগ্রাম ডট সিএস থেকে যে আইডেন্টিটি ডিফল্ট যে মেথডটা নিয়ে এসে একটা একটা সার্ভিস কালেকশন তৈরি করেছি সেখানে যে ম্যাপটা তৈরি করেছি staticদিয়ে তার ভিতরে কিছু কনফিগারেশন 
+    আমাদের দিয়ে দিতে হবে. যার ভিতরে বিভিন্ন ধরনের লগইন logout এই পাথরগুলো থাকবে এবং কুকি থাকবে তারপরে গিয়ে পাসওয়ার্ড সেটিং থাকবে লক আউট সেটিং থাকবে এই টাইপের কোড 
+    এবং নিচে সার্ভিস ডট রেজাল্ট পেজ এটা দিয়ে দিতে হবে services.AddRazorPages();
    <details>
     <summary>ServiceCollectionExtention</summary>
     
