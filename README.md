@@ -2516,7 +2516,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 5. EnrollmentService:34\
 * Create a EnrollmentService class in infrastructure >> Feature >> Service and binding it InfrastructureModule
     <details>
-     <summary>IEnrollmentDTO Interface</summary>
+     <summary>IEnrollmentService Interface</summary>
     
      ```c#
     namespace Crud.Application.Features.Training.Services
@@ -2534,7 +2534,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
 * Create IEnrollmentService interface in Applicition >> Feature >> Training >> Service
 
     <details>
-     <summary>IEnrollmentDTO Class</summary>
+     <summary>IEnrollmentService Class</summary>
     
      ```c#
     namespace Crud.Infrastructure.Features.Services

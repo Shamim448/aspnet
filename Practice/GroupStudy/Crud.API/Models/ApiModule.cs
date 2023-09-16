@@ -7,6 +7,7 @@ namespace Crud.API.Models
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<UserModel>().AsSelf();
+            builder.RegisterType<EnrollmentModel>().AsSelf();
             base.Load(builder);
         }
     }

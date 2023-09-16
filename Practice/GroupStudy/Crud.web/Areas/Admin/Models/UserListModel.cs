@@ -7,6 +7,7 @@ namespace Crud.web.Areas.Admin.Models
     public class UserListModel
     {
         private readonly IUserService _userService;
+        
         public UserListModel()
         {
 
@@ -14,8 +15,9 @@ namespace Crud.web.Areas.Admin.Models
         public UserListModel(IUserService userService)
         {
             _userService = userService;
+            
         }
-
+       
         public IList<User> GetUsers()
         {
             return _userService.GetAllUser();

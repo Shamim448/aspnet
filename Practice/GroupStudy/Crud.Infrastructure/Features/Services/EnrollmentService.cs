@@ -2,6 +2,7 @@
 using Crud.Application.Features.Training.Services;
 using Crud.Domain.Entities;
 using Crud.Domain.Utilities;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,19 @@ namespace Crud.Infrastructure.Features.Services
 {
     public class EnrollmentService : IEnrollmentService
     {
-        private readonly IAdoNetUtility _adoNetUtility; 
+        private readonly IAdoNetUtility _adoNetUtility;
+        public StringValues enrollmentDateFrom;
+        public StringValues enrollmentDateTo;
+        public StringValues CourseName { get; set; }
+        public StringValues UserName { get; set; }
+
         public EnrollmentService(IAdoNetUtility adoNetUtility) 
         { 
             _adoNetUtility = adoNetUtility;
         }
+
+
+
         public async Task<(IList<EnrollmentDTO> records, int total, int totalDisplay)>
             GetPagedEnrollmentsAsync(int pageIndex, int pageSize, string? courseName, string? userName, 
             DateTime? enrollmentDateFrom, DateTime? enrollmentDateTo, string orderBy)
