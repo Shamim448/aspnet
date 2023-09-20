@@ -23,6 +23,7 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
       - [DockerFile-72](#dockerfile-72)
   - [Class-44 (Dynamic SQL)](#class-44-dynamic-sql)
   - [Class-45 (Advance Search)](#class-45-advance-search)
+  - [Class-46 (Send Email)](#class-46-send-email)
   - [Class-48 (AWS Instance Create-Windows)](#class-48-aws-instance-create-windows)
     - [Server Create-70:](#server-create-70)
   - [Class-49 Load Balancer and Auto Scaling](#class-49-load-balancer-and-auto-scaling)
@@ -2576,6 +2577,225 @@ Asp.Net Batch-8 Main Repository which is used for Class Task(Assignment, Exam, P
     }
      ```
     </details>
+
+## Class-46 (Send Email)
+
+1. একটা ইন্টারফেস থাকবে আই ইমেইল সার্ভিস নামে যার মধ্যে একটা মেথড থাকবে সিঙ্গেল ইমেল সেন্ড নামে যার ভিতর প্যারামিটার থাকবে রিসিভার ইমেইল রিসিভার নেইম সাবজেক্ট এবং বডি এইটা থাকবে ডোমাইনের ভিতরে সার্ভিস ফোল্ডারে 
+    
+    <details>
+     <summary>IEmailService</summary>
+
+     ```c#
+     namespace CVBuilder.Domain.Services
+    {
+        public interface IEmailService
+        {
+            void SendSingleEmail(string receiverName, string receiverEmail,
+                string subject, string body);
+        }
+    }
+     ```
+    </details>
+
+2. এবার ডোমেইনের ভিতর ইউটিলিটি ফোল্ডারের মধ্যে SMTP নামে একটি ক্লাস তৈরি করব যার ভেতরে sender ইনফরমেশন গুলো থাকবে কিডেন্সিয়াল 
+
+    <details>
+     <summary>Smtp</summary>
+
+     ```c#
+     namespace CVBuilder.Domain.Utilities
+    {
+    public class Smtp
+    {
+        public string SenderName { get; set; }
+        public string SenderEmail { get; set; }
+        public string Host { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public int Port { get; set; }
+        public bool UseSSL { get; set; }
+    }
+    }
+     ```
+    </details>
+
+* 25 অ্যাপ সেটিং এর ভিতরে এস এম টিভির কিছু ইনফরমেশন দিতে হবে এখানে আমাদের মেইল ট্রাপে একটা একাউন্ট করে সেখান থেকে ইনফরমেশন গুলো দিতে হবে 
+    <details>
+     <summary>Appsetting.json</summary>
+
+     ```c#
+     "Smtp": {
+    "SenderName": "Shamim Hosen",
+    "SenderEmail": "shamim.448@outlook.com",
+    "Host": "smtp.mailtrap.io",
+    "Username": "5e4d0459b98c8b",
+    "Password": "f5188c0ec1e491",
+    "Port": 587,
+    "UseSSL": true
+    },
+     ```
+    </details>   
+
+    use in program.cs to get smtp info 
+    builder.Services.Configure<Smtp>(builder.Configuration.GetSection("Smtp"));
+
+3. 24: এইটার একটা ইমপ্লিমেন্টেশন থাকবে ইনফ্রস্ট্রাকচার লেয়ার Htmlemail সার্ভিস নামে এবং মেইল কিট নামে একটা নাগেড প্যাকেজ ম্যানেজার ইন্সটল করতে হবে. 
+   and InfrastructureModule a binding korte hobe
+
+    <details>
+     <summary>HtmlEmailService</summary>
+
+     ```c#
+     using MimeKit;
+     using MailKit.Security;
+     using MailKit.Net.Smtp;
+     namespace CVBuilder.Infrastructure.Services
+    {
+    public class HtmlEmailService : IEmailService
+    {
+        private readonly Smtp _emailSettings;
+        public HtmlEmailService(IOptions<Smtp> emailSettings)
+        {
+            _emailSettings = emailSettings.Value;
+        }
+        public void SendSingleEmail(string receiverName, string receiverEmail, string subject, string body)
+        {
+            var message = new MimeMessage();
+
+            message.From.Add(new MailboxAddress(_emailSettings.SenderName,
+                _emailSettings.SenderEmail));
+
+            message.To.Add(new MailboxAddress(receiverName, receiverEmail));
+            message.Subject = subject;
+
+            var builder = new BodyBuilder();
+            builder.HtmlBody = body;
+            message.Body = builder.ToMessageBody();
+
+            using (var client = new SmtpClient())
+            {
+                client.Connect(_emailSettings.Host, _emailSettings.Port, SecureSocketOptions.StartTls);
+                client.Timeout = 30000;
+                client.Authenticate(_emailSettings.Username, _emailSettings.Password);
+
+                client.Send(message);
+                client.Disconnect(true);
+            }
+        }
+    }
+    }
+     ```
+    </details>
+
+
+
+* 26:এখন অ্যাপ সেটিং এর কাজটুকুকে প্রোগ্রামর সি এসে বাইন্ডিং করার জন্য একটা গেট সার্ভিস করতে হবে তারপরে infraস্ট্রাকচার লেয়ার ইমেইলের জন্য যে ক্লাসটা নেওয়া হয়েছে সেটা মডিউলের মধ্যে বাইন্ডিং করে দিতে হবে 
+  builder.Services.Configure<Smtp>(builder.Configuration.GetSection("Smtp"));
+
+* 39: এখন মেইল পাঠানোর জন্য টি ফর টেমপ্লেট ব্যবহার করব এইচটিএমএল  মেইল পাঠানোর জন্য এজন্য infraস্ট্রাকচার লেয়ারে টেমপ্লেট নামে একটা ফোল্ডার নিব তার ভিতর ইমেইল কনফারমেশন টেমপ্লেট নামে একটা টিফোর টেমপ্লেট নিব  
+  (Runtime text template) 
+
+    <details>
+     <summary>EmailConfirmationTemplate in Infrastructure>> Template</summary>
+
+     ```HTML#
+     <html>
+	<head></head>
+	<body>
+		<h3 style="color:red">Hello, <#=Name#> </h3>
+		<a href="<#=Link#>">Click the link to verify email</a>
+	</body>
+    </html>
+     ```
+    </details>
+
+* 48: একইভাবে টেমপ্লেট ফোল্ডারের মধ্যে ইমেইল কনফার্মেশন টেমপ্লেট পারসিয়ান নামে একটা persial class নিব. 
+
+    এখানে আর একটা প্যাকেট ম্যানেজার লাগবে system.coddom নামের 
+
+    <details>
+     <summary>EmailConfirmationTemplate</summary>
+
+     ```c#
+     namespace CVBuilder.Infrastructure.Templates
+    {
+    public partial class EmailConfirmationTemplate
+    {
+        private string Name { get; set; }
+        private string Link { get; set; }
+
+        public EmailConfirmationTemplate(string name, string link)
+        {
+            Name = name;
+            Link = link;
+        }
+    }
+    }
+     ```
+    </details>
+    
+* 51. উপরে আমরা html ট্যাম্পে টাকা রে মেইল পাঠানোর জন্য সবকিছু করলাম বাট আমার ইউজার তো বিভিন্ন সময় বিভিন্ন রকম মেইন পাঠাইতে পারে এর জন্য আমরা এপ্লিকেশনের ফিচারের ভেতর ট্রেনিং এর ভিতরে সার্ভিসের মধ্যে একটা IEmailMessageService নামে একটা Interface নিব যার ভেতর একটা মেথড থাকবে যেটা রিসিভার ইমেইল রিসিভার নেম এবং একটা কনফার্মেশন লিংক নিব
+
+    <details>
+     <summary>IEmailMessageService</summary>
+
+     ```c#
+     namespace CVBuilder.Application.features.Services
+    {
+    public interface IEmailMessageService
+    {
+        Task SendEmailConfirmationEmailAsync(string receiverEmail, string receiverName,
+        string confirmationPage);
+    }
+    }
+     ```
+    
+
+* 55: অ্যাপ্লিকেশন এর ইন্টারফেসটা আমরা ইনভেস্ট্রাকচার লেয়ারে ইমপ্লিমেন্ট করব 
+   ইমেইল ম্যাসেজ সার্ভিস ক্লাসটা বাইন্ডিং করে নিব 
+   </details>
+     <summary>EmailMessageService </summary>
+
+     ```c#
+     namespace CVBuilder.Infrastructure.Services
+    {
+    public class EmailMessageService : IEmailMessageService
+    {
+        private readonly IEmailService _emailService;
+        public EmailMessageService(IEmailService emailService) 
+        { 
+            _emailService = emailService;
+        }
+        public async Task SendEmailConfirmationEmailAsync(string receiverEmail, string receiverName, string confirmationPage)
+        {
+            var template = new EmailConfirmationTemplate(receiverName,
+                HtmlEncoder.Default.Encode(confirmationLink));
+            string body = template.TransformText();
+            string subject = "Please confirm your email";
+
+            _emailService.SendSingleEmail(receiverName, receiverEmail, subject, body);
+        }
+    }
+    }
+     ```
+    </details>
+* AccountController a  IEmailMessageService dependency Injection korte hobe
+  
+    </details>
+        <details>
+     <summary>AccountController a Register ar vitor</summary>
+
+     ```c#
+      var callbackUrl = Url.Action("ConfirmEmail", "Account",
+     new { area = "", userId = userId, code = code, returnUrl = model.ReturnUrl },
+        Request.Scheme);     
+ 
+    //send email
+    _emailMessageService.SendEmailConfirmationEmailAsync(user.Email, $"{user.FirstName} {user.LastName}", callbackUrl);
+    
+     ```
+    </details>
+
 
 ## Class-48 (AWS Instance Create-Windows)
 1. Login Link : https://signin.aws.amazon.com/
