@@ -25,7 +25,7 @@ namespace Crud.API.Controllers
         public async Task<object> Get()
         {
             var model = _scope.Resolve<EnrollmentModel>();
-            model.SearchItem = new EnrollmentSearch();
+           // model.SearchItem = new EnrollmentSearch();
             model.SearchItem.CourseName = Request.Query["SearchItem[CourseName]"];
             model.SearchItem.UserName = Request.Query["SearchItem[UserName ]"];
 
@@ -45,9 +45,9 @@ namespace Crud.API.Controllers
             var dataTablesModel = new DataTablesAjaxRequestUtility(Request);
             model.ResolveDependency(_scope);
 
-            var data = await model.GetPagedCoursesAdvanced(dataTablesModel);
+           // var data = await model.GetPagedCoursesAdvanced(dataTablesModel);
 
-            return data;
+            return 0;
         }
     }
 }
