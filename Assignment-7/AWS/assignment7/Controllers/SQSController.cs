@@ -24,11 +24,12 @@ namespace assignment7.Controllers
                 QueueUrl = queueUrlResponse.QueueUrl,
                 MaxNumberOfMessages = 10,
             };
-            while (!cts.IsCancellationRequested)
-            {
-                ReceiveMessageResponse? response = await sqsClient.ReceiveMessageAsync(receivedMessageRequest, cts.Token);
-
-                foreach (var message in response.Messages)
+            //while (!cts.IsCancellationRequested)
+            //{
+                ReceiveMessageResponse? response = await sqsClient.ReceiveMessageAsync(receivedMessageRequest/*, cts.Token*/);
+            if(response.Messages.Count > 0) { 
+                
+            foreach (var message in response.Messages)
                 {
                     receiveMessages.Add(new ReceiveMessage
                     {
@@ -38,11 +39,12 @@ namespace assignment7.Controllers
 
                     });
                 }
-                await Task.Delay(1000);
+            }
+            await Task.Delay(1000);
 
                 return View(receiveMessages);
-            }
-            return View(receiveMessages);
+            //}
+            //return View(receiveMessages);
         }
         public async Task< IActionResult> CreateQueue()
         {
