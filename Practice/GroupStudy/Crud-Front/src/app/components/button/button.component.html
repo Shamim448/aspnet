@@ -1,2 +1,3 @@
 <p>button works!</p>
-<input type="button" [ngStyle]="{'background-color': color}"  value="{{text}}">
+<input type="button" [ngClass]="cssclass" [ngStyle]="{'background-color': color}" 
+ value="{{text}}" (click)="onClick()"/>

@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Crud-Front';
+
+  onClick(){
+    console.log("button clicked");
+  }
+  printMessager() {
+    console.log("clicked");
+    }
+  
 }
